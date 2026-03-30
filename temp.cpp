@@ -55,17 +55,17 @@ void set_border(){
 
 void check_character(int y, int x){
     if (screen[y][x] == TOP_LEFT_ANGLE)
-        cout<<"╔";//
+        cout<<"╔";
     else if(screen[y][x] == TOP_RIGHT_ANGLE)
-        cout<<"╗";//
+        cout<<"╗";
     else if (screen[y][x] == BOTTOM_LEFT_ANGLE)
-        cout<<"╚";//
+        cout<<"╚";
     else if (screen[y][x] == BOTTOM_RIGHT_ANGLE)
-        cout<<"╝";//
+        cout<<"╝";
     else if (screen[y][x] == HORIZONTAL_BORDER)
-        cout<<"═";//
+        cout<<"═";
     else if (screen[y][x] == VERTICAL_BORDER)
-        cout<<"║";//
+        cout<<"║";
     else if (screen[y][x] == EMPTY)
         cout<<" ";
     
