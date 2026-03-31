@@ -1,5 +1,5 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/matteobernardi/bomberman/temp'
+binary-path:     '/Users/matteobernardi/bomberman/bomberman/temp'
 relocations:     []
 ...
