@@ -11,6 +11,7 @@ add_executable(bomberman
         main.cpp
         Player.cpp
         BidirectionalList.cpp
+        Map.cpp
 )
 
 target_link_libraries(bomberman ${CURSES_LIBRARIES})
