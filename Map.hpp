@@ -1,4 +1,5 @@
-#include <ncurses.h>
+#include <curses.h>
+//#include <ncurses.h>
 
 class Map{
 protected:

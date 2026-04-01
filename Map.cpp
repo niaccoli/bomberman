@@ -20,6 +20,7 @@ void Map::initialize_map(int levelID){
 
             break;
         case 2:
+            break;
     }
 }
 

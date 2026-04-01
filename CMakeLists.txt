@@ -4,7 +4,11 @@ project(bomberman)
 
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(Curses REQUIRED)
+find_package(Curses)
+if(NOT CURSES_FOUND AND WIN32)
+    set(CURSES_INCLUDE_DIR "C:/MinGW/include")
+    set(CURSES_LIBRARIES "C:/MinGW/lib/libpdcurses.a")
+endif ()
 include_directories(${CURSES_INCLUDE_DIR})
 
 add_executable(bomberman
