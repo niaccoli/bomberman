@@ -1,8 +1,20 @@
+# Cartelle build
+build/
 cmake-build-debug/
 cmake-build-release/
+
+# IDE
 .idea/
 .vscode/
+
+# File compilati
 *.exe
 *.out
 *.o
+
+# Debug (Mac)
 *.dSYM
+
+# Cache CMake
+CMakeCache.txt
+CMakeFiles/
