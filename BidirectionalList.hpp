@@ -1,8 +1,9 @@
 #include <iostream>
+#include "Map.hpp"
 
 struct node{
     int levelID;
-    //puntatore alla mappa specifica di un determinato livello
+    Map* map;
     node* next;
     node* prev;
 };

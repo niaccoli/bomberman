@@ -1,0 +1,144 @@
+riduzione del codice nel metodo Initialize_Map tramite LLM passando da:
+switch(levelID){
+        case 1:{
+            ifstream file("level1.txt");
+            if (!file.is_open()) return; //gestione errore
+
+            char ch;
+            int r = 0;
+            int c = 0;
+
+            while(file.get(ch) && r < rows){
+                if(ch == '\n'){
+                    r++;
+                    c = 0;
+                }
+                else if (c < cols){
+                    grid[r][c] = ch;
+                    c++;
+                }
+            }
+            file.close();
+            break;
+        }
+
+        case 2:{
+            ifstream file("level2.txt");
+            if (!file.is_open()) return; //gestione errore
+
+            char ch;
+            int r = 0;
+            int c = 0;
+
+            while(file.get(ch) && r < rows){
+                if(ch == '\n'){
+                    r++;
+                    c = 0;
+                }
+                else if (c < cols){
+                    grid[r][c] = ch;
+                    c++;
+                }
+            }
+            file.close();
+            break;
+        }
+
+        case 3:{
+            ifstream file("level3.txt");
+            if (!file.is_open()) return; //gestione errore
+
+            char ch;
+            int r = 0;
+            int c = 0;
+
+            while(file.get(ch) && r < rows){
+                if(ch == '\n'){
+                    r++;
+                    c = 0;
+                }
+                else if (c < cols){
+                    grid[r][c] = ch;
+                    c++;
+                }
+            }
+            file.close();
+            break;
+        }
+
+        case 4:{
+            ifstream file("level4.txt");
+            if (!file.is_open()) return; //gestione errore
+
+            char ch;
+            int r = 0;
+            int c = 0;
+
+            while(file.get(ch) && r < rows){
+                if(ch == '\n'){
+                    r++;
+                    c = 0;
+                }
+                else if (c < cols){
+                    grid[r][c] = ch;
+                    c++;
+                }
+            }
+            file.close();
+            break;
+        }
+
+        case 5:{
+            ifstream file("level5.txt");
+            if (!file.is_open()) return; //gestione errore
+
+            char ch;
+            int r = 0;
+            int c = 0;
+
+            while(file.get(ch) && r < rows){
+                if(ch == '\n'){
+                    r++;
+                    c = 0;
+                }
+                else if (c < cols){
+                    grid[r][c] = ch;
+                    c++;
+                }
+            }
+            file.close();
+            break;
+        }
+
+
+a:
+void Map::Initialize_Map(int levelID){
+
+    string fileName;
+
+    switch(levelID) {
+        case 1: fileName = "level1.txt"; break;
+        case 2: fileName = "level2.txt"; break;
+        case 3: fileName = "level3.txt"; break;
+        case 4: fileName = "level4.txt"; break;
+        case 5: fileName = "level5.txt"; break;
+        default: return; // Livello non valido
+    }
+
+    ifstream file(fileName);
+    if (!file.is_open()) return;
+
+    char ch;
+    int r = 0, c = 0;
+    while (file.get(ch) && r < rows) {
+        if (ch == '\n') {
+            r++;
+            c = 0;
+        } else if (c < cols) {
+            grid[r][c] = ch;
+            c++;
+        }
+    }
+    file.close();
+        
+}

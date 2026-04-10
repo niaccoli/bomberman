@@ -2,6 +2,8 @@
 #include <cstring>
 //#include <ncurses.h>
 #include <curses.h>
+#include "Map.hpp"
+#include "BidirectionalList.hpp"
 
 using namespace std;
 
@@ -89,6 +91,13 @@ void menu(){
 
 
 int main() {
+
+    
+    Map* map1 = new Map(20, 40, 1, 1);
+
+    //BidirectionalList l1 = new BidirectionalList()
+
+
 
     //inizializza lo schermo
     //setta la memoria e pulisce lo schermo (ncurses)

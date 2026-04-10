@@ -12,7 +12,7 @@ public:
     //costruttore
     Map(int h, int w, int start_y, int start_x);
 
-    void initialize_map(int levelID);
+    void Initialize_Map(int levelID);
     
     void stamp_map();
 
