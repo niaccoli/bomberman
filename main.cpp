@@ -92,11 +92,9 @@ void menu(){
 
 int main() {
 
-    
-    Map* map1 = new Map(20, 40, 1, 1);
+    BidirectionalList levelList;
 
-    //BidirectionalList l1 = new BidirectionalList()
-
+    levelList.Create_Levels();
 
 
     //inizializza lo schermo
@@ -115,6 +113,11 @@ int main() {
     //Crea un bordo attorno alla window
     box(win, 0, 0);
     wrefresh(win);
+
+    // TEST
+    node* currentNode = levelList.getCurrent();
+    currentNode->map->stamp_map();
+    //
 
     //Prende l'input dell'utente restituendo il valore int corrispondente al tasto premuto
     getch();

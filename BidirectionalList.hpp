@@ -20,6 +20,9 @@ public:
 
     void goToPrev();  
 
-    node getCurrent();
+    //Creazione dei 5 livelli
+    void Create_Levels();
+
+    node* getCurrent();
 };
 
