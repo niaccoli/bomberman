@@ -60,3 +60,4 @@ void Map::stamp_map(){
     }
     wrefresh(win);
 };
+

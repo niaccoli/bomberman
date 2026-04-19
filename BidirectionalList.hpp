@@ -1,3 +1,5 @@
+#ifndef BIDIRECTIONALLIST_HPP
+#define BIDIRECTIONALLIST_HPP
 #include <iostream>
 #include "Map.hpp"
 
@@ -26,3 +28,4 @@ public:
     node* getCurrent();
 };
 
+#endif

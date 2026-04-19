@@ -83,3 +83,4 @@ void BidirectionalList::goToPrev(){
 node* BidirectionalList::getCurrent(){
     this->current;
 }
+

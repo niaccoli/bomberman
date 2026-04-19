@@ -1,3 +1,5 @@
+#ifndef MAP_HPP
+#define MAP_HPP
 #include <curses.h>
 //#include <ncurses.h>
 
@@ -22,3 +24,4 @@ public:
 
     WINDOW* getWin();
 };
+#endif
