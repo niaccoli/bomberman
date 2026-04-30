@@ -13,9 +13,13 @@ include_directories(${CURSES_INCLUDE_DIR})
 
 add_executable(bomberman
         main.cpp
-        Player.cpp
+        Personaggio.cpp
         BidirectionalList.cpp
         Map.cpp
+        funzioni.cpp
+        Giocatore.cpp
+        NemicoRandom.cpp
+        NemicoInseguitore.cpp
 )
 
 target_link_libraries(bomberman ${CURSES_LIBRARIES})
