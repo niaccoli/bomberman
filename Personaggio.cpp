@@ -26,7 +26,6 @@ void Personaggio::muovi(int newx, int newy) {
     setY(newy);
 }
 
-
 void Personaggio::setVite(int vite) {
     this->vite = vite;
 }

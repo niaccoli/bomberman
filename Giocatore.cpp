@@ -1,26 +1,37 @@
-#include "Giocatore.h "
+#include "Giocatore.h"
 #include "Personaggio.hpp"
 
 
 Giocatore::Giocatore(): Personaggio(3,-1,-1) {
-    InvulnerabilitaOff();
+    invulnerabilitaOff();
 }
 
 Giocatore::Giocatore(int vite, int x, int y): Personaggio(vite, x, y) {
-    InvulnerabilitaOff();
+    invulnerabilitaOff();
 }
 
 
-void Giocatore::InvulnerabilitaOn() {
+void Giocatore::invulnerabilitaOn(int durata) {
     invulnerabilita = true;
+    tempoInvulnerabilita = durata;
 }
 
-void Giocatore::InvulnerabilitaOff() {
+void Giocatore::invulnerabilitaOff() {
     invulnerabilita = false;
+    tempoInvulnerabilita = 0;
 }
 
 bool Giocatore::invulnerabile() const {
     return invulnerabilita;
+}
+
+void Giocatore::aggiornaInvulnerabilita(){
+    if (invulnerabile()){
+        tempoInvulnerabilita -= 1;
+
+        if (tempoInvulnerabilita <= 0)
+            invulnerabilitaOff();
+    }
 }
 
 void Giocatore::diminuisciVita() {
@@ -36,24 +47,3 @@ void Giocatore::diminuisciVita(int danno) {
     //setvite()=0
 }
 
-
-void muoviGiocatore(Giocatore &player, char input) {
-    int dx = 0;
-    int dy = 0;
-
-    if (input == 'w' || input == 'W')
-        dy = -1;
-    else if (input == 'a' || input == 'A')
-        dx = -1;
-    else if (input == 's' || input == 'S')
-        dy = 1;
-    else
-        dx = 1;
-
-    int newX = player.getX() + dx;
-    int newY = player.getY() + dy;
-
-    //if mossavalida(newx,newy)
-
-    player.muovi(newX, newY);
-}

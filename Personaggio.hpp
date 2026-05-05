@@ -18,6 +18,7 @@ class Personaggio {
         int getY () const;
         void muovi(int newx, int newy);
 
+
         void setVite(int vite);
         void aumentaVita();
         void diminuisciVita();

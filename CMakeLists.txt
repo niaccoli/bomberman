@@ -20,6 +20,10 @@ add_executable(bomberman
         Giocatore.cpp
         NemicoRandom.cpp
         NemicoInseguitore.cpp
+        Bomba.h
+        Item.h
+        Item.cpp
+        Bomba.cpp
 )
 
 target_link_libraries(bomberman ${CURSES_LIBRARIES})
