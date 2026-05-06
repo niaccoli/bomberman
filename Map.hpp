@@ -1,7 +1,7 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 #include <curses.h>
-//#include <ncurses.h>
+#include "Personaggio.hpp"
 
 class Map{
 protected:
@@ -18,7 +18,7 @@ public:
     
     void stamp_map();
 
-    bool isWalkable(int y, int x);
+    bool isWalkable(int x, int y);
 
     void breakWall();
 

@@ -59,5 +59,17 @@ void Map::stamp_map(){
         }
     }
     wrefresh(win);
-};
+}
+
+//Prende in input due coordinate e restituiisce TRUE se è superficie calpestabile (spazio vuoto o Item)
+bool Map::isWalkable(int x, int y){
+
+    //Controllo limiti mappa (probabilemtne non serve ma è per sicurezza)
+    if (x >= cols || y >= rows)
+        return false;
+    if (grid[y][x] == ' ' ||  grid[y][x] == 'I')
+        return true;
+    
+    return false;
+}
 

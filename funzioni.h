@@ -5,6 +5,8 @@
 #include "Item.h"
 #include "Bomba.h"
 
+
+//Funzione creata nella classe 'Map', da capire se sarà da inserire eventualmente nella classe 'Livello'
 //bool posizioneValida(int x, int y); //serve sapere se una posizione è valida altrimenti il player non si deve spostare MATTE
 
 void muoviGiocatore(Giocatore& player, char input);
