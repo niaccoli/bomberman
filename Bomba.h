@@ -58,27 +58,27 @@ class Bomba {
         void setX(int x);
         void setY(int y);
 
-        int getTimer() const;
-        void setTimer(int tempo);
-        void diminuisciTimer();
-        void dimezzaTimer(); //forse meglio velocizza (per item 'T' = diminuzione tempo esplosione)
+        int getTimer() const; //ritorna il tempo rimanente prima di esplodere
+        void setTimer(int tempo); //imposta il timer della bomba
+        void diminuisciTimer(); //diminuisce il timer della bomba
+        //void dimezzaTimer(); //forse meglio velocizza (per item 'T' = diminuzione tempo esplosione)
 
-        int getDanno() const;
-        void setDanno(int danno);
-        void duplicaDanno(); //o potenziaDanno() (per item 'D' = aumento danno bomba (creare nemici tank con 2 vite))
+        int getDanno() const; //ritorna il danno della bomba
+        void setDanno(int danno); //imposta il danno della bomba
+        //void duplicaDanno(); //o potenziaDanno() (per item 'D' = aumento danno bomba (creare nemici tank con 2 vite))
 
-        int getRaggio() const;
-        void setRaggio(int raggio);
-        void raddoppiaRaggio();  //o aumentaRaggio() (per item 'B' = aumento raggio bomba)
+        int getRaggio() const; //ritorna il raggio di azione della bomba
+        void setRaggio(int raggio); //imposta il raggio di azione della bomba
+        //void raddoppiaRaggio();  //o aumentaRaggio() (per item 'B' = aumento raggio bomba)
 
-        bool attivata() const; //o innescata
-        void setAttivo(bool attivo);
-        void attiva();
-        void disattiva(); //fose semanticamente più bello esplodi
+        bool innescata() const; //o innescata
+        void attivaBomba();
+        void esplodi(); // = disattiva
+        //bool esplodi() ;
         void aggiornaBomba();
 
         //POTENZIAMENTI
-        void attivaBoostDanno();
+        /*void attivaBoostDanno();
         void disattivaBoostDanno();
         void setDurataBoostDanno(int durata);
         void diminuisciDurataBoostDanno();
@@ -100,7 +100,7 @@ class Bomba {
         void diminuisciDurataBoostTimer();
         int getDurataBoostTimer() const;
         bool boostTimerAttivo();
-        void aggiornaBoostTimer();
+        void aggiornaBoostTimer();*/
 
 
 

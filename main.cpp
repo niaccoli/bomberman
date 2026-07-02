@@ -128,6 +128,35 @@ int main() {
     //dealloca la memoria e termina ncurses
     endwin();
 
+    //LOOP:
+    /*
+     *
+     *INPUT:
+     *controllo se posizione valida (manca funzione)
+     *void muoviGiocatore(Giocatore& player, char input);
+    MUOVI PLAYER
+    PIAZZA BOMBA(SE INPUT):
+    *void piazzaBomba(Giocatore& g, Bomba& b)
+    *
+    MUOVI NEMICI:
+    NemicoRandom : Muovi() serve funzione posizione valida
+
+
+    CONTROLLA COLLISIONI:
+    void controllaCollisioni(Giocatore& g, Nemico& n[], Mappa& m, Bomba& b, Item i);
+
+
+    STAMPA:
+    guarda l esempio mandato su whatsapp
+    ti ho scritto anche l esempio in map.cpp
+    *
+    *
+    *Aggiorna bomba
+
+    */
+
+
+
 
 
 

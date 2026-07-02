@@ -6,7 +6,7 @@ class Item{
         int x;
         int y;
         char tipo; //invulnerabilità('I'), riduzione tempo bomba('T'), aumento raggio bomba('B'), 1pt.vita('V'), aumento velocità? pistola?
-        int durata; //per quanto rempo rimane sulla mappa
+        //int durata; //per quanto rempo rimane sulla mappa
         bool attivo;//il tempo per quanto dura il suo effetto lo mettiamo in una funzione generale
 
 
@@ -22,13 +22,13 @@ class Item{
         void setTipo(char tipo);
         char getTipo() const;
 
-        void setDurata(int tempo);
-        int getDurata() const;
+        //void setDurata(int tempo);
+        //int getDurata() const;
 
         bool isAttivo() const;
         void raccogli();
         void disattiva();
-        void aggiornaItem();
+        //void aggiornaItem();
 
 };
 

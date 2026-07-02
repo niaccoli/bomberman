@@ -37,13 +37,13 @@ void Bomba::setTimer(int tempo) {
     this -> timer = tempo;
 }
 
-void diminuisciTimer() {
-    this -> timer -= 1;
+void Bomba::diminuisciTimer() {
+    this -> timer-- ;
 }
 
-void Bomba::dimezzaTimer() {
+/*void Bomba::dimezzaTimer() {
     this -> timer /= 2;
-}
+}*/
 
 int Bomba::getDanno() const {
     return this -> danno;
@@ -53,9 +53,9 @@ void Bomba::setDanno(int danno) {
     this -> danno = danno;
 }
 
-void Bomba::duplicaDanno() {
+/*void Bomba::duplicaDanno() {
     this -> danno *= 2;
-}
+}*/
 
 int Bomba::getRaggio() const {
     return this -> raggio;
@@ -65,41 +65,37 @@ void Bomba::setRaggio(int raggio) {
     this -> raggio = raggio;
 }
 
-void Bomba::raddoppiaRaggio() {
+/*void Bomba::raddoppiaRaggio() {
     this -> raggio *= 2;
-}
+}*/
 
-bool Bomba::attivata() const {
+bool Bomba::innescata() const {
     return this -> attivo;
 }
 
-void setAttivo(bool attivo) {
-    this -> attivo = attivo;
-}
-
-void Bomba::attiva() {
+void Bomba::attivaBomba() {
     this -> attivo = true;
 }
 
-void Bomba::disattiva() {
+void Bomba::esplodi() {
     this -> attivo = false;
 }
 
 void Bomba::aggiornaBomba() {
-    aggiornaBoostDanno();
+    /*aggiornaBoostDanno();
     aggiornaBoostRaggio();
-    aggiornaBoostTimer();
-    if (attivata()) {
+    aggiornaBoostTimer();*/
+    if (innescata()) {
         diminuisciTimer();
         if (getTimer() <= 0)
-            disattiva();
+            esplodi();
     }
 }
 
 
 
 
-void Bomba::attivaBoostDanno() {
+/*void Bomba::attivaBoostDanno() {
     boostDanno = true;
     setDurataBoostDanno(5);
     duplicaDanno();
@@ -189,4 +185,4 @@ void Bomba::aggiornaBoostTimer() {
         if (getDurataBoostTimer() <= 0)
             disattivaBoostTimer();
     }
-}
+}*/

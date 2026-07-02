@@ -5,16 +5,16 @@
 
 class Giocatore : public Personaggio {
 protected:
-    bool invulnerabilita;
-    int tempoInvulnerabilita;
+    //bool invulnerabilita;
+    //int tempoInvulnerabilita;
 public:
     Giocatore();
     Giocatore(int vite, int x, int y);
 
-    void invulnerabilitaOn(int durata);
-    void invulnerabilitaOff();
-    bool invulnerabile() const;
-    void aggiornaInvulnerabilita();
+    //void invulnerabilitaOn(int durata);
+    //void invulnerabilitaOff();
+    //bool invulnerabile() const;
+    //void aggiornaInvulnerabilita();
 
     void diminuisciVita();
     void diminuisciVita(int danno);
