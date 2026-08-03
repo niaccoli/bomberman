@@ -10,7 +10,9 @@ BidirectionalList::BidirectionalList(node* HEAD, node* CURRENT){
     current = CURRENT;
 }
 
-void BidirectionalList::Create_Levels(){
+//Creazione vecchia livelli (pre classe Level)
+
+/* void BidirectionalList::Create_Levels(){
     Map* map1 = new Map(21, 41, 1, 1);
     Map* map2 = new Map(24, 46, 19, 10);
 
@@ -30,7 +32,7 @@ void BidirectionalList::Create_Levels(){
 
     node2->next = NULL; //TEMPORANEO PER TEST
     //node* node3 = new node;
-    /*
+    
     node2->next = node3;
 
     node3->levelID = 3;
@@ -54,7 +56,7 @@ void BidirectionalList::Create_Levels(){
     node5->map = map5;
     node5->prev = node4;
     node5->next = NULL;
-    */
+    
 
 
     //Inizializzazione delle 5 mappe con cicli while
@@ -69,6 +71,7 @@ void BidirectionalList::Create_Levels(){
     this->head = node1;
     this->current = node1;
 }
+*/
 
 void BidirectionalList::goToNext(){
     if(current->next != NULL)

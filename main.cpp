@@ -116,7 +116,7 @@ int main() {
 
     // TEST
     node* currentNode = levelList.getCurrent();
-    currentNode->map->stamp_map();
+    //currentNode->map->stamp_map();
     //
 
     //Prende l'input dell'utente restituendo il valore int corrispondente al tasto premuto

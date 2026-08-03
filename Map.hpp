@@ -14,6 +14,10 @@ public:
     //costruttore
     Map(int h, int w, int start_y, int start_x);
 
+    char getCell(int x, int y);
+
+    void setCell(int x, int y, char c);
+
     void Initialize_Map(int levelID);
     
     void stamp_map();

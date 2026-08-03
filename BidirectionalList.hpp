@@ -1,11 +1,11 @@
 #ifndef BIDIRECTIONALLIST_HPP
 #define BIDIRECTIONALLIST_HPP
 #include <iostream>
-#include "Map.hpp"
+#include "Level.hpp"
 
 struct node{
     int levelID;
-    Map* map;
+    Level* level;
     node* next;
     node* prev;
 };
