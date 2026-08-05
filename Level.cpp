@@ -11,5 +11,17 @@ Map& Level::getMap(){
 }
 
 void Level::addEnemies(Personaggio& p){
-    
+    //Da scrivere
+}
+
+void updateEnemies(Personaggio& p){
+    //Da scrivere
+}
+
+void Level::addItem(Item& i){
+    //Da scrivere
+}
+
+void updateItems(Item& i){
+    //Da scrivere
 }

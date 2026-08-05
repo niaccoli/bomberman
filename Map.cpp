@@ -1,5 +1,6 @@
 #include "Map.hpp"
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -47,31 +48,60 @@ void Map::Initialize_Map(int levelID){
         
 }
 
-
-void Map::stamp_map(){
-    werase(win); //Pulisce la finestra (probabilmente eliminabile gestendo ogni finestra in modo separato per ogni sezione del gioco (es menu, livello, classifica, etc,))
-    box(win, 0, 0);
-
-    for(int i = 1; i < rows - 1; i++){
-        for(int j = 1; j < cols - 1; j++){
-            wmove(win, i, j);
-            addch(grid[i][j]);
-        }
-    }
-    wrefresh(win);
-}
-
 //Prende in input due coordinate e restituiisce TRUE se è superficie calpestabile (spazio vuoto o Item)
-bool Map::isWalkable(int x, int y){
+bool Map::mossavalida(int x, int y){
 
     //Controllo limiti mappa (probabilemtne non serve ma è per sicurezza)
-    if (x >= cols || y >= rows)
+    if (x >= cols || y >= rows || x < 0 || y < 0)
         return false;
-    if (grid[y][x] == ' ' ||  grid[y][x] == 'I')
+    if (grid[y][x] == ' ' ||  grid[y][x] == 'I') //da capire se il player può andare nella stessa cella di un nemico o meno
         return true;
     
     return false;
 }
+
+
+void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b ){
+    for(int i = 0; i < rows; i++){
+        for(int j=0; j < cols; j++){
+            char char_to_display = grid[i][j]; // Inizia con il carattere base della mappa
+
+            // Priorità 4: Item (la più bassa tra gli oggetti dinamici)
+            // Controlla se c'è un item attivo in questa posizione
+            for(int k = 0; k < numItems; k++){
+                if(items[k].isAttivo() && i == items[k].getY() && j == items[k].getX()){
+                    char_to_display = items[k].getTipo(); // Stampa il tipo di item (es. 'B', 'T', 'D')
+                    break; // Trovato un item, non serve controllare gli altri per questa cella
+                }
+            }
+
+            // Priorità 3: Nemico (sovrascrive l'item se presente)
+            // Controlla se c'è un nemico in questa posizione
+            for(int k = 0; k < numNemici; k++){
+                for(int k=0; k < numNemici; k++){
+                    if(i == nemici[k].getY() && j == nemici[k].getX()){
+                        char_to_display = 'N'; // 'N' per nemico (de gestire poi i vari tipi di nemici)
+                        break; // Trovato un nemico, non serve controllare gli altri per questa cella
+                    }
+                }
+            }
+
+            // Priorità 2: Bomba (sovrascrive nemico e item se presente)
+            if(b.innescata() && i == b.getY() && j == b.getX()){
+                char_to_display = 'X'; // 'X' per bomba
+            }
+
+            // Priorità 1: Giocatore (la più alta, sovrascrive tutto)
+            if(i == p.getY() && j == p.getX()){
+                char_to_display = 'P'; // 'P' per giocatore
+            }
+
+            cout << char_to_display;
+        }
+        cout << endl;
+    }
+}
+
 
 /* Andrea: di seguito trovi un esempio
  * ti suggerisco di cambiare stampa mappa cosi
@@ -108,4 +138,3 @@ bool Map::isWalkable(int x, int y){
     }
  *
  */
-

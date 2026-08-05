@@ -2,6 +2,10 @@
 #define MAP_HPP
 #include <curses.h>
 #include "Personaggio.hpp"
+#include "Nemico.hpp". //Aggiungere la calsse nemica generale!!!!!!!!!!!!!!!!!
+#include "Bomba.h"
+#include "Item.h"
+
 
 class Map{
 protected:
@@ -20,9 +24,9 @@ public:
 
     void Initialize_Map(int levelID);
     
-    void stamp_map();
+    void stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b );
 
-    bool isWalkable(int x, int y);
+    bool mossavalida(int x, int y);
 
     void breakWall();
 
