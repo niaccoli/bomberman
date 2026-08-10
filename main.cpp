@@ -27,7 +27,7 @@ bomb = ''
 enemy = ''
 player = ''
 perk = ....
-*/
+
 const char TOP_LEFT_ANGLE = 'A';
 const char TOP_RIGHT_ANGLE = 'B';
 const char BOTTOM_LEFT_ANGLE = 'C';
@@ -84,6 +84,7 @@ void stamp_screen(){
         cout<<endl;
     }
 }
+*/
 
 void menu(){
     
@@ -95,6 +96,9 @@ int main() {
     BidirectionalList levelList;
 
     levelList.Create_Levels();
+
+    noecho(); //Non mostra il carattere della tastiera in input
+
 
 
     //inizializza lo schermo
@@ -115,7 +119,7 @@ int main() {
     wrefresh(win);
 
     // TEST
-    node* currentNode = levelList.getCurrent();
+    //node* currentNode = levelList.getCurrent();
     //currentNode->map->stamp_map();
     //
 

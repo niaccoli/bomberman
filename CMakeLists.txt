@@ -26,6 +26,10 @@ add_executable(bomberman
         Bomba.cpp
         Nemico.cpp
         Nemico.h
+        Personaggio.hpp
+        Map.hpp
+        Level.hpp
+        Level.cpp
 )
 
 target_link_libraries(bomberman ${CURSES_LIBRARIES})
