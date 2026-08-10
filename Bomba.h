@@ -1,5 +1,5 @@
-#ifndef BOMBERMAN_BOMBE_H
-#define BOMBERMAN_BOMBE_H
+#ifndef BOMBERMAN_BOMBA_H
+#define BOMBERMAN_BOMBA_H
 
 
 class Bomba {
@@ -20,7 +20,7 @@ class Bomba {
         bool boostTimer;
         int durataBoostTimer;
 
-/*da ragionare: una volta che viene viene raccoloto un item bisogna applicare un effetto(funzione void effetto item()).
+/*da ragionare: una volta che viene viene raccolto un item bisogna applicare un effetto(funzione void effetto item()).
  *Se l'item è un item che riguarda il giocatore è facile perchè il giocatore è già creato.
  *Es. invulnerabilità fai invulnerabilitaOn() e diminuisci il  *tempoinvulnerabilità ogni ciclo (aggiornaInvulnerabilità()).
  *le bombe invece vengono create ogni volta che il giocatore preme  *'x' quindi forse non ha senso salvare boostpotenza,
@@ -49,6 +49,7 @@ class Bomba {
 
     public:
         Bomba();
+        //crea un oggetto bomba posizionato fuori dalla mappa e non attiva
 
         /*Bomba(int x, int y, int timer, int danno, int raggio, bool attivo); //capire se aggiungere funzioni di check per valori
         // timer, danno, raggio (>0)*/
@@ -72,7 +73,7 @@ class Bomba {
         //void raddoppiaRaggio();  //o aumentaRaggio() (per item 'B' = aumento raggio bomba)
 
         bool innescata() const; //o innescata
-        void attivaBomba();
+        void innesca();
         void esplodi(); // = disattiva
         //bool esplodi() ;
         void aggiornaBomba();
@@ -107,4 +108,4 @@ class Bomba {
 
 };
 
-#endif //BOMBERMAN_BOMBE_H
+#endif //BOMBERMAN_BOMBA_H

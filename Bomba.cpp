@@ -73,7 +73,7 @@ bool Bomba::innescata() const {
     return this -> attivo;
 }
 
-void Bomba::attivaBomba() {
+void Bomba::innesca() {
     this -> attivo = true;
 }
 

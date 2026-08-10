@@ -3,6 +3,7 @@
 #include "Giocatore.h"
 #include "Item.h"
 #include "Bomba.h"
+#include "Map.hpp"
 
 
 
@@ -11,13 +12,17 @@
 //  int y[RAGGIO_MAX];
 //}
 
-//bool posizioneValida(int x, int y); //serve sapere se una posizione è valida altrimenti il player non si deve spostare MATTE
-
-void muoviGiocatore(Giocatore& player, char input);
+void muoviGiocatore(Giocatore& player, Map& m, char input) ;
 
 void piazzaBomba(Giocatore& g, Bomba& b);
+//posiziona una bomba nella posizione occupata dal giocatore e ne attiva il timer.
 
-void gestisciInput(Giocatore& player,char input);
+void gestisciInput(Giocatore& player, Bomba& b, Map& m, char input);
+//precondizione: l'utente inserisce l'input da tastiera
+//postcondizione: se input ('W''A''S''D') e posizione mossa valida la posizione del giocatore viene aggiornata, altrimenti
+//mantiene la stessa posizione. Se input 'X' e non e' gia presente una bomba innescata,
+//viene posizionata una bomba nella stessa posizione del giocatore.
+//Se input non valido non viene effettuata alcuna azione.
 
 Item generaItem(int x, int y); //x e y sono la posizione di un nemico ucciso o di un muro rotto
 

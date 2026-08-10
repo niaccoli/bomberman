@@ -128,16 +128,25 @@ int main() {
     //dealloca la memoria e termina ncurses
     endwin();
 
+    //char input ;
+    //Giocatore player ;
+    //Bomba b ; //crea un oggetto bomba posizionato fuori dalla mappa e non attiva
+    //Map m ;
+
     //LOOP:
     /*
      *
+    //cin >> input ;
      *INPUT:
-     *controllo se posizione valida (manca funzione)
-     *void muoviGiocatore(Giocatore& player, char input);
-    MUOVI PLAYER
-    PIAZZA BOMBA(SE INPUT):
-    *void piazzaBomba(Giocatore& g, Bomba& b)
-    *
+    gestisciInput(player, bomba, mappa, input) ;
+    //precondizione: l'utente inserisce l'input da tastiera
+    //postcondizione: se input ('W''A''S''D') e posizione mossa valida la posizione del giocatore viene aggiornata, altrimenti
+    //mantiene la stessa posizione. Se input 'X' e non e' gia presente una bomba innescata,
+    //viene posizionata una bomba nella stessa posizione del giocatore.
+    //Se input non valido non viene effettuata alcuna azione.
+
+
+
     MUOVI NEMICI:
     NemicoRandom : Muovi() serve funzione posizione valida
 

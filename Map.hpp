@@ -2,7 +2,7 @@
 #define MAP_HPP
 #include <curses.h>
 #include "Personaggio.hpp"
-#include "Nemico.hpp". //Aggiungere la calsse nemica generale!!!!!!!!!!!!!!!!!
+#include "Nemico.hpp" //Aggiungere la calsse nemica generale!!!!!!!!!!!!!!!!!
 #include "Bomba.h"
 #include "Item.h"
 

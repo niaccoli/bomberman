@@ -55,6 +55,9 @@ bool Map::mossavalida(int x, int y){
     if (x >= cols || y >= rows || x < 0 || y < 0)
         return false;
     if (grid[y][x] == ' ' ||  grid[y][x] == 'I') //da capire se il player può andare nella stessa cella di un nemico o meno
+        //Andrea: si il giocatore puo' può andare nella stessa cella di un nemico perche poi se la cella e' la stessa
+            //quando si fa il controllo collisioni il giocatore perde la vita
+                //pero' un nemico non dovrebbe poter andare nella cella occupata da un altro nemico
         return true;
     
     return false;

@@ -1,12 +1,13 @@
 #include "funzioni.h"
 #include "Bomba.h"
+#include "Map.hpp"
 #include <cstdlib>
 
 
 
 
 
-void muoviGiocatore(Giocatore& player, char input) {
+void muoviGiocatore(Giocatore& player, Map& m, char input) {
     int dx = 0;
     int dy = 0;
 
@@ -22,24 +23,23 @@ void muoviGiocatore(Giocatore& player, char input) {
     int newX = player.getX() + dx;
     int newY = player.getY() + dy;
 
-    //if mossavalida(newx,newy)
-
-    player.muovi(newX, newY);
+    if ( m.mossavalida(newX, newY) )
+        player.muovi(newX, newY);
 }
 
 void piazzaBomba(Giocatore& g, Bomba& b) {
     b.setX(g.getX());
     b.setY(b.getY());
     b.setTimer(4);
-    b.attivaBomba();
+    b.innesca();
 }
 
 
 
-void gestisciInput(Giocatore& player,Bomba& b,char input) {
+void gestisciInput(Giocatore& player,Bomba& b, Map& m, char input) {
     if (input == 'W' || input == 'w' || input == 'A' || input == 'a' || input == 's' || input == 'S' ||
         input == 'd' || input == 'D')
-        muoviGiocatore(player, input);
+        muoviGiocatore(player, m, input);
     else if (input == 'x' || input == 'X') {
         if ( ! b.innescata())
         piazzaBomba(player,  b);
