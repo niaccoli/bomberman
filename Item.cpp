@@ -1,8 +1,9 @@
 #include "Item.h"
+#include <cstdlib>
 
 Item::Item(): x(-1), y(-1), tipo(' '), /*durata(0),*/ attivo(false){}
 
-Item::Item(int x, int y, char tipo, int durata, bool attivo): x(x), y(y), tipo(tipo), /*durata(durata),*/ attivo(attivo){}
+Item::Item(int x, int y, char tipo, /*int durata,*/ bool attivo): x(x), y(y), tipo(tipo), /*durata(durata),*/ attivo(attivo){}
 
 void Item::setX(int x) {
     this->x = x;
@@ -22,6 +23,19 @@ int Item::getY() const {
 
 void Item::setTipo(char tipo) {
     this -> tipo = tipo;
+}
+
+void Item::setTipoRandom() {
+    int i = rand() % 3 ;
+    if (i == 0) {
+        this -> tipo = 'D' ;
+    }
+    else if (i == 1) {
+        this -> tipo = 'B' ;
+    }
+    else {
+        this -> tipo = 'T' ;
+    }
 }
 
 char Item::getTipo() const {
