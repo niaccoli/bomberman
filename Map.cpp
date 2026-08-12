@@ -8,7 +8,7 @@ Map::Map(int height, int width, int start_Y, int start_X){
     rows = height;
     cols = width;
 
-    win = newwin(height, width, start_Y, start_X);
+    win = newwin(height + 2, width + 2, start_Y, start_X);
 
     //allocazione dinamica della matrice
     grid = new char*[rows];
@@ -65,6 +65,9 @@ bool Map::mossavalida(int x, int y){
 
 
 void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b ){
+
+    box(this->win, 0, 0);
+
     for(int i = 0; i < rows; i++){
         for(int j=0; j < cols; j++){
             char char_to_display = grid[i][j]; // Inizia con il carattere base della mappa
@@ -99,8 +102,10 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
                 char_to_display = 'P'; // 'P' per giocatore
             }
 
-            cout << char_to_display;
+            mvwaddch(this->win, i + 1, j + 1, char_to_display);
         }
-        cout << endl;
     }
+
+    //Aggiorna la finestra
+    wrefresh(this->win);
 }

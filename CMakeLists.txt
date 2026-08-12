@@ -33,3 +33,6 @@ add_executable(bomberman
 )
 
 target_link_libraries(bomberman ${CURSES_LIBRARIES})
+
+file(COPY level1.txt level2.txt level3.txt level4.txt level5.txt 
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
