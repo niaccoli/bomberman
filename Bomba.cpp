@@ -1,7 +1,7 @@
 #include "Bomba.h"
 
-Bomba::Bomba(): x(-1), y(-1), timer(4), danno(1), raggio(1), attivo(false), boostDanno(false), durataBoostDanno(5),
-                boostRaggio(false), durataBoostRaggio(5), boostTimer(false), durataBoostTimer(5){}
+Bomba::Bomba(): x(-1), y(-1), timer(4), danno(1), raggio(1), attivo(false)/*, boostDanno(false), durataBoostDanno(5),
+                boostRaggio(false), durataBoostRaggio(5), boostTimer(false), durataBoostTimer(5)*/{}
 
 
 /*Bomba::Bomba(int x, int y, int timer, int danno, int raggio, bool attivo) {

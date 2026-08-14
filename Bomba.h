@@ -11,14 +11,14 @@ class Bomba {
         int raggio;
         bool attivo;
 
-        bool boostDanno;
+        /*bool boostDanno;
         int durataBoostDanno;
 
         bool boostRaggio;
         int durataBoostRaggio;
 
         bool boostTimer;
-        int durataBoostTimer;
+        int durataBoostTimer;*/
 
 /*da ragionare: una volta che viene viene raccolto un item bisogna applicare un effetto(funzione void effetto item()).
  *Se l'item è un item che riguarda il giocatore è facile perchè il giocatore è già creato.
