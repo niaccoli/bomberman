@@ -2,8 +2,12 @@
 #include "Item.h"
 #include "Personaggio.hpp"
 #include "Giocatore.h"
+#include "Bomba.h"
+#include "NemicoInseguitore.h"
+#include "NemicoRandom.h"
 
-const int MAX_NEMICI = 10;
+const int MAX_NEMICI_INS = 10;
+const int MAX_NEMICI_RND = 10;
 const int MAX_ITEMS = 10;
 
 class Level{
@@ -11,8 +15,13 @@ class Level{
 private:
     Map& map;
 
-    Personaggio nemici[MAX_NEMICI];
-    int num_nemici;
+    NemicoInseguitore nemici_inseguitore[MAX_NEMICI_INS];
+    int num_nemici_ins;
+
+    NemicoRandom nemici_random[MAX_NEMICI_RND];
+    int num_nemici_rnd;
+
+    Bomba b ;
 
     Item items[MAX_ITEMS];
     int num_items;
@@ -80,8 +89,9 @@ private:
     ma una volta piazzata appartiene allo stato del livello, proprio come un item o un nemico. */
 
 public:
+    Level() ; //ANDREA
 
-    Level(Map& m, int enemies, int items); 
+    Level(Map& m, int chasers_enemies, int random_enemies, int items);
 
     Map& getMap();
 
