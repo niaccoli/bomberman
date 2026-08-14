@@ -5,6 +5,7 @@
 #include "Bomba.h"
 #include "NemicoInseguitore.h"
 #include "NemicoRandom.h"
+#pragma once
 
 const int MAX_NEMICI_INS = 10;
 const int MAX_NEMICI_RND = 10;
@@ -34,6 +35,7 @@ private:
         BidirectionalList livelli;
     La bomba esiste una sola volta e cambia stato:
     Quando esplode, la disattivi e la stessa b può essere riutilizzata per la bomba successiva.
+
 
     problema: "non c'e la possibilita che se la bomba viene piazzata in un livello poi il giocatore va in un altro
     livello prima che la bomba esploda poi la bomba risulti posizionata nel nuovo livello?"
@@ -153,11 +155,6 @@ public:
     void piazzaBomba(Giocatore& g) ;
 
     void applicaEffettoItem ( Item& i );
-
-
-
-
-
 
 
 };

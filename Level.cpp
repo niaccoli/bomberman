@@ -15,7 +15,7 @@ void Level::addEnemies(Personaggio& p){
     //Da scrivere
 }
 
-void updateEnemies(Personaggio& p){
+void Level::updateEnemies(Personaggio& p){
     //Da scrivere
 }
 
@@ -23,7 +23,7 @@ void Level::addItem(Item& i){
     //Da scrivere
 }
 
-void updateItems(Item& i){
+void Level::updateItems(Item& i){
     //Da scrivere
 }
 
