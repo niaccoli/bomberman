@@ -30,6 +30,12 @@ public:
 
     void breakWall();
 
+    int getRows();
+
+    int getCols();
+
+    bool cell_without_wall(int x, int y);
+
     WINDOW* getWin();
 };
 #endif

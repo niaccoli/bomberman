@@ -122,3 +122,18 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
     //Aggiorna la finestra
     wrefresh(this->win);
 }
+
+int Map::getRows(){
+    return rows;
+}
+
+int Map::getCols(){
+    return cols;
+}
+
+bool Map::cell_without_wall(int x, int y){
+    if(grid[y][x] == 'X' || grid[y][x] == '#')
+        return false;
+    return true;
+}
+
