@@ -24,7 +24,7 @@ void menu(){
 int main() {
 
     
-
+    setlocale(LC_ALL, "");
     //inizializza lo schermo
     //setta la memoria e pulisce lo schermo (ncurses)
     initscr();

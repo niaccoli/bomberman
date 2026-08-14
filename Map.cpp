@@ -94,7 +94,7 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
 
             // Priorità 2: Bomba (sovrascrive nemico e item se presente)
             if(b.innescata() && i == b.getY() && j == b.getX()){
-                char_to_display = 'X'; // 'X' per bomba
+                char_to_display = 'O'; // 'O' per bomba
             }
 
             // Priorità 1: Giocatore (la più alta, sovrascrive tutto)
@@ -102,7 +102,20 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
                 char_to_display = 'P'; // 'P' per giocatore
             }
 
-            mvwaddch(this->win, i + 1, j + 1, char_to_display);
+            // 2. RENDERIZZAZIONE GRAFICA MODERNA
+            // Stampiamo con OFFSET di +1 per salvare i bordi della finestra
+            if (char_to_display == '#') {
+                // MURO INDISTRUTTIBILE: Blocco Unicode pieno (senza fessure!)
+                mvwaddstr(this->win, i + 1, j + 1, "█"); 
+            } 
+            else if (char_to_display == 'X') {
+                // MURO DISTRUTTIBILE: Blocco sfumato
+                mvwaddstr(this->win, i + 1, j + 1, "▒"); 
+            }
+            else {
+                // Per tutti gli altri caratteri normali ('P', 'N', ' ') usiamo mvwaddch
+                mvwaddch(this->win, i + 1, j + 1, char_to_display);
+            }
         }
     }
 
