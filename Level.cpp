@@ -30,7 +30,6 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int items) : map(m
 Posizione Level::posizioneRandomValida() {
 
 
-
 }
 
 
@@ -45,12 +44,20 @@ void Level::posizionaNemici() {
 }
 
 
-int isThereAnEnemy ( Posizione posizione ) {
-
+int Level::isThereARandomEnemy ( Posizione posizione ) {
+    for (int i = 0 ; i < num_nemici_rnd ; i++ ) {
+        if ( stessaPosizione(nemici_random[i].getPosizione( ), posizione ) && nemici_random[i].vivo( ) )
+            return i ;
+    }
+    return -1 ;
 }
 
-int isThereAInsEnemy ( Posizione posizione ) {
-
+int Level::isThereAInsEnemy ( Posizione posizione ) {
+    for (int i = 0 ; i < num_nemici_ins ; i++ ) {
+        if ( stessaPosizione(nemici_inseguitore[i].getPosizione( ), posizione ) && nemici_inseguitore[i].vivo( ) )
+            return i ;
+    }
+    return -1 ;
 }
 
 

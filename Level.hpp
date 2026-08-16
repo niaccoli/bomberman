@@ -39,10 +39,10 @@ private:
     //posiziona i nemici validi in diverse posizioni valide causali valide ( dentro la mappa, non muro, non occupate )
 
     int isThereARandomEnemy ( Posizione posizione ) ;
-    //se presente, ritorna l'indice del nemico random in posizione, altrimenti ritorna -1
+    //se presente un nemico_random vivo in posizione ritorna l'indice del nemico, altrimenti ritorna -1
 
     int isThereAInsEnemy ( Posizione posizione ) ;
-    //se presente, ritorna l'indice del nemico inseguitore in posizione, altrimenti ritorna -1
+    //se presente un nemico_inseguitore vivo in posizione ritorna l'indice del nemico, altrimenti ritorna -1
 
 
     /*
