@@ -1,25 +1,35 @@
 #include "Item.h"
 #include <cstdlib>
 
-Item::Item(): x(-1), y(-1), tipo(' '), /*durata(0),*/ attivo(false){}
+Item::Item(): posizione{ -1, -1 }, tipo(' '), /*durata(0),*/ attivo(false){}
 
-Item::Item(int x, int y, char tipo, /*int durata,*/ bool attivo): x(x), y(y), tipo(tipo), /*durata(durata),*/ attivo(attivo){}
+Item::Item(int x, int y, char tipo, /*int durata,*/ bool attivo): posizione{ x, y }, tipo(tipo), /*durata(durata),*/ attivo(attivo){}
 
 void Item::setX(int x) {
-    this->x = x;
+    this->posizione.x = x;
 }
 
 void Item::setY(int y) {
-    this->y = y;
+    this->posizione.y = y;
 }
 
+void Item::setPosizione(Posizione posizione) {
+    this -> posizione = posizione ;
+}
+
+
 int Item::getX() const {
-    return this -> x;
+    return this -> posizione.x;
 }
 
 int Item::getY() const {
-    return this -> y;
+    return this -> posizione.y;
 }
+
+Posizione Item::getPosizione( ) const {
+    return this -> posizione ;
+}
+
 
 void Item::setTipo(char tipo) {
     this -> tipo = tipo;
@@ -62,6 +72,11 @@ void Item::disattiva() {
     attivo = false;
     //setDurata(0);
 }
+
+void Item::attiva() {
+    attivo = true ;
+}
+
 
 /*void Item::aggiornaItem() {
     if (attivo) {

@@ -7,11 +7,6 @@
 
 
 
-//struct posizione{
-//  int x[RAGGIO_MAX];
-//  int y[RAGGIO_MAX];
-//}
-
 void muoviGiocatore(Giocatore& player, Map& m, char input) ;
 
 
@@ -31,12 +26,15 @@ void gestisciInput(Giocatore& player, Bomba& b, Map& m, char input);
 //viene posizionata una bomba nella stessa posizione del giocatore.
 //Se input non valido non viene effettuata alcuna azione.
 
+
+
 //Item generaItem(int x, int y); //x e y sono la posizione di un nemico ucciso o di un muro rotto
+//sostituita da dropItem in class::Level
 
 
 
 
-////anche questa funzione ha piu' senso appartenga al livello
+//anche questa funzione ha piu' senso appartenga al livello
 /*chat dice: è il livello che:
 possiede gli item;
 possiede la bomba;

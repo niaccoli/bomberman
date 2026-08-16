@@ -10,6 +10,7 @@ protected:
 public:
     Giocatore();
     Giocatore(int vite, int x, int y);
+    Giocatore(int vite, Posizione posizione) ;
 
     //void invulnerabilitaOn(int durata);
     //void invulnerabilitaOff();

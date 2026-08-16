@@ -30,6 +30,18 @@ public:
 
     void breakWall();
 
+    //Andrea:
+    bool isWalkable (Posizione posizione ) ; //ritorna true se la cella non e' un muro
+
+    //Andrea:
+    void breakWall(Posizione posizione) ;
+
+    //Andrea:
+    bool isBreakable( Posizione posizione ) ; //ritorna true se e' un muro distruttibile
+
     WINDOW* getWin();
+
+    //ANDREA:
+    //
 };
 #endif

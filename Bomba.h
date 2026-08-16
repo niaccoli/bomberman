@@ -1,11 +1,12 @@
 #ifndef BOMBERMAN_BOMBA_H
 #define BOMBERMAN_BOMBA_H
-
+#include "Posizione.h"
 
 class Bomba {
     protected:
-        int x;
-        int y;
+        /*int x;
+        int y;*/
+        Posizione posizione ;
         int timer; //tempo che la bomba impiega ad esplodere
         int danno;
         int raggio;
@@ -56,8 +57,10 @@ class Bomba {
 
         int getX() const;
         int getY() const;
+        Posizione getPosizione() const ;
         void setX(int x);
         void setY(int y);
+        void setPosizione(Posizione posizione) ;
 
         int getTimer() const; //ritorna il tempo rimanente prima di esplodere
         void setTimer(int tempo); //imposta il timer della bomba

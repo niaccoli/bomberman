@@ -30,6 +30,8 @@ add_executable(bomberman
         Map.hpp
         Level.hpp
         Level.cpp
+        Posizione.cpp
+        Posizione.h
 )
 
 target_link_libraries(bomberman ${CURSES_LIBRARIES})

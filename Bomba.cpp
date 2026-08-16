@@ -1,6 +1,6 @@
 #include "Bomba.h"
 
-Bomba::Bomba(): x(-1), y(-1), timer(4), danno(1), raggio(1), attivo(false)/*, boostDanno(false), durataBoostDanno(5),
+Bomba::Bomba(): posizione{ -1, -1 }, timer(4), danno(1), raggio(1), attivo(false)/*, boostDanno(false), durataBoostDanno(5),
                 boostRaggio(false), durataBoostRaggio(5), boostTimer(false), durataBoostTimer(5)*/{}
 
 
@@ -14,20 +14,29 @@ Bomba::Bomba(): x(-1), y(-1), timer(4), danno(1), raggio(1), attivo(false)/*, bo
 }*/
 
 int Bomba::getX() const {
-    return this -> x;
+    return this -> posizione.x;
 }
 
 int Bomba::getY() const {
-    return this -> y;
+    return this -> posizione.y;
+}
+
+Posizione Bomba::getPosizione() const {
+    return this -> posizione ;
 }
 
 void Bomba::setX(int x) {
-    this -> x = x;
+    this -> posizione.x = x;
 }
 
 void Bomba::setY(int y) {
-    this -> y = y;
+    this -> posizione.y = y;
 }
+
+void Bomba::setPosizione(Posizione posizione) {
+    this -> posizione = posizione ;
+}
+
 
 int Bomba::getTimer() const {
     return this -> timer;
@@ -74,6 +83,7 @@ bool Bomba::innescata() const {
 }
 
 void Bomba::innesca() {
+    //aggiungere controllo? if ( !innescata )
     this -> attivo = true;
 }
 

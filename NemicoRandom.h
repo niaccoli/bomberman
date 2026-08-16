@@ -7,7 +7,8 @@
 class NemicoRandom : public Personaggio{
     public:
         NemicoRandom();
-        void muovi( Map& m); //questa muovi utilizza la funzione mossaValida
+        void muovi( Map& m); //da implementare con Posizione
+    //questa muovi utilizza la funzione mossaValida
         /*forse meglio creare una funzione nuovaPosizione che aggiorna due campi newX e newY, quindi nel main verificare
          *se è una posizione valida e chiamare Personaggio::muovi. */
 

@@ -134,6 +134,8 @@ l'idea del main prima del loop sarebbe:
     1. Creo il giocatore
 
     2. Creo le mappe
+    //penso sia:
+    //Initialize_Map() ;
 
     3. Creo i Level:
           Level 1 → Map 1, X nemici, X item, propria bomba

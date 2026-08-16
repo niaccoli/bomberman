@@ -1,5 +1,6 @@
 #ifndef BOMBERMAN_ITEMS_H
 #define BOMBERMAN_ITEMS_H
+#include "Posizione.h"
 
 
 /*mia idea:
@@ -114,13 +115,13 @@ Tipo random nel costruttore oppure nel drop?
 Tra le due possibilità, io sceglierei assegnare il tipo durante il drop, non nel costruttore.
 
 
-Level::dropItem(int x, int y)
+Level::dropItem(Posizione posizione)
 si occupa di:
 1. controllare num_items > 0
 2. stabilire casualmente se fare il drop
 3. prendere items[num_items - 1]
 4. assegnare tipo casuale
-5. assegnare x e y
+5. assegnare posizione
 6. attivarlo
 7. decrementare num_items
 */
@@ -128,8 +129,9 @@ si occupa di:
 
 class Item{
     protected:
-        int x;
-        int y;
+        /*int x;
+        int y;*/
+        Posizione posizione ;
         char tipo; //invulnerabilità('I'), riduzione tempo bomba('T'), aumento raggio bomba('B'), 1pt.vita('V'), aumento velocità? pistola?
         //int durata; //per quanto rempo rimane sulla mappa
         bool attivo;//il tempo per quanto dura il suo effetto lo mettiamo in una funzione generale
@@ -141,8 +143,10 @@ class Item{
 
         void setX(int x);
         void setY(int y);
+        void setPosizione(Posizione posizione) ;
         int getX() const;
         int getY() const;
+        Posizione getPosizione( ) const;
 
         void setTipo(char tipo);
         char getTipo() const;
@@ -154,6 +158,7 @@ class Item{
         bool isAttivo() const;
         void raccogli();
         void disattiva();
+        void attiva( ) ;
         //void aggiornaItem();
 
 };

@@ -6,7 +6,7 @@
 
 
 
-
+//da implementare con Posizione
 void muoviGiocatore(Giocatore& player, Map& m, char input) {
     int dx = 0;
     int dy = 0;
@@ -47,6 +47,20 @@ void gestisciInput(Giocatore& player,Bomba& b, Map& m, char input) {
     else
         return;
 }
+
+
+/*void applicaEffettoItem( Item& i, Bomba& b) { //quando il giocatore e l'item hanno la stessa posizione (bool controllaraccoltaitem())
+    if (i.getTipo() == 'D') {
+        b.attivaBoostRaggio();
+    }
+    else if (i.getTipo() == 'B') {
+        b.attivaBoostDanno();
+    }
+    else {
+        b.attivaBoostTimer();
+    }
+} //poi Item.raccogli();*/
+
 
 
 //ANDREA: direi che non serve piu'

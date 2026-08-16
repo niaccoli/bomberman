@@ -28,3 +28,12 @@ void NemicoRandom::muovi(Map &m) {
 //      }
 //  }
 }
+
+/*idea per implementare con posizione:
+Posizione newp = getPosizione();
+
+newp.x += dx;
+newp.y += dy;
+
+muovi(newp);
+*/

@@ -10,6 +10,9 @@ Giocatore::Giocatore(int vite, int x, int y): Personaggio(vite, x, y) {
     //invulnerabilitaOff();
 }
 
+Giocatore::Giocatore(int vite, Posizione posizione): Personaggio( vite, posizione ) { }
+
+
 
 /*void Giocatore::invulnerabilitaOn(int durata) {
     invulnerabilita = true;
