@@ -46,6 +46,12 @@ public:
 
     bool isUnbreakableWall ( Posizione posizione ) ; //ritorna true se e' un muro indistruttibile
 
+    int getRows();
+
+    int getCols();
+
+    bool cell_without_wall(int x, int y);
+
     WINDOW* getWin();
 
     //ANDREA:
