@@ -144,6 +144,7 @@ class Item{
         void setX(int x);
         void setY(int y);
         void setPosizione(Posizione posizione) ;
+        void setPosizione(int x, int y) ;
         int getX() const;
         int getY() const;
         Posizione getPosizione( ) const;

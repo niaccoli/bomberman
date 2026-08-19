@@ -17,6 +17,11 @@ void Item::setPosizione(Posizione posizione) {
     this -> posizione = posizione ;
 }
 
+void Item::setPosizione(int x, int y) {
+    this -> posizione.x = x ;
+    this -> posizione.y = y ;
+}
+
 
 int Item::getX() const {
     return this -> posizione.x;
@@ -29,6 +34,7 @@ int Item::getY() const {
 Posizione Item::getPosizione( ) const {
     return this -> posizione ;
 }
+
 
 
 void Item::setTipo(char tipo) {

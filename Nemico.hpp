@@ -1,3 +1,0 @@
-class Nemico : public Personaggio{
-    //
-};

@@ -2,9 +2,11 @@
 #define MAP_HPP
 #include <curses.h>
 #include "Personaggio.hpp"
-#include "Nemico.hpp" //Aggiungere la calsse nemica generale!!!!!!!!!!!!!!!!!
+#include "Nemico.h" //Aggiungere la calsse nemica generale!!!!!!!!!!!!!!!!!
 #include "Bomba.h"
 #include "Item.h"
+
+class Nemico ; //Forward declaration perche': Map.hpp usa il tipo Nemico, ma non sa ancora che esiste.
 
 
 class Map{
@@ -41,6 +43,8 @@ public:
 
     //Andrea:
     bool isBreakable( Posizione posizione ) ; //ritorna true se e' un muro distruttibile
+
+    bool isUnbreakableWall ( Posizione posizione ) ; //ritorna true se e' un muro indistruttibile
 
     WINDOW* getWin();
 

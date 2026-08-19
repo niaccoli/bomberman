@@ -5,32 +5,58 @@
 #include "Bomba.h"
 #include "NemicoInseguitore.h"
 #include "NemicoRandom.h"
+#include "Nemico.h"
 #pragma once
 
 const int MAX_NEMICI_INS = 10;
 const int MAX_NEMICI_RND = 10;
+const int MAX_NEMICI_TANK = 5;
 const int MAX_ITEMS = 10;
 
 class Level {
 private:
     Map& map;
 
+
+    //ELIMINARE IN IMPEMENTAZIONE CON NEMICO----------------------------------------------------------------------------
     NemicoInseguitore nemici_inseguitore[MAX_NEMICI_INS];
-    int num_nemici_ins;
+    int num_nemici_ins; //mantenere anche in implementazione con Nemico per reset()
 
     NemicoRandom nemici_random[MAX_NEMICI_RND];
-    int num_nemici_rnd;
+    int num_nemici_rnd; //mantenere anche in implementazione con Nemico per reset()
     //idea: ogni livello avra' un certo numero di nemici_inseguitore e un certo numero di nemici_random.
     //Noi consideriamo come validi solo i primi num_nemici.
+    //------------------------------------------------------------------------------------------------------------------
+
+
+
+
+    //IMPLEMENTAZIONE CON NEMICO----------------------------------------------------------------------------------------
+    Nemico nemici[MAX_NEMICI_INS + MAX_NEMICI_RND + MAX_NEMICI_TANK];
+    int num_nemici ;
+    int num_nemici_tank ;
+    /*num_nemici_ins ;
+     num_nemici_rnd ;*/
+
+    //------------------------------------------------------------------------------------------------------------------*/
 
 
     Bomba b ;
 
     Item items[MAX_ITEMS];
     int num_items;
-    //int next_item ; //da introdurre se si vuole usare Level::reset()
+    int next_item ;
 
     bool completato;
+
+
+
+
+
+
+
+
+    //ELIMINARE IN IMPEMENTAZIONE CON NEMICO----------------------------------------------------------------------------
 
     Posizione posizioneRandomValida() ;
     //ritorna una posizione casuale: dentro la mappa, non muro, non occupata;
@@ -38,14 +64,31 @@ private:
     void posizionaNemici( ) ;
     //posiziona i nemici validi in diverse posizioni valide causali valide ( dentro la mappa, non muro, non occupate )
 
+
     int isThereARandomEnemy ( Posizione posizione ) ;
     //se presente un nemico_random vivo in posizione ritorna l'indice del nemico, altrimenti ritorna -1
 
-    int isThereAInsEnemy ( Posizione posizione ) ;
+    int isThereAnInsEnemy ( Posizione posizione ) ;
     //se presente un nemico_inseguitore vivo in posizione ritorna l'indice del nemico, altrimenti ritorna -1
 
+    bool isThereAnEnemy ( Posizione posizione) ;
+    //ritorna true se e' presente un nemico nella posizione, false altrimenti
+    //------------------------------------------------------------------------------------------------------------------
 
-    /*
+
+
+
+
+    //IMPLEMENTAZIONE CON NEMICO ---------------------------------------------------------------------------------------
+    Posizione posizioneRandomValida_v2() ;
+
+    void posizionaNemici_v2( ) ;
+
+    int isThereAnEnemy_v2( Posizione posizione) ;
+    //se e' presente un nemico vivo in posizione ritorna l'indice del nemico, altrimenti ritorna -1 ;
+    //------------------------------------------------------------------------------------------------------------------
+
+
 
     /* valutare se avere un solo oggetto Bomba per il giocatore, riutilizzato ogni volta.
     *   Giocatore g;
@@ -112,9 +155,11 @@ public:
 
     Level(Map& m, int chasers_enemies, int random_enemies, int items);
 
+    Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
+
     Map& getMap( );
 
-    //void addEnemies(Personaggio& p);
+    void addEnemies(Personaggio& p);
     /*Andrea: penso che questa funzione non sia necessaria
      *la mia idea e':
      *nel costruttore di Level noi posizioniamo gia i nemici causalmente nella mappa in posizioni valide
@@ -173,6 +218,13 @@ public:
         */
     //DA DECIDERE: "ricomincia dal primo livello": tornare semplicemente al Level 1 mantenendo lo stato dei livelli,
     //oppure resettare completamente nemici/item/bombe come a inizio partita.
+
+
+    //IMPLEMENTAZIONE CON NEMICO:--------------------------------------------------------------------------------------
+
+    bool collisioneGiocatoreNemici_v2(Giocatore& g ) ;
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     void collisioneEsplosione(Giocatore& g ) ;
     //anziche' avere un unica funzione che controlla le collisioni dell'esplosione con giocatori, muri, nemici
@@ -320,31 +372,9 @@ Però farei una distinzione importante: non parlerei di “ripristinare allo sta
     È Level che conosce i propri: nemici, item, bomba, completato, mappa
     quindi solo lui dovrebbe sapere come riportare il proprio stato all'inizio.
 
+
+
     */
-
-    void reset() ;
-    /*DA DECIDERE:
-     *valutare se quando il giocatore perde una vita fare ricominciare il gioco dal primo livello
-     *e resettare i nemici e gli item (come nelle versioni online, ma piu' complicato da implementare )
-     * altimenti possiamo fare ripartire il giocatore dal livello corrente o dal primo senza resettare i nemici e item
-    pero' in quel caso prima di fare ricominciare il livello l'esplosione deve finire di produrre tutti i suoi effetti
-    anche se ha colpito il giocatore.
-
-
-    ATTENZIONE(chat):
-    Il costruttore salva:
-    num_nemici_ins = chasers_enemies;
-    num_nemici_rnd = random_enemies;
-    num_items = items;
-    Se durante la partita questi contatori vengono decrementati quando muoiono nemici o vengono droppati item,
-    al momento del reset non saprai più quanti ce n'erano inizialmente.
-
-    DOMANDA A CHAT:
-    alla morte dei nemici la mia intenzione era semplicemente di mettere lo stato del nemico come morto quindi il contatore non cambierebbe,
-    il problema e' invece con drop item dove man mano che un item viene droppato diminuivo num_items,
-    pero' per quello mi basta aggiungere una campo in Level indicato come next
-    _item che indica l'item da droppare cosi da mantenere il num_items invariato
-     */
 
 
 
@@ -361,7 +391,7 @@ Però farei una distinzione importante: non parlerei di “ripristinare allo sta
 
 
 
-    void collisioneEsplosioneMuri( ) ;
+    void collisioneEsplosioneMuri_v1( ) ;
     /*non bool perche' una singola esplosione potrebbe colpire più oggetti contemporaneamente.
     *esplosione
        ↓
@@ -371,6 +401,21 @@ Però farei una distinzione importante: non parlerei di “ripristinare allo sta
        ↓
     provaDropItem(posizione del muro)
     */
+
+    void collisioneEsplosioneMuriNemici_v1( ) ;
+
+    bool collisioneEsplosioneMuriNemiciGiocatore_v1( Giocatore& g ) ;
+    //versione che non prevede il reset dei livelli se il giocatore viene colpito (nel caso volessimo utilizzare il reset
+    //conviene ritornare appena il giocatore viene colpito.
+
+
+    //IMPLEMENTAZIONE CON NEMICO:--------------------------------------------------------------------------------------
+
+    bool collisioneEsplosioneMuriNemiciGiocatore_v2( Giocatore& g ) ;
+
+    //------------------------------------------------------------------------------------------------------------------
+
+
 
     void collisioneEsplosioniNemici( ) ;
     /*esplosione
@@ -389,28 +434,12 @@ Però farei una distinzione importante: non parlerei di “ripristinare allo sta
 
 
     void raccoltaItem(Giocatore& g ) ;
+    //se il giocatore occupa la stessa posizione di un Item attivo, l'item viene raccolto ( attivo == false) e applicato
+    //l'effetto
 
 
-    void controllaCollisioni(Giocatore& g ) ;
-    //forse piuttosto che un unica funzione conviene utilizzare separatamente:
-    //collisioneGiocatoreNemici
-    //collisioneEsplosione
-    //raccoltaItem
-
-    void dropItem_v1(Posizione posizione) ; //versione senza int next_item ;
-    //guarda nore in item.h
-    /*  si occupa di:
-        1. controllare num_items > 0
-        2. stabilire casualmente se fare il drop
-        3. prendere items[num_items - 1]
-        4. assegnare tipo casuale
-        5. assegnare x e y
-        6. attivarlo
-        7. decrementare num_items
-
-
-        //non considerare muri per ora
-        Quando muore un nemico in (x,y) oppure viene distrutto un muro in (x,y), fai il lancio casuale:
+    void dropItem_v1(Posizione posizione) ; ;
+    /*  Quando muore un nemico in (x,y) oppure viene distrutto un muro in (x,y), fai il lancio casuale:
         nemico muore
              ↓
         rand()
@@ -435,6 +464,34 @@ Però farei una distinzione importante: non parlerei di “ripristinare allo sta
 
     //void applicaEffettoItem ( Item& i );
     //capire se mettere come funzione generale
+
+
+
+    //IMPLEMENTAZIONE CON NEMICO----------------------------------------------------------------------------------------
+    void reset_v2() ;
+    /*DA DECIDERE:
+     *valutare se quando il giocatore perde una vita fare ricominciare il gioco dal primo livello
+     *e resettare i nemici e gli item (come nelle versioni online, ma piu' complicato da implementare )
+     * altimenti possiamo fare ripartire il giocatore dal livello corrente o dal primo senza resettare i nemici e item
+    pero' in quel caso prima di fare ricominciare il livello l'esplosione deve finire di produrre tutti i suoi effetti
+    anche se ha colpito il giocatore.
+
+
+    ATTENZIONE(chat):
+    Il costruttore salva:
+    num_nemici_ins = chasers_enemies;
+    num_nemici_rnd = random_enemies;
+    num_items = items;
+    Se durante la partita questi contatori vengono decrementati quando muoiono nemici o vengono droppati item,
+    al momento del reset non saprai più quanti ce n'erano inizialmente.
+
+    DOMANDA A CHAT:
+    alla morte dei nemici la mia intenzione era semplicemente di mettere lo stato del nemico come morto quindi il contatore non cambierebbe,
+    il problema e' invece con drop item dove man mano che un item viene droppato diminuivo num_items,
+    pero' per quello mi basta aggiungere una campo in Level indicato come next
+    _item che indica l'item da droppare cosi da mantenere il num_items invariato
+     */
+
 
 
 };

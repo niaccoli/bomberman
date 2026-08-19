@@ -37,6 +37,11 @@ void Bomba::setPosizione(Posizione posizione) {
     this -> posizione = posizione ;
 }
 
+void Bomba::setPosizione(int x, int y) {
+    this -> posizione.x = x ;
+    this -> posizione.y = y ;
+}
+
 
 int Bomba::getTimer() const {
     return this -> timer;

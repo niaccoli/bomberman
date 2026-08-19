@@ -61,6 +61,7 @@ class Bomba {
         void setX(int x);
         void setY(int y);
         void setPosizione(Posizione posizione) ;
+        void setPosizione(int x, int y) ;
 
         int getTimer() const; //ritorna il tempo rimanente prima di esplodere
         void setTimer(int tempo); //imposta il timer della bomba

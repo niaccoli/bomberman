@@ -1,4 +1,5 @@
 #include "Map.hpp"
+#include "Nemico.h"
 #include <fstream>
 #include <iostream>
 
