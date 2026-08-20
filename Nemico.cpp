@@ -11,6 +11,7 @@ Nemico::Nemico(): Personaggio(1, {-1, -1 }) {
 }
 
 Nemico::Nemico(char tipo): Personaggio(1, {-1, -1 }) {
+    this -> tipo = tipo ;
     if ( tipo == 'T')
         Personaggio::setVite( 2 ) ;
 }

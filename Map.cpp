@@ -19,7 +19,6 @@ Map::Map(int height, int width, int start_Y, int start_X){
 };
 
 void Map::Initialize_Map(int levelID){
-
     string fileName;
 
     switch(levelID) {
@@ -124,13 +123,47 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
     wrefresh(this->win);
 }
 
+
+
+
+void Map::breakWall() {
+    //da scrivere
+}
+
+
+bool Map::isWalkable (Posizione posizione ) {
+    //da scrivere
+}
+
+
+Posizione Map::walkableRandomPosition( ) {
+    //da scrivere
+}
+
+
+void Map::breakWall(Posizione posizione) {
+    //da scrivere
+}
+
+
+bool Map::isBreakable( Posizione posizione ) {
+    //da scrivere
+}
+
+bool Map::isUnbreakableWall ( Posizione posizione ) {
+    //da scrivere
+}
+
+
 int Map::getRows(){
     return rows;
 }
 
+
 int Map::getCols(){
     return cols;
 }
+
 
 bool Map::cell_without_wall(int x, int y){
     if(grid[y][x] == 'X' || grid[y][x] == '#')

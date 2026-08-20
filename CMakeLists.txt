@@ -18,8 +18,6 @@ add_executable(bomberman
         Map.cpp
         funzioni.cpp
         Giocatore.cpp
-        NemicoRandom.cpp
-        NemicoInseguitore.cpp
         Bomba.h
         Item.h
         Item.cpp
