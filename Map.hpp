@@ -30,6 +30,7 @@ public:
 
     bool mossavalida(int x, int y);
 
+    //Matteo: metodo cancellabile siccome lo hai messo tu con il paramentro posizione
     void breakWall();
 
     //Andrea:

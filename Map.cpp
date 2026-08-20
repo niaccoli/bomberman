@@ -2,6 +2,7 @@
 #include "Nemico.h"
 #include <fstream>
 #include <iostream>
+#include <random>
 
 using namespace std;
 
@@ -132,26 +133,53 @@ void Map::breakWall() {
 
 
 bool Map::isWalkable (Posizione posizione ) {
-    //da scrivere
+    char current_cell = grid[posizione.y][posizione.x];
+
+    if( current_cell == '#' || current_cell == 'X')
+        return false;
+    return true;
 }
 
 
 Posizione Map::walkableRandomPosition( ) {
-    //da scrivere
+    //utilizzo static per iniziallizarli solo una volta
+    static random_device rnd;
+
+    //Motore pseudocasuale con algoritmo Marsenne Twister
+    static mt19937 gen(rnd());
+
+    //Escludo la prima e ultima riga/colonna sapendo che, essendo i bordi della mappa non sono mai calpestabili
+    uniform_int_distribution<int> random_row(1, rows - 1);
+    uniform_int_distribution<int> random_col(1, cols - 1);
+
+    Posizione rnd_position;
+
+    do{       
+        rnd_position.x = random_col(gen);
+        rnd_position.y = random_row(gen);
+
+    }while(!isWalkable(rnd_position));
+
+    return rnd_position;
 }
 
 
 void Map::breakWall(Posizione posizione) {
-    //da scrivere
+    if(isBreakable(posizione))
+        grid[posizione.y][posizione.x] = ' ';
 }
 
 
 bool Map::isBreakable( Posizione posizione ) {
-    //da scrivere
+    if(grid[posizione.y][posizione.x] = 'X')
+        return true;
+    return false;
 }
 
 bool Map::isUnbreakableWall ( Posizione posizione ) {
-    //da scrivere
+    if(grid[posizione.y][posizione.x] = '#')
+        return true;
+    return false;
 }
 
 
