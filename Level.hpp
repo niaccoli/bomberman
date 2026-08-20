@@ -46,9 +46,96 @@ public:
 
     Map& getMap( );
 
-    void updateEnemies(Personaggio& p);
+    bool updateLevel(Giocatore& g) ;
+    /* MIA IDEA:
+     * nel loop del main:
+     * leggiInput
+     *
+    *  updateLevel:
+    *       |--updateEnemies(muovi i nemici)
+    *       |
+    *       |--collisioneGiocatoreNemici
+    *       |           \g ha subito danno -> return true -> reset
+    *       |--updateBomba
+    *       |            \b.esplode -> controllaCollisioniEsplosione. se g colpito return true
+            |
+            |--raccolta Item
+            |
+            |--return false ;
 
-    void updateItems(Item& i);
+        chat:
+    deve esserci un modo chiaro per sapere che “in questo turno la bomba è appena esplosa”.
+    Quindi devi stare attento a non fare concettualmente:
+    aggiornaBomba()
+
+    if (b.innescata())
+        collisioneEsplosione()
+
+    MIA IDEA:
+    fare una pdateLevel come bool e se il giocatore viene colpito ritornare subito true
+
+    SUGGERIMENTO CHAT:
+    C'è però una distinzione importante da fare adesso, prima di implementarla:
+    vuoi riavviare il livello quando il giocatore viene "colpito" oppure quando perde effettivamente una vita?
+    Non sono necessariamente la stessa cosa, visto che hai l'invulnerabilità.
+    collisione
+        ↓
+    g.diminuisciVita()
+        ↓
+    return true
+    Ma se Giocatore::diminuisciVita() non diminuisce la vita perché il giocatore è invulnerabile,
+    la collisione restituisce comunque true.
+
+    possibilità proposte da chat:
+    A)void updateLevel() e poi controllare dal main lo stato del giocatore, per esempio confrontando le vite.
+    B)Oppure potresti avere uno stato dentro Level, ad esempio un booleano: livelloDaResettare
+    e poi:
+    updateLevel(g)
+i   f (level.daResettare())
+    ...
+    C)altra possibilità sarebbe restituire un int o un char per distinguere più risultati:
+    0 → continua
+    1 → giocatore colpito
+    2 → livello completato
+    3 → game over
+
+    MIA IDEA( DOMANDA A CHAT )
+    per adesso non considererei l'invulnerabilita' del giocatore, quella forse la implementeremo piu' avanti,
+    e nel caso la mia idea sarebbe quella di aggiornare e collisioniGiocatoreNemici e Esplosione metteno negli
+    if anche un parametro && !g.invulnerrabile( )
+
+    RISPOSTA CHAT:
+    aggiungere il controllo nella collisione tipo:
+    è coerente, perché in quel caso stai dicendo: considero “collisione dannosa” solo una collisione che può
+    effettivamente togliere vita.
+    problema:
+    Se Giocatore::diminuisciVita() già controlla internamente invulnerabile(), allora mettere anche && !g.invulnerabile()
+    in tutte le collisioni diventa un doppio controllo.
+    Hai quindi due modelli possibili:
+    A) Collisione controlla invulnerabilità
+       collisione -> se non invulnerabile -> diminuisciVita()
+    B) Giocatore controlla invulnerabilità
+       collisione -> diminuisciVita()
+                             ↓
+                     Giocatore decide
+                     se perdere vita
+
+    MIA IDEA:
+    rendere diminuisci vita un bool
+
+    RSIPOSTA CHAT:
+    Sì, e nel tuo caso sarebbe una soluzione pulita.
+    Potresti dare a diminuisciVita() questo significato:
+    bool diminuisciVita();
+
+
+
+    */
+
+    void updateEnemies(Giocatore& g);
+    //muove i nemici
+
+    void updateItems( );
     //questa funzione avra' senso quando gli item avranno una durata
 
     bool collisioneGiocatoreNemici_v2(Giocatore& g ) ;

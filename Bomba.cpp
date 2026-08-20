@@ -96,15 +96,18 @@ void Bomba::esplodi() {
     this -> attivo = false;
 }
 
-void Bomba::aggiornaBomba() {
+bool Bomba::aggiornaBomba() {
     /*aggiornaBoostDanno();
     aggiornaBoostRaggio();
     aggiornaBoostTimer();*/
     if (innescata()) {
         diminuisciTimer();
-        if (getTimer() <= 0)
+        if (getTimer() <= 0) {
             esplodi();
+            return true ;
+        }
     }
+    return false ;
 }
 
 
