@@ -44,7 +44,7 @@ char Nemico::getTipo( ) {
     return this -> tipo ;
 }
 
-/*void Nemico::muovi ( Giocatore& g, Map& m ) { //meglio degli else if?
+Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) { //meglio degli else if?
     if ( tipo == 'I') {
         //
     }
@@ -54,7 +54,7 @@ char Nemico::getTipo( ) {
     if ( tipo == 'T') {
         //
     }
-}*/
+}
 
 void Nemico::rianima( ) {
     if ( tipo == 'I' || tipo == 'R' )

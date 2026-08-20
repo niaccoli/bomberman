@@ -32,12 +32,7 @@ private:
         Nemico (int vite, Posizione posizione, char tipo ) ;
         void setTipo ( char Tipo ) ;
         char getTipo ( ) ;
-    //void muovi ( Giocatore& g, Map& m ) ; //forse non serve includere la mappa
-    //piu che altro forse conviene calcolare una posizione provvisoria,
-    //quindi in level controllare se la posizione e' camminabile (Map::isWalkable)
-    //e se non e' gia' occupata da un nemico (Level::iThereAnEnemy_v2)
-    //e quindi muovere il personaggio in quella posizione
-        Posizione nuovaPosizione ();
+        Posizione nuovaPosizione (Giocatore& g, Map& m);
         void rianima( ) ;
 
 };

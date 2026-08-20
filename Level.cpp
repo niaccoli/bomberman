@@ -178,7 +178,7 @@ void Level::updateEnemies(Giocatore& g){
     for ( int i = 0 ; i < num_nemici ; i++ ) {
         bool mosso = false ;
         while ( !mosso && nemici[i].vivo()) {
-            Posizione new_posizione = nemici[i].nuovaPosizione() ;
+            Posizione new_posizione = nemici[i].nuovaPosizione(g, map) ;
             if ( map.isWalkable( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
                 nemici[i].muovi( new_posizione) ;
                 mosso = true ;
