@@ -37,10 +37,13 @@ Giocatore::Giocatore(int vite, Posizione posizione): Personaggio( vite, posizion
     }
 }*/
 
-void Giocatore::diminuisciVita() {
+bool Giocatore::diminuisciVita() {
     //if (! invulnerabile())
         Personaggio::diminuisciVita();
+    return true ;
 }
+
+
 
 void Giocatore::diminuisciVita(int danno) {
     //if (! invulnerabile())

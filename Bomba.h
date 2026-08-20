@@ -79,8 +79,8 @@ class Bomba {
         bool innescata() const; //o innescata
         void innesca();
         void esplodi(); // = disattiva
-        //bool esplodi() ;
-        void aggiornaBomba();
+        bool aggiornaBomba();  //se innescata, controlla il timer della bomba, se il timer scende a zero chiama Bomba::esplodi( )
+        //e restituisce true, altrimenti restituisce false
 
         //POTENZIAMENTI
         /*void attivaBoostDanno();

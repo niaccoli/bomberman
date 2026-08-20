@@ -153,14 +153,43 @@ Map& Level::getMap(){
     return map;
 }
 
+bool Level::updateLevel(Giocatore& g) {
 
-void Level::updateEnemies(Personaggio& p){
-    //Da scrivere
+    updateEnemies( g )  ;
+
+    if ( collisioneGiocatoreNemici_v2( g ))
+        return true ;
+
+    if ( b.aggiornaBomba( ) )
+        if ( collisioneEsplosione( g ))
+            return true ;
+
+    //updateItem
+    //quando gli item avranno una durata
+
+    raccoltaItem( g ) ;
+
+    return false ;
 }
 
 
-void Level::updateItems(Item& i){
-    //Da scrivere
+void Level::updateEnemies(Giocatore& g){
+
+    for ( int i = 0 ; i < num_nemici ; i++ ) {
+        bool mosso = false ;
+        while ( !mosso && nemici[i].vivo()) {
+            Posizione new_posizione = nemici[i].nuovaPosizione() ;
+            if ( map.isWalkable( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
+                nemici[i].muovi( new_posizione) ;
+                mosso = true ;
+            }
+        }
+    }
+}
+
+
+void Level::updateItems(){
+    //Da scrivere quando gli items avranno una durata
 }
 
 

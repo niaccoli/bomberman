@@ -17,7 +17,19 @@ public:
     //bool invulnerabile() const;
     //void aggiornaInvulnerabilita();
 
-    void diminuisciVita();
+    bool diminuisciVita();
+    // Ridefinisco diminuisciVita() in Giocatore perché il giocatore può avere
+    // condizioni particolari, come l'invulnerabilità, che possono impedire
+    // l'applicazione del danno.
+    //
+    // La versione di Giocatore restituisce un bool:
+    // true  -> la vita è stata effettivamente diminuita;
+    // false -> il danno non è stato applicato.
+    //
+    // In questo modo Level e le funzioni di collisione non devono conoscere
+    // direttamente lo stato di invulnerabilità del giocatore: si limitano a
+    // chiamare diminuisciVita() e controllarne il risultato.
+
     void diminuisciVita(int danno);
 };
 
