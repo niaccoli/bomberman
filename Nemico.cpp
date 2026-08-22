@@ -5,6 +5,7 @@
 #include  "Personaggio.hpp"
 #include "Nemico.h"
 #include "Map.hpp"
+#include <cstdlib>
 
 Nemico::Nemico(): Personaggio(1, {-1, -1 }) {
     tipo = ' ' ; //valutare se assegnare il tipo rnd come predefinito o lasciare senza niente
@@ -46,13 +47,77 @@ char Nemico::getTipo( ) {
 
 Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) { //meglio degli else if?
     if ( tipo == 'I') {
-        //
+        int x_diff = g.getX() - getX() ;
+        int y_diff = g.getY() - getY() ;
+        if ( abs(x_diff) > abs(y_diff)) {
+            if ( x_diff > 0 )
+                posizione.x += 1 ;
+            else
+                posizione.x -= 1 ;
+        }
+        else {
+            if ( y_diff > 0 ) {
+                posizione.y -= 1 ;
+            }
+            else
+                posizione.y += 1 ;
+        }
+        return posizione ;
     }
     if (tipo == 'R') {
-        //
+        int random = rand() % 3 ;
+        if ( random == 0 )
+            posizione.x -= 1 ;
+        if ( random == 1 )
+            posizione.y += 1 ;
+        if ( random == 2 )
+            posizione.x += 1 ;
+        if ( random == 3 )
+            posizione.y -= 1 ;
+        return posizione ;
     }
     if ( tipo == 'T') {
-        //
+        if ( rand() % 1 ) {
+            int random = rand() % 3 ;
+            if ( random == 0 )
+                posizione.x -= 1 ;
+            if ( random == 1 )
+                posizione.y += 1 ;
+            if ( random == 2 )
+                posizione.x += 1 ;
+            if ( random == 3 )
+                posizione.y -= 1 ;
+            return posizione ;
+        }
+    }
+}
+
+Posizione Nemico::nuovaPosizione (Map& m) {
+    if (tipo == 'R' || tipo == 'I') {
+        int random = rand() % 3 ;
+        if ( random == 0 )
+            posizione.x -= 1 ;
+        if ( random == 1 )
+            posizione.y += 1 ;
+        if ( random == 2 )
+            posizione.x += 1 ;
+        if ( random == 3 )
+            posizione.y -= 1 ;
+        return posizione ;
+    }
+    if ( tipo == 'T') {
+        if ( rand() % 1 ) {
+            int random = rand() % 3 ;
+            if ( random == 0 )
+                posizione.x -= 1 ;
+            if ( random == 1 )
+                posizione.y += 1 ;
+            if ( random == 2 )
+                posizione.x += 1 ;
+            if ( random == 3 )
+                posizione.y -= 1 ;
+            return posizione ;
+        }
     }
 }
 

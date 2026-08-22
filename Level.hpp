@@ -132,6 +132,7 @@ i   f (level.daResettare())
 
     */
 
+
     void updateEnemies(Giocatore& g);
     //muove i nemici
 
@@ -157,5 +158,23 @@ i   f (level.daResettare())
     //capire se mettere come funzione generale
 
     void reset_v2() ;
+
+    // ---------------------------------------- DA VALUTARE---------------------------------------------
+
+    //se vogliamo che se una bomba viene piazzata in un livello e il giocatore si sposta nel livello sucessivo la bomba
+    //continui ad esplodere, i nemici si muovano e quando la bomba esplode crei danno ai nemici
+    //richiede una funzione in BidirectionalLIst che prende la lista di livelli, chiama updateLevel(Giocatore& g)
+    //per il livello corrente e updateLevel( ) per gli altri livelli
+
+    void updateLevel_v1 ( ) ;
+    //chiama una versione moificata di updateEnemies ( muove i nemici ). Non essendo presente il giocatore in quel
+    //livello fa muovere i nemici_inseguitore come nemici_random chiamando Nemico::nuovaPosizione( )
+
+    void updateEnemies( ) ;
+    //muove tutti i nemici vivi nel livello. Non essendo presente il giocatore in quel
+    //livello fa muovere i nemici_inseguitore come nemici_random chiamando Nemico::nuovaPosizione( )
+
+    void collisioneEplosione( ) ;
+    //fa esplodere la bomba causando danno a muri e nemici
 
 };

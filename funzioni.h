@@ -8,12 +8,12 @@
 
 
 void muoviGiocatore(Giocatore& player, Map& m, char input) ;
+//valutare se non fare una cosa simile a nemico
+//ovvero fai una funzione leggi input
+//passi l'input a nuovaPosizione, una volta calcolata la nuova posizione e' level ad occuparsi se il giocatore
+//puo' muoversi o no
 
 
-//se scegliamo che ogni livello ha la propria bomba questa funzione dovrebbe appartenere a level
-//e nel main: current->level->piazzaBomba(player);
-void piazzaBomba(Giocatore& g, Bomba& b);
-//posiziona una bomba nella posizione occupata dal giocatore e ne attiva il timer.
 
 
 
@@ -71,9 +71,6 @@ void applicaEffettoItem( Item& i, Bomba& b); //a seconda del tipo di item andran
 //capire se aggiungere un item che da invulnerabilità al giocatore
 //nel caso aggiungerlo nei parametri
 
-
-//void posizioneLiberaCasuale(int& x, int& y);
-//ritorni una posizione libera casuale sulla mappa per posizionare i nemici
 
 
 
