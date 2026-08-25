@@ -47,6 +47,8 @@ public:
 
     Map& getMap( );
 
+    bool isCompletato( );
+
     bool updateLevel(Giocatore& g) ;
     /* MIA IDEA:
      * nel loop del main:

@@ -15,6 +15,8 @@ protected:
     int cols;
     char** grid;
     WINDOW* win;
+    Posizione entry ;
+    Posizione exit ;
 
 public:
     //costruttore
@@ -55,6 +57,14 @@ public:
     bool cell_without_wall(int x, int y);
 
     WINDOW* getWin();
+
+    Posizione getEntry( ) ;
+
+    Posizione getExit ( ) ;
+
+    bool isEntry( ) ;
+
+    bool isExit( ) ;
 
 };
 #endif

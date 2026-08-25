@@ -24,9 +24,16 @@ public:
     BidirectionalList();
     BidirectionalList(node* head, node* current);
 
-    void goToNext();
+    void goToNext(Giocatore& g);
+    //Andrea: aggiungere controllo se il livello e' completato va eliminato il nodo
+    /*  1. verificare se esiste il livello destinazione
+        2. ricordare il livello che sto lasciando
+        3. cambiare current
+        4. posizionare il giocatore sulla porta corretta
+        5. se il vecchio livello era completato, eliminarlo */
 
-    void goToPrev();  
+    void goToPrev(Giocatore& g);
+    //Andrea: aggiungere controllo se il livello e' completato va eliminato il nodo
 
     //Creazione dei 5 livelli
     void Create_Levels();

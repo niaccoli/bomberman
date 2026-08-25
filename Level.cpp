@@ -153,6 +153,16 @@ Map& Level::getMap(){
     return map;
 }
 
+bool Level::isCompletato( ) {
+    for ( int i = 0 ; i < num_nemici ; i++ ) {
+        if (nemici[i].vivo( ))
+            return false ;
+    }
+    completato = true ;
+    return true ;
+}
+
+
 bool Level::updateLevel(Giocatore& g) {
 
     updateEnemies( g )  ;
