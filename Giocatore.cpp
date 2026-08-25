@@ -3,42 +3,50 @@
 
 
 Giocatore::Giocatore(): Personaggio(3,-1,-1) {
-    //invulnerabilitaOff();
+    invulnerabilitaOff();
 }
 
 Giocatore::Giocatore(int vite, int x, int y): Personaggio(vite, x, y) {
-    //invulnerabilitaOff();
+    invulnerabilitaOff();
 }
 
-Giocatore::Giocatore(int vite, Posizione posizione): Personaggio( vite, posizione ) { }
+Giocatore::Giocatore(int vite, Posizione posizione): Personaggio( vite, posizione ) {
+    invulnerabilitaOff() ;
+}
 
 
 
-/*void Giocatore::invulnerabilitaOn(int durata) {
+void Giocatore::invulnerabilitaOn(int durata) {
     invulnerabilita = true;
     tempoInvulnerabilita = durata;
-}*/
+}
 
-/*void Giocatore::invulnerabilitaOff() {
+void Giocatore::invulnerabilitaOn( ) {
+    invulnerabilita = true ;
+    tempoInvulnerabilita = 4 ;
+}
+
+
+void Giocatore::invulnerabilitaOff() {
     invulnerabilita = false;
     tempoInvulnerabilita = 0;
-}*/
+}
 
-/*bool Giocatore::invulnerabile() const {
+bool Giocatore::invulnerabile() const {
     return invulnerabilita;
-}*/
+}
 
-/*void Giocatore::aggiornaInvulnerabilita(){
+void Giocatore::aggiornaInvulnerabilita(){
     if (invulnerabile()){
         tempoInvulnerabilita -= 1;
 
         if (tempoInvulnerabilita <= 0)
             invulnerabilitaOff();
     }
-}*/
+}
 
 bool Giocatore::diminuisciVita() {
-    //if (! invulnerabile())
+    if (! invulnerabile())
         Personaggio::diminuisciVita();
     return true ;
 }
@@ -46,10 +54,7 @@ bool Giocatore::diminuisciVita() {
 
 
 void Giocatore::diminuisciVita(int danno) {
-    //if (! invulnerabile())
-        //if (getvite() - danno)
+    if (! invulnerabile())
             setVite( getVite() - danno);
-    //else
-    //setvite()=0
 }
 

@@ -12,14 +12,14 @@ class Bomba {
         int raggio;
         bool attivo;
 
-        /*bool boostDanno;
+        bool boostDanno;
         int durataBoostDanno;
 
         bool boostRaggio;
         int durataBoostRaggio;
 
         bool boostTimer;
-        int durataBoostTimer;*/
+        int durataBoostTimer;
 
 /*da ragionare: una volta che viene viene raccolto un item bisogna applicare un effetto(funzione void effetto item()).
  *Se l'item è un item che riguarda il giocatore è facile perchè il giocatore è già creato.
@@ -66,15 +66,15 @@ class Bomba {
         int getTimer() const; //ritorna il tempo rimanente prima di esplodere
         void setTimer(int tempo); //imposta il timer della bomba
         void diminuisciTimer(); //diminuisce il timer della bomba
-        //void dimezzaTimer(); //forse meglio velocizza (per item 'T' = diminuzione tempo esplosione)
+        void velocizza(); // (per item 'T' = diminuzione tempo esplosione)
 
         int getDanno() const; //ritorna il danno della bomba
         void setDanno(int danno); //imposta il danno della bomba
-        //void duplicaDanno(); //o potenziaDanno() (per item 'D' = aumento danno bomba (creare nemici tank con 2 vite))
+        void duplicaDanno(); //o potenziaDanno() (per item 'D' = aumento danno bomba (creare nemici tank con 2 vite))
 
         int getRaggio() const; //ritorna il raggio di azione della bomba
         void setRaggio(int raggio); //imposta il raggio di azione della bomba
-        //void raddoppiaRaggio();  //o aumentaRaggio() (per item 'B' = aumento raggio bomba)
+        void raddoppiaRaggio();  //o aumentaRaggio() (per item 'B' = aumento raggio bomba)
 
         bool innescata() const; //o innescata
         void innesca();
@@ -83,7 +83,7 @@ class Bomba {
         //e restituisce true, altrimenti restituisce false
 
         //POTENZIAMENTI
-        /*void attivaBoostDanno();
+        void attivaBoostDanno();
         void disattivaBoostDanno();
         void setDurataBoostDanno(int durata);
         void diminuisciDurataBoostDanno();
@@ -96,18 +96,19 @@ class Bomba {
         void setDurataBoostRaggio(int durata);
         void diminuisciDurataBoostRaggio();
         int getDurataBoosRaggio() const;
-        bool boostRaggioAttivo();
+        bool boostRaggioAttivo() const;
         void aggiornaBoostRaggio();
 
-        void attivaBoostTimer();
-        void disattivaBoostTimer();
+
+        void attivaBoostTimer( );
+        void disattivaBoostTimer( );
         void setDurataBoostTimer(int durata);
-        void diminuisciDurataBoostTimer();
-        int getDurataBoostTimer() const;
-        bool boostTimerAttivo();
-        void aggiornaBoostTimer();*/
+        void diminuisciDurataBoostTimer( );
+        int getDurataBoostTimer( ) const;
+        bool boostTimerAttivo( ) const;
+        void aggiornaBoostTimer( );
 
-
+        void aggiornaPotenziamenti( ) ;
 
 
 };

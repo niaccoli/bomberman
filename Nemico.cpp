@@ -64,7 +64,7 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) { //meglio degli else 
         }
         return posizione ;
     }
-    if (tipo == 'R') {
+    else if (tipo == 'R') {
         int random = rand() % 3 ;
         if ( random == 0 )
             posizione.x -= 1 ;
@@ -76,7 +76,7 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) { //meglio degli else 
             posizione.y -= 1 ;
         return posizione ;
     }
-    if ( tipo == 'T') {
+    else if ( tipo == 'T') {
         if ( rand() % 1 ) {
             int random = rand() % 3 ;
             if ( random == 0 )
@@ -90,9 +90,11 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) { //meglio degli else 
             return posizione ;
         }
     }
+    else
+        return posizione ;
 }
 
-Posizione Nemico::nuovaPosizione (Map& m) {
+Posizione Nemico::nuovaPosizione_v3 (Map& m) {
     if (tipo == 'R' || tipo == 'I') {
         int random = rand() % 3 ;
         if ( random == 0 )
@@ -105,7 +107,7 @@ Posizione Nemico::nuovaPosizione (Map& m) {
             posizione.y -= 1 ;
         return posizione ;
     }
-    if ( tipo == 'T') {
+    else if ( tipo == 'T') {
         if ( rand() % 1 ) {
             int random = rand() % 3 ;
             if ( random == 0 )
@@ -119,6 +121,8 @@ Posizione Nemico::nuovaPosizione (Map& m) {
             return posizione ;
         }
     }
+    else
+        return posizione ;
 }
 
 void Nemico::rianima( ) {

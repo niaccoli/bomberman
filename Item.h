@@ -132,7 +132,7 @@ class Item{
         /*int x;
         int y;*/
         Posizione posizione ;
-        char tipo; //invulnerabilità('I'), riduzione tempo bomba('T'), aumento raggio bomba('B'), 1pt.vita('V'), aumento velocità? pistola?
+        char tipo; //danno('D'), riduzione tempo bomba('T'), aumento raggio bomba('B'), invulnerabilità('I'), 1pt.vita('V')
         //int durata; //per quanto rempo rimane sulla mappa
         bool attivo;//il tempo per quanto dura il suo effetto lo mettiamo in una funzione generale
 
@@ -141,24 +141,34 @@ class Item{
         Item();
         Item(int x, int y, char tipo, /*int durata,*/ bool attivo);
 
-        void setX(int x);
-        void setY(int y);
+        void setX(int x) ;
+        void setY(int y) ;
         void setPosizione(Posizione posizione) ;
         void setPosizione(int x, int y) ;
-        int getX() const;
-        int getY() const;
-        Posizione getPosizione( ) const;
+        int getX() const ;
+        int getY() const ;
+        Posizione getPosizione( ) const ;
 
-        void setTipo(char tipo);
-        char getTipo() const;
-        void setTipoRandom() ;
+        void setTipo(char tipo) ;
+        char getTipo() const ;
+        void setTipoRandom() ; //imposta un tipo causale
+
+        void setTipoRandom_v2() ;
+        /*imposta un tipo casuale:
+        danno('D') --> probabilita': 30%
+        riduzione tempo bomba('T') --> probabilita': 30%
+        aumento raggio bomba('B') --> probabilita': 30%
+        1pt.vita('V') --> probabilita': 5%
+        invulnerabilità('I') --> probabilita': 5%
+        */
+
 
         //void setDurata(int tempo);
         //int getDurata() const;
 
-        bool isAttivo() const;
-        void raccogli();
-        void disattiva();
+        bool isAttivo() const ;
+        void raccogli() ;
+        void disattiva() ;
         void attiva( ) ;
         //void aggiornaItem();
 

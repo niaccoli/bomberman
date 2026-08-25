@@ -1,7 +1,7 @@
 #include "Bomba.h"
 
-Bomba::Bomba(): posizione{ -1, -1 }, timer(4), danno(1), raggio(1), attivo(false)/*, boostDanno(false), durataBoostDanno(5),
-                boostRaggio(false), durataBoostRaggio(5), boostTimer(false), durataBoostTimer(5)*/{}
+Bomba::Bomba(): posizione{ -1, -1 }, timer(5), danno(1), raggio(1), attivo(false)/*, boostDanno(false), durataBoostDanno(5),
+                boostRaggio(false), durataBoostRaggio(5)*/, boostTimer(false), durataBoostTimer(5) {}
 
 
 /*Bomba::Bomba(int x, int y, int timer, int danno, int raggio, bool attivo) {
@@ -55,9 +55,9 @@ void Bomba::diminuisciTimer() {
     this -> timer-- ;
 }
 
-/*void Bomba::dimezzaTimer() {
+void Bomba::velocizza( ) {
     this -> timer /= 2;
-}*/
+}
 
 int Bomba::getDanno() const {
     return this -> danno;
@@ -67,9 +67,9 @@ void Bomba::setDanno(int danno) {
     this -> danno = danno;
 }
 
-/*void Bomba::duplicaDanno() {
+void Bomba::duplicaDanno() {
     this -> danno *= 2;
-}*/
+}
 
 int Bomba::getRaggio() const {
     return this -> raggio;
@@ -79,9 +79,9 @@ void Bomba::setRaggio(int raggio) {
     this -> raggio = raggio;
 }
 
-/*void Bomba::raddoppiaRaggio() {
+void Bomba::raddoppiaRaggio() {
     this -> raggio *= 2;
-}*/
+}
 
 bool Bomba::innescata() const {
     return this -> attivo;
@@ -97,9 +97,7 @@ void Bomba::esplodi() {
 }
 
 bool Bomba::aggiornaBomba() {
-    /*aggiornaBoostDanno();
-    aggiornaBoostRaggio();
-    aggiornaBoostTimer();*/
+    aggiornaPotenziamenti() ;
     if (innescata()) {
         diminuisciTimer();
         if (getTimer() <= 0) {
@@ -113,7 +111,7 @@ bool Bomba::aggiornaBomba() {
 
 
 
-/*void Bomba::attivaBoostDanno() {
+void Bomba::attivaBoostDanno() {
     boostDanno = true;
     setDurataBoostDanno(5);
     duplicaDanno();
@@ -126,6 +124,11 @@ void Bomba::disattivaBoostDanno() {
 
 void Bomba::setDurataBoostDanno(int durata) {
     durataBoostDanno = durata;
+}
+
+void Bomba::diminuisciDurataBoostDanno() {
+    if ( boostDannoAttivo() )
+        durataBoostDanno -= 1 ;
 }
 
 int Bomba::getDurataBoostDanno() const {
@@ -159,10 +162,16 @@ void Bomba::setDurataBoostRaggio(int durata) {
     durataBoostRaggio = durata;
 }
 
+void Bomba::diminuisciDurataBoostRaggio() {
+    if ( boostRaggioAttivo() )
+        durataBoostRaggio -= 1 ;
+}
+
 int Bomba::getDurataBoosRaggio() const {
     return durataBoostRaggio;
 }
-bool Bomba::boostRaggioAttivo() {
+
+bool Bomba::boostRaggioAttivo() const{
     return boostRaggio;
 }
 
@@ -174,10 +183,13 @@ void Bomba::aggiornaBoostRaggio() {
     }
 }
 
+
+
+
 void Bomba::attivaBoostTimer() {
     boostTimer = true;
     setDurataBoostTimer(5);
-    dimezzaTimer();
+    velocizza();
 }
 
 void Bomba::disattivaBoostTimer() {
@@ -189,11 +201,16 @@ void Bomba::setDurataBoostTimer(int durata) {
     durataBoostTimer = durata;
 }
 
-int Bomba::getDurataBoostTimer() const {
-    return durataBoostRaggio;
+void Bomba::diminuisciDurataBoostTimer() {
+    durataBoostTimer-- ;
 }
 
-bool Bomba::boostTimerAttivo() {
+
+int Bomba::getDurataBoostTimer() const {
+    return durataBoostTimer ;
+}
+
+bool Bomba::boostTimerAttivo() const{
     return boostTimer;
 }
 
@@ -203,4 +220,10 @@ void Bomba::aggiornaBoostTimer() {
         if (getDurataBoostTimer() <= 0)
             disattivaBoostTimer();
     }
-}*/
+}
+
+void Bomba::aggiornaPotenziamenti() {
+    aggiornaBoostTimer( ) ;
+    aggiornaBoostRaggio( ) ;
+    aggiornaBoostDanno( ) ;
+}

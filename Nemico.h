@@ -34,7 +34,7 @@ private:
         char getTipo ( ) ;
         Posizione nuovaPosizione (Giocatore& g, Map& m);
     //----------------------------------------------DA VALUTARE (guarda Level) -----------------------------------------
-        Posizione nuovaPosizione (Map& m); //se il giocatore non e' presente nel livello i nemici inseguitori si comportano
+        Posizione nuovaPosizione_v3 (Map& m); //se il giocatore non e' presente nel livello i nemici inseguitori si comportano
     //come nemici random
     //-------------------------------------------------------------------------------------------------------------------
         void rianima( ) ;

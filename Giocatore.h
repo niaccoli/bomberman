@@ -5,17 +5,22 @@
 
 class Giocatore : public Personaggio {
 protected:
-    //bool invulnerabilita;
-    //int tempoInvulnerabilita;
+    bool invulnerabilita;
+    int tempoInvulnerabilita;
 public:
     Giocatore();
     Giocatore(int vite, int x, int y);
     Giocatore(int vite, Posizione posizione) ;
 
-    //void invulnerabilitaOn(int durata);
-    //void invulnerabilitaOff();
-    //bool invulnerabile() const;
-    //void aggiornaInvulnerabilita();
+    void invulnerabilitaOn(int durata); //ritorna il tempo di invulnerabilita'
+
+    void invulnerabilitaOn (  ); //attiva invulnerabilita
+
+    void invulnerabilitaOff( ); //distattiva invulnerabilita' e reimposta il tempo invulnerabilita' a zero
+
+    bool invulnerabile( ) const; //ritorna true se invulnerabilita attiva, false altrimenti
+
+    void aggiornaInvulnerabilita( ); //diminuisce il tempo di invulnerabilita', se il tempo arriva a zero la disattiva
 
     bool diminuisciVita();
     // Ridefinisco diminuisciVita() in Giocatore perché il giocatore può avere

@@ -2,8 +2,7 @@
 #include "Bomba.h"
 #include "Map.hpp"
 #include <cstdlib>
-
-
+#include "BidirectionalList.hpp"
 
 
 //da implementare con Posizione
@@ -49,17 +48,21 @@ void gestisciInput(Giocatore& player,Bomba& b, Map& m, char input) {
 }
 
 
-/*void applicaEffettoItem( Item& i, Bomba& b) { //quando il giocatore e l'item hanno la stessa posizione (bool controllaraccoltaitem())
-    if (i.getTipo() == 'D') {
-        b.attivaBoostRaggio();
+void applicaEffettoItem( Giocatore& g, BidirectionalList& lista, char tipo ) {
+
+    //effetto su giocatore :
+    if ( tipo == 'I') {
+        g.invulnerabilitaOn( ) ;
     }
-    else if (i.getTipo() == 'B') {
-        b.attivaBoostDanno();
+
+    if ( tipo == 'V') {
+        g.aumentaVita() ;
     }
-    else {
-        b.attivaBoostTimer();
-    }
-} //poi Item.raccogli();*/
+
+    //effetto su bombe:
+    lista.applicaEffettoItem( tipo ) ;
+
+}
 
 
 

@@ -54,6 +54,25 @@ void Item::setTipoRandom() {
     }
 }
 
+void Item::setTipoRandom_v2() {
+    int i = rand() % 101 ;
+    if (i >= 0 && i < 30) {
+        this -> tipo = 'D' ;
+    }
+    else if (i >= 30 && i < 60) {
+        this -> tipo = 'B' ;
+    }
+    else if (i >= 60 && i < 90) {
+        this -> tipo = 'T' ;
+    }
+    else if (i >= 90 && i < 95) {
+        this -> tipo = 'I' ;
+    }
+    else {
+        this -> tipo = 'V' ;
+    }
+}
+
 char Item::getTipo() const {
     return this -> tipo;
 }

@@ -167,11 +167,8 @@ bool Level::updateLevel(Giocatore& g) {
     //updateItem
     //quando gli item avranno una durata
 
-    raccoltaItem( g ) ;
-
     return false ;
 }
-
 
 
 
@@ -194,6 +191,7 @@ void Level::updateEnemies(Giocatore& g){
 
 void Level::updateItems(){
     //Da scrivere quando gli items avranno una durata
+
 }
 
 
@@ -345,12 +343,13 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
 
 
-void Level::raccoltaItem(Giocatore& g ) {
+char Level::raccoltaItem(Giocatore& g ) {
     for (int i = 0 ; i < next_item ; i++ )
-        if ( stessaPosizione( g.getPosizione(), items[i].getPosizione()) && items[i].isAttivo() ) {
-            items[i].raccogli() ;
-            //applicaEffettoItem(items[i], b) ;
-        }
+
+        if ( stessaPosizione( g.getPosizione(), items[i].getPosizione()) && items[i].isAttivo() )
+            return items[i].getTipo() ;
+
+    return (' ') ;
 }
 
 
@@ -377,7 +376,6 @@ void Level::piazzaBomba(Giocatore& g) {
 
 void Level::reset_v2() {
 
-
     // riporta tutti i nemici vivi
     for ( int i = 0 ; i < num_nemici; i++ ) {
         nemici[i].rianima( ) ;
@@ -396,25 +394,44 @@ void Level::reset_v2() {
     b.setPosizione( -1, -1 ) ;
 
     completato = false;
+
 }
+
+
+void Level::updateLevel() {
+    b.aggiornaPotenziamenti( ) ;
+}
+
+void Level::applicaEffetto(char tipo ) {
+    if ( tipo == 'D') {
+        b.attivaBoostDanno( ) ;
+    }
+    if ( tipo == 'R') {
+        b.attivaBoostRaggio( );
+    }
+    if ( tipo == 'T') {
+        b.attivaBoostTimer( ) ;
+    }
+}
+
 //---------------------------------------------------DA VALUTARE-------------------------------------------------------
 
 
-void Level::updateLevel_v1() {
+void Level::updateLevel_v3() {
 
-    updateEnemies( ) ;
+    updateEnemies_v3( ) ;
 
     if (b.aggiornaBomba( ) )
-        collisioneEplosione() ;
+        collisioneEplosione_v3() ;
 
     //updateItems( ) ;
 }
 
-void Level::updateEnemies( ) {
+void Level::updateEnemies_v3( ) {
     for ( int i = 0 ; i < num_nemici ; i++ ) {
         bool mosso = false ;
         while ( !mosso && nemici[i].vivo()) {
-            Posizione new_posizione = nemici[i].nuovaPosizione( map) ;
+            Posizione new_posizione = nemici[i].nuovaPosizione_v3( map ) ;
             if ( map.isWalkable( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
                 nemici[i].muovi( new_posizione) ;
                 mosso = true ;
@@ -425,7 +442,7 @@ void Level::updateEnemies( ) {
 
 
 
-void Level::collisioneEplosione( ) {
+void Level::collisioneEplosione_v3( ) {
     Posizione epicentro = b.getPosizione() ;
 
     Posizione nord = { epicentro.x, epicentro.y - b.getRaggio() - 1} ;
@@ -531,4 +548,5 @@ void Level::collisioneEplosione( ) {
         current.x++ ;
     }
 }
+
 

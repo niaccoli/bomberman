@@ -91,3 +91,5 @@ node* BidirectionalList::getCurrent(){
     return this->current;
 }
 
+
+

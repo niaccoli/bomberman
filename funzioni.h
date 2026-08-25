@@ -3,11 +3,11 @@
 #include "Giocatore.h"
 #include "Item.h"
 #include "Bomba.h"
-#include "Map.hpp"
+#include "Level.hpp"
 
 
 
-void muoviGiocatore(Giocatore& player, Map& m, char input) ;
+void muoviGiocatore(Giocatore& player, Level& , char input) ;
 //valutare se non fare una cosa simile a nemico
 //ovvero fai una funzione leggi input
 //passi l'input a nuovaPosizione, una volta calcolata la nuova posizione e' level ad occuparsi se il giocatore
@@ -67,7 +67,9 @@ prendo +raggio nel Level 1
 → da ora tutte le bombe che piazzo hanno raggio maggiore
 → anche nel Level 2, Level 3...
 */
-void applicaEffettoItem( Item& i, Bomba& b); //a seconda del tipo di item andranno modificate le caratteristiche di bomba o giocatore
+
+
+void applicaEffettoItem( Giocatore& g, BidirectionalList& lista, char tipo ) ; //a seconda del tipo di item andranno modificate le caratteristiche di bomba o giocatore
 //capire se aggiungere un item che da invulnerabilità al giocatore
 //nel caso aggiungerlo nei parametri
 

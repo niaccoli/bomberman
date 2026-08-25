@@ -6,6 +6,7 @@
 #include "Nemico.h"
 #pragma once
 
+
 const int MAX_NEMICI_INS = 10;
 const int MAX_NEMICI_RND = 10;
 const int MAX_NEMICI_TANK = 5;
@@ -144,7 +145,7 @@ i   f (level.daResettare())
     bool collisioneEsplosione( Giocatore& g ) ;
     //precedentemente nominata come: bool collisioneEsplosioneMuriNemiciGiocatore_v2( Giocatore& g ) ;
 
-    void raccoltaItem(Giocatore& g ) ;
+    char raccoltaItem(Giocatore& g ) ;
     //se il giocatore occupa la stessa posizione di un Item attivo, l'item viene raccolto ( attivo == false) e applicato
     //l'effetto
 
@@ -159,22 +160,31 @@ i   f (level.daResettare())
 
     void reset_v2() ;
 
+    void updateLevel( ) ;
+    //aggiorna il timer dei potenziamenti sulle bombe
+    //se vogliamo congelare il livello precedente  ma allo stesso tempo applicare l'effetto degli item a tutte le bombe
+    //di tutti i livelli bisogna avere una funzione che aggiorni il timer degli effetti nei livelli dove non e' presente
+    //il giocatore
+
+    void applicaEffetto(char tipo ) ;
+    //applica gli effetti sulle bombe
+
     // ---------------------------------------- DA VALUTARE---------------------------------------------
 
     //se vogliamo che se una bomba viene piazzata in un livello e il giocatore si sposta nel livello sucessivo la bomba
     //continui ad esplodere, i nemici si muovano e quando la bomba esplode crei danno ai nemici
     //richiede una funzione in BidirectionalLIst che prende la lista di livelli, chiama updateLevel(Giocatore& g)
-    //per il livello corrente e updateLevel( ) per gli altri livelli
+    //per il livello corrente e updateLevel_v3( ) per gli altri livelli
 
-    void updateLevel_v1 ( ) ;
+    void updateLevel_v3 ( ) ;
     //chiama una versione moificata di updateEnemies ( muove i nemici ). Non essendo presente il giocatore in quel
     //livello fa muovere i nemici_inseguitore come nemici_random chiamando Nemico::nuovaPosizione( )
 
-    void updateEnemies( ) ;
+    void updateEnemies_v3( ) ;
     //muove tutti i nemici vivi nel livello. Non essendo presente il giocatore in quel
     //livello fa muovere i nemici_inseguitore come nemici_random chiamando Nemico::nuovaPosizione( )
 
-    void collisioneEplosione( ) ;
+    void collisioneEplosione_v3( ) ;
     //fa esplodere la bomba causando danno a muri e nemici
 
 };

@@ -32,6 +32,26 @@ public:
     void Create_Levels();
 
     node* getCurrent();
+
+
+    //resetLevels_v1
+    //resetLevels_v2
+    //deve chiamare ripetutamente Level::reset( ) per rispristinare i livelli quando il giocatore perde una vita
+    //non necessaria nell'immediato, prima facciamo una versione semplice dove rimettiamo semplicemente il giocatore
+    //al livello 1
+
+
+    //Andrea x Matte:
+    void applicaEffettoItem ( Giocatore& g, char tipo ) ;
+    // se tipo == 'I' g.invulnerabilitaOn()
+    //se tipo == 'V' g.aumentaVita()
+    //altrimenti chiami per tutti i livelli Level::applicaEffetto( tipo )
+
+    void updateLevels( ) ;
+    /* per tutti i livelli non correnti → Level::updateLevel() //aggiorna soltanto i timer dei potenziamenti
+     livello corrente  → Level::updateLevel(g) // deve ritornare questo valore cosi' sappiamo se il giocatore e' stato colpito
+     */
+
 };
 
 #endif
