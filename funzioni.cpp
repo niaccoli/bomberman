@@ -48,21 +48,6 @@ void gestisciInput(Giocatore& player,Bomba& b, Map& m, char input) {
 }
 
 
-void applicaEffettoItem( Giocatore& g, BidirectionalList& lista, char tipo ) {
-
-    //effetto su giocatore :
-    if ( tipo == 'I') {
-        g.invulnerabilitaOn( ) ;
-    }
-
-    if ( tipo == 'V') {
-        g.aumentaVita() ;
-    }
-
-    //effetto su bombe:
-    lista.applicaEffettoItem( tipo ) ;
-
-}
 
 
 

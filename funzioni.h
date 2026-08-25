@@ -69,9 +69,6 @@ prendo +raggio nel Level 1
 */
 
 
-void applicaEffettoItem( Giocatore& g, BidirectionalList& lista, char tipo ) ; //a seconda del tipo di item andranno modificate le caratteristiche di bomba o giocatore
-//capire se aggiungere un item che da invulnerabilità al giocatore
-//nel caso aggiungerlo nei parametri
 
 
 
