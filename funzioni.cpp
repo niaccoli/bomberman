@@ -3,10 +3,11 @@
 #include "Map.hpp"
 #include <cstdlib>
 #include "BidirectionalList.hpp"
+#include "Level.hpp"
 
 
 //da implementare con Posizione
-void muoviGiocatore(Giocatore& player, Map& m, char input) {
+void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char input) {
     int dx = 0;
     int dy = 0;
 
@@ -19,57 +20,26 @@ void muoviGiocatore(Giocatore& player, Map& m, char input) {
     else //chat suggerisce di aggiungere un if esle e un else con return (valutare: in realtà il controllo lo faccio gia sotto)
         dx = 1;
 
-    int newX = player.getX() + dx;
-    int newY = player.getY() + dy;
+    Posizione temp = {player.getX() + dx , player.getY() + dy};
 
-    if ( m.mossavalida(newX, newY) )
-        player.muovi(newX, newY);
-}
-
-void piazzaBomba(Giocatore& g, Bomba& b) {
-    b.setX(g.getX());
-    b.setY(b.getY());
-    b.setTimer(4);
-    b.innesca();
+    if ( lista_livelli.getCurrent() -> level -> getMap().mossavalida(temp.x, temp.y) )
+        player.muovi( temp );
 }
 
 
 
-void gestisciInput(Giocatore& player,Bomba& b, Map& m, char input) {
+void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char input) {
     if (input == 'W' || input == 'w' || input == 'A' || input == 'a' || input == 's' || input == 'S' ||
         input == 'd' || input == 'D')
-        muoviGiocatore(player, m, input);
+        muoviGiocatore(player, lista_livelli, input);
     else if (input == 'x' || input == 'X') {
-        if ( ! b.innescata())
-        piazzaBomba(player,  b);
+        lista_livelli.getCurrent() -> level -> piazzaBomba(player ) ;
     }
     else
         return;
 }
 
 
-
-
-
-//ANDREA: direi che non serve piu'
-//Item generaItem(int x, int y) { //"GLI ITEM MODIFICANO IL COMPORTAMENTO DELLE BOMBE AUMENTANDO IL RAGGIO PER UN TEMPO DI 5 O 10 SECONDI"
-    //per ora:
-    //'B' = aumento raggio bomba
-    //'T' = diminuzione tempo esplosione
-    //'D' = aumento danno bomba (creare nemici tank con 2 vite)
-    //valutare se aggiungere: 'I' = invulnerabilità     'V'=aumento velocità?        punto vita? pistola?
-/*
-int i = rand() % 3;
-    if (i == 0) {
-        return Item( x, y, 'D', /*20, true);
-    }
-    else if (i == 1) {
-        return Item( x, y, 'B', /*20, true);
-    }
-    else {
-        return Item( x, y, 'T', /*10, true);
-    }
-}*/
 
 
 

@@ -28,7 +28,8 @@ public:
     
     void stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b );
 
-    bool mossavalida(int x, int y);
+    bool mossavalida(int x, int y); //forse cancelare o chiamare isWalkable perche' alla fine la mossa e' valida se la cella
+    //non e' un muro
 
     //Matteo: metodo cancellabile siccome lo hai messo tu con il paramentro posizione
     void breakWall();

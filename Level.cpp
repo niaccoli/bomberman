@@ -369,9 +369,11 @@ void Level::dropItem(Posizione posizione) {
 
 
 void Level::piazzaBomba(Giocatore& g) {
-    b.setPosizione( g.getPosizione()) ;
-    b.setTimer( 4 ) ; //forse inutile perche' il costruttore inizializza gia il timer a 4 e non viene aggiornato se la bomba non e' innescata
-    b.innesca( ) ;
+    if ( !b.innescata()) {
+        b.setPosizione( g.getPosizione()) ;
+        b.setTimer( 4 ) ; //forse inutile perche' il costruttore inizializza gia il timer a 4 e non viene aggiornato se la bomba non e' innescata
+        b.innesca( ) ;
+    }
 }
 
 void Level::reset_v2() {
