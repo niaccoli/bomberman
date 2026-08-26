@@ -199,3 +199,5 @@ bool Map::cell_without_wall(int x, int y){
     return true;
 }
 
+bool Map::getEntry
+

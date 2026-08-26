@@ -91,5 +91,16 @@ node* BidirectionalList::getCurrent(){
     return this->current;
 }
 
+void BidirectionalList::applicaEffettoItem(Giocatore& g, char type){
+    if(type == 'I')
+        g.invulnerabilitaOn(5);
+
+    else if(type == 'V')
+        g.aumentaVita();
+
+    else
+        current->level->applicaEffetto(type);
+}
+
 
 

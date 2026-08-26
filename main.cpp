@@ -32,7 +32,7 @@ int main() {
 
     BidirectionalList levelList;
 
-    //levelList.Create_Levels(); //TEST
+    levelList.Create_Levels(); //TEST
 
     int const start_y = 3;
     int const start_x = 5;
@@ -76,7 +76,7 @@ int main() {
     //move(y, x);
 
     //dealloca la memoria e termina ncurses
-    endwin();
+    //endwin();
 
 
 
