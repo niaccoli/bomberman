@@ -20,7 +20,7 @@ protected:
 
 public:
     //costruttore
-    Map(int h, int w, int start_y, int start_x);
+    Map(int h, int w);
 
     char getCell(int x, int y);
 

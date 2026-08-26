@@ -28,7 +28,7 @@ public:
     //Andrea: aggiungere controllo se il livello e' completato va eliminato il nodo
     //se esiste un livello sucessivo aggiorna current e ritorna true, false altrimenti
 
-    bool goToPrev( );
+    bool goToPrev();
     //Andrea: aggiungere controllo se il livello e' completato va eliminato il nodo
     //se esiste un livello precedente aggiorna current e ritorna true, false altrimenti
 
@@ -51,13 +51,17 @@ public:
     //se tipo == 'V' g.aumentaVita()
     //altrimenti chiami per tutti i livelli Level::applicaEffetto( tipo )
 
-    bool updateLevels( ) ;
+    bool updateLevels(Giocatore& g) ;
     /* per tutti i livelli non correnti → Level::updateLevel() //aggiorna soltanto i timer dei potenziamenti
      livello corrente  → Level::updateLevel(g) // deve ritornare questo valore cosi' sappiamo se il giocatore e' stato colpito
      */
 
     bool isLastLevel( ) ;
     //ritorna true se il livello corrente e' l'ultimo livello rimasto
+
+
+    //Eliminazione del nodo(Utilizzato in goToNext e goToPrev)
+    void deleteNode();
 
 };
 
