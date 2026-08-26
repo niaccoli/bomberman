@@ -84,7 +84,7 @@ int main() {
    //Giocatore player(3, 1, 1);
      char input ;
 
-     //posizionaGiocatore
+     posizionaGiocatoreStart( player, levelList ) ;
 
 
    //INIZIO CICLO
@@ -96,10 +96,7 @@ while ( player.vivo() ) {
      gestisciInput(player, levelList, input ) ;
 
      //3. controlla entrata / uscita
-     if ( levelList.getCurrent() -> level -> getMap().isEntry( player.getPosizione()))
-          levelList.goToPrev( player ) ;
-     if ( levelList.getCurrent() -> level -> getMap().isExit( player.getPosizione()))
-          levelList.goToNext( player ) ;
+     controllaPassaggioLivelli( player, levelList ) ;
 
      //4. aggiorna i timer dei potenziamenti dei livelli non correnti
      //+ aggiorna il livello corrente e ritorna true se il giocatore' ha subito danno

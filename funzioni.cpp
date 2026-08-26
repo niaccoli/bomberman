@@ -6,7 +6,9 @@
 #include "Level.hpp"
 
 
-//da implementare con Posizione
+
+
+
 void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char input) {
     int dx = 0;
     int dy = 0;
@@ -40,6 +42,23 @@ void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char inpu
 }
 
 
+void posizionaGiocatoreStart( Giocatore& player, BidirectionalList& l ) {
+    player.muovi( l.getCurrent() -> level -> getMap().getEntry()) ;
+}
+
+
+void controllaPassaggioLivelli( Giocatore& player, BidirectionalList& l ) {
+    if ( l.getCurrent() -> level -> getMap().isEntry( player.getPosizione())) {
+        if (l.goToPrev( ) ) //aggiorna il current della lista
+            player.muovi( l.getCurrent() -> level -> getMap().getExit() ) ;
+    }
+    else if ( l.getCurrent() -> level -> getMap().isExit( player.getPosizione())) {
+        if ( l.goToNext( )) //aggiorna il current della lista
+            player.muovi(l.getCurrent() -> level -> getMap().getEntry() );
+    }
+    else
+        return ;
+}
 
 
 
