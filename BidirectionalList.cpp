@@ -77,12 +77,12 @@ void BidirectionalList::Create_Levels(){
  
 }
 
-void BidirectionalList::goToNext(){
+bool BidirectionalList::goToNext( ){
     if(current->next != NULL)
         current = current->next;
 }
 
-void BidirectionalList::goToPrev(){
+bool BidirectionalList::goToPrev( ){
     if(current->prev != NULL)
         current = current->prev;
 }

@@ -16,6 +16,8 @@ class Level {
 private:
     Map& map;
 
+    Posizione cella_esplosione[9] ;
+    int num_cella_esplosione ;
 
     Nemico nemici[MAX_NEMICI_INS + MAX_NEMICI_RND + MAX_NEMICI_TANK];
     int num_nemici ;
@@ -47,6 +49,8 @@ public:
 
     Map& getMap( );
 
+    void stamp_map(Giocatore& g) ;
+
     bool isCompletato( );
 
     bool updateLevel(Giocatore& g) ;
@@ -62,7 +66,6 @@ public:
     *       |--updateBomba
     *       |            \b.esplode -> controllaCollisioniEsplosione. se g colpito return true
             |
-            |--raccolta Item
             |
             |--return false ;
 
