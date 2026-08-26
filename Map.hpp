@@ -30,6 +30,9 @@ public:
     
     void stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b );
 
+    void stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems,
+        const Bomba& b , Posizione celle_esplosione, int num_celle_esplosione);
+
     bool mossavalida(int x, int y); //forse cancelare o chiamare isWalkable perche' alla fine la mossa e' valida se la cella
     //non e' un muro
 
@@ -62,9 +65,9 @@ public:
 
     Posizione getExit ( ) ;
 
-    bool isEntry( ) ;
+    bool isEntry( Posizione posizione) ;
 
-    bool isExit( ) ;
+    bool isExit( Posizione posizione) ;
 
 };
 #endif

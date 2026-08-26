@@ -4,10 +4,11 @@
 #include "Item.h"
 #include "Bomba.h"
 #include "Level.hpp"
+#include "BidirectionalList.hpp"
 
 
 
-void muoviGiocatore(Giocatore& player, Level& , char input) ;
+void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char input) ;
 //valutare se non fare una cosa simile a nemico
 //ovvero fai una funzione leggi input
 //passi l'input a nuovaPosizione, una volta calcolata la nuova posizione e' level ad occuparsi se il giocatore
@@ -19,7 +20,7 @@ void muoviGiocatore(Giocatore& player, Level& , char input) ;
 
 
 
-void gestisciInput(Giocatore& player, Bomba& b, Map& m, char input);
+void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char input);
 //precondizione: l'utente inserisce l'input da tastiera
 //postcondizione: se input ('W''A''S''D') e posizione mossa valida la posizione del giocatore viene aggiornata, altrimenti
 //mantiene la stessa posizione. Se input 'X' e non e' gia presente una bomba innescata,

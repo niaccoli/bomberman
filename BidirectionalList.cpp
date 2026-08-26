@@ -77,12 +77,12 @@ void BidirectionalList::Create_Levels(){
  
 }
 
-void BidirectionalList::goToNext(){
+void BidirectionalList::goToNext(Giocatore& g){
     if(current->next != NULL)
         current = current->next;
 }
 
-void BidirectionalList::goToPrev(){
+void BidirectionalList::goToPrev(Giocatore& g){
     if(current->prev != NULL)
         current = current->prev;
 }

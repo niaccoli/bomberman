@@ -26,6 +26,8 @@ Level::Level(Map& m, int chasers_enemies, int items) : map(m) {
         num_items = 0 ;
     next_item = 0 ;
 
+    num_cella_esplosione = 0 ;
+
     completato = false;
 }
 
@@ -61,6 +63,8 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int items) : map(m
     else
         num_items = 0 ;
     next_item = 0 ;
+
+    num_cella_esplosione = 0 ;
 
     completato = false;
 }
@@ -108,6 +112,8 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, 
         num_items = 0 ;
     next_item = 0 ;
 
+    num_cella_esplosione = 0 ;
+
     completato = false;
 }
 
@@ -151,6 +157,13 @@ int Level::isThereAnEnemy_v2( Posizione posizione) {
 
 Map& Level::getMap(){
     return map;
+}
+
+void Level::stamp_map(Giocatore& g) {
+    if ( num_cella_esplosione == 0 )
+        map.stamp_map( g, nemici, num_nemici, items, num_items, b) ;
+    else
+        map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione) ;
 }
 
 bool Level::isCompletato( ) {
@@ -228,6 +241,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
     bool muro_distrutto = false ;
     bool giocatore_colpito = false ;
 
+    cella_esplosione[num_cella_esplosione] = current ;
+    num_cella_esplosione++;
+
+
     if (stessaPosizione(g.getPosizione(), epicentro)) {
         g.diminuisciVita();
         giocatore_colpito = true;
@@ -244,6 +261,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
     //SU:
     current = { epicentro.x, epicentro.y - 1 } ;
     while ( !stessaPosizione(current, nord) && !map.isUnbreakableWall(current) && !muro_distrutto ) {
+
+        cella_esplosione[num_cella_esplosione] = current ;
+        num_cella_esplosione++;
+
         if ( stessaPosizione( g.getPosizione(), current )) {
             g.diminuisciVita() ;
             giocatore_colpito = true ;
@@ -270,6 +291,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
     current = { epicentro.x, epicentro.y + 1 } ;
     muro_distrutto = false ;
     while ( !stessaPosizione(current, sud) && !map.isUnbreakableWall(current) && !muro_distrutto) {
+
+        cella_esplosione[num_cella_esplosione] = current ;
+        num_cella_esplosione++;
+
         if ( stessaPosizione( g.getPosizione(), current )) {
             g.diminuisciVita() ;
             giocatore_colpito = true ;
@@ -296,6 +321,9 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
     current = { epicentro.x - 1, epicentro.y } ;
     muro_distrutto = false ;
     while ( !stessaPosizione(current, est) && !map.isUnbreakableWall(current) && !muro_distrutto ) {
+
+        cella_esplosione[num_cella_esplosione] = current ;
+        num_cella_esplosione++;
 
         if ( stessaPosizione( g.getPosizione(), current )) {
             g.diminuisciVita() ;
@@ -324,6 +352,9 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
     muro_distrutto = false ;
     while ( !stessaPosizione(current, ovest) && !map.isUnbreakableWall(current) && !muro_distrutto) {
 
+        cella_esplosione[num_cella_esplosione] = current ;
+        num_cella_esplosione++;
+
         if ( stessaPosizione( g.getPosizione(), current )) {
             g.diminuisciVita() ;
             giocatore_colpito = true ;
@@ -346,6 +377,9 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
         current.x++ ;
     }
 
+
+    stamp_map( g ) ;
+    num_cella_esplosione = 0 ;
     return giocatore_colpito ;
 }
 

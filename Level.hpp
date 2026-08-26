@@ -16,6 +16,8 @@ class Level {
 private:
     Map& map;
 
+    Posizione cella_esplosione[9] ;
+    int num_cella_esplosione ;
 
     Nemico nemici[MAX_NEMICI_INS + MAX_NEMICI_RND + MAX_NEMICI_TANK];
     int num_nemici ;
@@ -46,6 +48,8 @@ public:
     Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
 
     Map& getMap( );
+
+    void stamp_map(Giocatore& g) ;
 
     bool isCompletato( );
 

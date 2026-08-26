@@ -54,10 +54,13 @@ public:
     //se tipo == 'V' g.aumentaVita()
     //altrimenti chiami per tutti i livelli Level::applicaEffetto( tipo )
 
-    void updateLevels( ) ;
+    bool updateLevels( ) ;
     /* per tutti i livelli non correnti → Level::updateLevel() //aggiorna soltanto i timer dei potenziamenti
      livello corrente  → Level::updateLevel(g) // deve ritornare questo valore cosi' sappiamo se il giocatore e' stato colpito
      */
+
+    bool isLastLevel( ) ;
+    //ritorna true se il livello corrente e' l'ultimo livello rimasto
 
 };
 
