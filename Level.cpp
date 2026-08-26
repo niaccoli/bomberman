@@ -121,7 +121,8 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, 
 Posizione Level::posizioneRandomValida_v2() {
     Posizione temp = map.walkableRandomPosition( ) ;
 
-    if ( !isThereAnEnemy_v2( temp ))
+
+    if ( !isThereAnEnemy_v2( temp ) && !map.isNearEntry(temp))
         return temp ;
 
     return posizioneRandomValida_v2() ;
@@ -172,7 +173,7 @@ bool Level::isCompletato( ) {
             return false ;
     }
     completato = true ;
-    return true ;
+    return completato ;
 }
 
 

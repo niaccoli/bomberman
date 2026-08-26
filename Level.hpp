@@ -66,7 +66,6 @@ public:
     *       |--updateBomba
     *       |            \b.esplode -> controllaCollisioniEsplosione. se g colpito return true
             |
-            |--raccolta Item
             |
             |--return false ;
 
