@@ -28,6 +28,7 @@ public:
 
     void Initialize_Map(int levelID);
     
+    //Metodo stamp map vecchio
     void stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b );
 
     void stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems,

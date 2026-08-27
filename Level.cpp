@@ -34,6 +34,7 @@ Level::Level(Map& m, int chasers_enemies, int items) : map(m) {
 
 Level::Level(Map& m, int chasers_enemies, int random_enemies, int items) : map(m) {
 
+    
     num_nemici = 0 ;
 
     if ( chasers_enemies <= MAX_NEMICI_INS) {
@@ -117,7 +118,7 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, 
     completato = false;
 }
 
-
+/*
 Posizione Level::posizioneRandomValida_v2() {
     Posizione temp = map.walkableRandomPosition( ) ;
 
@@ -127,6 +128,22 @@ Posizione Level::posizioneRandomValida_v2() {
 
     return posizioneRandomValida_v2() ;
 }
+*/
+Posizione Level::posizioneRandomValida_v2() {
+    Posizione temp;
+    int tentativi = 0;
+
+    do {
+        temp = map.walkableRandomPosition();
+        tentativi++;
+    } while ((isThereAnEnemy_v2(temp) || map.isNearEntry(temp)) && tentativi < 1000);
+
+    return temp;
+}
+
+
+
+
 /*chat suggerisce:
 Posizione Level::posizioneRandomValida() {
 

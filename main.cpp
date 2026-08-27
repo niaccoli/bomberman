@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
-//#include <ncurses.h>
-#include <curses.h>
+#include <ncurses.h>
+//#include <curses.h>
 #include "Map.hpp"
 #include "BidirectionalList.hpp"
 #include "funzioni.h"
@@ -21,76 +21,113 @@ void menu(){
 }
 
 int main() {
-
-    
-    setlocale(LC_ALL, "");
-    
-    //inizializza lo schermo
-    //setta la memoria e pulisce lo schermo (ncurses)
-    initscr();
-    noecho(); //Non mostra il carattere della tastiera in input
-    curs_set(0); //Nasconde il cursore
-
-    BidirectionalList levelList;
-
-    levelList.Create_Levels(); //TEST
-
-    int const start_y = 3;
-    int const start_x = 5;
+     // 1. Forza il terminale corretto per evitare che initscr fallisca
+     /*
+     Imposta la variabile d'ambiente che definisce l'identità del terminale. 
+     Senza questa riga, l'ambiente di debug di VS Code non comunicava a ncurses quale tipo di schermo stesse usando, 
+     impedendole di caricare le sequenze di escape corrette dal database di sistema (terminfo).
+     */
+     setenv("TERM", "xterm-256color", 1);
 
 
-    /*
-    //Puntatore alla finestra window
-    WINDOW *win = newwin(height, width, start_y, start_x);
+     //INIZIALIZZAZIONE
+     setlocale(LC_ALL, "");
+     initscr(); //inizializza lo schermo
+     noecho(); //Non mostra il carattere della tastiera in input
+     curs_set(0); //Nasconde il cursore
+     refresh();
 
-    //Aggiorna lo schermo per farlo matchare a ciò c he è presente in memoria
-    refresh();
+     BidirectionalList levelList;
+     levelList.Create_Levels(); 
 
-    //Crea un bordo attorno alla window
-    box(win, 0, 0);
-    wrefresh(win);
-    */
+     // CHECKPOINT 1
+     printw("1. Livelli creati correttamente!\n"); 
+     refresh(); 
+     getch(); // Aspetta che tu prema un tasto
 
-    refresh();
-    // TEST
+     //2 CREAZIONE ENTITÀ
+     Giocatore player(3, 1, 1);
+     char input;
 
-    node* currentNode = levelList.getCurrent();
-    Map& m = currentNode->level->getMap();
+     // CHECKPOINT 2
+     printw("2. Sto per chiamare posizionaGiocatoreStart...\n"); 
+     refresh(); 
+     getch();
 
-    // 2. Variabili fittizie per far funzionare stamp_map (temporanee)
-    Giocatore player(3, 1, 1);
-    Nemico dummy_nemici[1];
-    Item dummy_items[1];
-    Bomba b;
+     posizionaGiocatoreStart(player, levelList);
 
-    // 3. STAMPA IL LIVELLO!
-    m.stamp_map(player, dummy_nemici, 0, dummy_items, 0, b);
-    //FINE TEST
+     if (levelList.getCurrent() == NULL || levelList.getCurrent()->level == NULL) {
+          endwin();
+          cout << "ERRORE CRITICO: Livello non caricato o lista vuota!" << endl;
+          return 1;
+     }
 
+     // CHECKPOINT 3
+     printw("3. Giocatore posizionato! Sto per chiamare stamp_map...\n"); 
+     refresh(); 
+     getch();
 
-    //Prende l'input dell'utente restituendo il valore int corrispondente al tasto premuto
-    getch();
+     //3 PRIMA STAMPA
+     levelList.getCurrent()->level->stamp_map(player);
 
-    //Muove il cursore alle coordinate specificate
-    //move(y, x);
-
-    //dealloca la memoria e termina ncurses
-    //endwin();
+     // CHECKPOINT 4
+     printw("4. Mappa stampata con successo!\n"); 
+     refresh(); 
+     getch();
 
 
 
+     /*
+     //Puntatore alla finestra window
+     WINDOW *win = newwin(height, width, start_y, start_x);
+
+     //Aggiorna lo schermo per farlo matchare a ciò c he è presente in memoria
+     refresh();
+
+     //Crea un bordo attorno alla window
+     box(win, 0, 0);
+     wrefresh(win);
+     */
+
+     // TEST
+
+     //node* currentNode = levelList.getCurrent();
+     //Map& m = currentNode->level->getMap();
+
+     // 2. Variabili fittizie per far funzionare stamp_map (temporanee)
+     //Giocatore player(3, 1, 1);
+     //Nemico dummy_nemici[1];
+     //Item dummy_items[1];
+     //Bomba b;
+
+     // 3. STAMPA IL LIVELLO!
+     //m.stamp_map(player, dummy_nemici, 0, dummy_items, 0, b);
+     //FINE TEST
 
 
-   //Giocatore player(3, 1, 1);
-     char input ;
+       //Prende l'input dell'utente restituendo il valore int corrispondente al tasto premuto
+      //getch();
 
-     posizionaGiocatoreStart( player, levelList ) ;
+      //Muove il cursore alle coordinate specificate
+      //move(y, x);
+
+      //dealloca la memoria e termina ncurses
+      //endwin();
 
 
-   //INIZIO CICLO
+
+
+
+     //Giocatore player(3, 1, 1);
+     //char input ;
+
+     //posizionaGiocatoreStart( player, levelList ) ;
+
+
+     //INIZIO CICLO
 while ( player.vivo() ) {
      //1. leggi input
-     cin >> input ;
+     input = getch();
 
      //2. esegui azione giocatore
      gestisciInput(player, levelList, input ) ;

@@ -15,11 +15,11 @@ void BidirectionalList::Create_Levels(){
 
     //Creazione delle mappe
     //parametri momentanei
-    Map* map1 = new Map(21, 41, 3, 5);
-    Map* map2 = new Map(24, 46, 19, 10);
-    Map* map3 = new Map(1, 1, 1, 1);
-    Map* map4 = new Map(1, 1, 1, 1);
-    Map* map5 = new Map(1, 1, 1, 1);
+    Map* map1 = new Map(21, 41);
+    Map* map2 = new Map(24, 46);
+    Map* map3 = new Map(1, 1);
+    Map* map4 = new Map(1, 1);
+    Map* map5 = new Map(1, 1);
 
     //Inizializzazione mappe
     map1->Initialize_Map(1);
@@ -121,8 +121,14 @@ void BidirectionalList::applicaEffettoItem(Giocatore& g, char type){
     else if(type == 'V')
         g.aumentaVita();
 
-    else
-        current->level->applicaEffetto(type);
+    else{
+        node* tmp = head;
+
+        while(tmp != NULL){
+            tmp->level->applicaEffetto(type);
+            tmp = tmp->next;
+        }
+    }
 }
 
 void BidirectionalList::deleteNode(){
@@ -147,21 +153,32 @@ void BidirectionalList::deleteNode(){
 bool BidirectionalList::updateLevels(Giocatore& g){
     node* tmp = head;
 
+    bool is_hitted = false;
+
     while(tmp != NULL){
         if(tmp != current)
             tmp->level->updateLevel();
         else
-            current->level->updateLevel(g);
+            is_hitted = current->level->updateLevel(g);
         tmp = tmp->next;
     }
 
-    return true;
+    return is_hitted;
 }
 
 bool BidirectionalList::isLastLevel(){
     if(current->next == NULL && current->prev == NULL)
         return true;
     return false;
+}
+
+void BidirectionalList::reset_v1(){
+    node* tmp = head;
+
+        while(tmp != NULL){
+            tmp->level->reset_v1();
+            tmp = tmp->next;
+        }
 }
 
 
