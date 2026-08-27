@@ -160,10 +160,12 @@ i   f (level.daResettare())
     void piazzaBomba(Giocatore& g) ;
     //posiziona una bomba nella posizione occupata dal giocatore e ne attiva il timer (timer default = 4).
 
-    //void applicaEffettoItem ( Item& i );
-    //capire se mettere come funzione generale
+    void reset_v1( ) ;
+    //disattiva bomba e potenziamenti
 
-    void reset_v2() ;
+    void reset_v2( ) ;
+    //riporta tutti i nemici vivi e li riposiziona casualmente, rimette gli item a 0 (da valuare), resetta la bomba
+    //e ne disattiva eventuali potenziamenti
 
     void updateLevel( ) ;
     //aggiorna il timer dei potenziamenti sulle bombe

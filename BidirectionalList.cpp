@@ -91,5 +91,9 @@ node* BidirectionalList::getCurrent(){
     return this->current;
 }
 
+bool BidirectionalList::updateLevels( ) {
+
+}
+
 
 

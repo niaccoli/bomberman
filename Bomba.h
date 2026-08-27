@@ -109,6 +109,7 @@ class Bomba {
         void aggiornaBoostTimer( );
 
         void aggiornaPotenziamenti( ) ;
+        void disattivaPotenziamenti( ) ;
 
 
 };

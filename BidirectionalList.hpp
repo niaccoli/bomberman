@@ -59,6 +59,9 @@ public:
     bool isLastLevel( ) ;
     //ritorna true se il livello corrente e' l'ultimo livello rimasto
 
+    void reset_v1( ) ;
+    //chiama void Level::reset_v1() per tutti i livelli attivi disattivando i potenziamenti bomba
+
 };
 
 #endif

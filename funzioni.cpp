@@ -60,5 +60,9 @@ void controllaPassaggioLivelli( Giocatore& player, BidirectionalList& l ) {
         return ;
 }
 
+void reset_v1( Giocatore& player, BidirectionalList& l) {
+    l.reset_v1() ;
+    player.invulnerabilitaOn() ;
+}
 
 

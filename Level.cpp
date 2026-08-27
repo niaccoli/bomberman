@@ -163,8 +163,11 @@ Map& Level::getMap(){
 void Level::stamp_map(Giocatore& g) {
     if ( num_cella_esplosione == 0 )
         map.stamp_map( g, nemici, num_nemici, items, num_items, b) ;
-    else
+    else {
         map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione) ;
+
+        num_cella_esplosione = 0 ;
+    }
 }
 
 bool Level::isCompletato( ) {
@@ -181,12 +184,18 @@ bool Level::updateLevel(Giocatore& g) {
 
     updateEnemies( g )  ;
 
-    if ( collisioneGiocatoreNemici_v2( g ))
+    if ( collisioneGiocatoreNemici_v2( g )) {
+        stamp_map( g ) ;
         return true ;
+    }
 
-    if ( b.aggiornaBomba( ) )
-        if ( collisioneEsplosione( g ))
+    if ( b.aggiornaBomba( ) ) {
+        bool giocatore_colpito = collisioneEsplosione( g ) ;
+        //collisione esplsione inizializza le cella_esplosione[]
+        stamp_map( g ) ;
+        if ( giocatore_colpito)
             return true ;
+    }
 
     //updateItem
     //quando gli item avranno una durata
@@ -378,9 +387,6 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
         current.x++ ;
     }
 
-
-    stamp_map( g ) ;
-    num_cella_esplosione = 0 ;
     return giocatore_colpito ;
 }
 
@@ -421,6 +427,13 @@ void Level::piazzaBomba(Giocatore& g) {
     }
 }
 
+void Level::reset_v1() {
+    b.esplodi( );
+    b.disattivaPotenziamenti() ;
+    b.setPosizione( -1, -1 ) ;
+}
+
+
 void Level::reset_v2() {
 
     // riporta tutti i nemici vivi
@@ -438,6 +451,7 @@ void Level::reset_v2() {
 
     // reset bomba
     b.esplodi( );
+    b.disattivaPotenziamenti() ;
     b.setPosizione( -1, -1 ) ;
 
     completato = false;

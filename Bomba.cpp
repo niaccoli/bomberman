@@ -222,8 +222,15 @@ void Bomba::aggiornaBoostTimer() {
     }
 }
 
-void Bomba::aggiornaPotenziamenti() {
+void Bomba::aggiornaPotenziamenti( ) {
     aggiornaBoostTimer( ) ;
     aggiornaBoostRaggio( ) ;
     aggiornaBoostDanno( ) ;
+}
+
+
+void Bomba::disattivaPotenziamenti( ) {
+    disattivaBoostDanno( ) ;
+    disattivaBoostRaggio( ) ;
+    disattivaBoostTimer( ) ;
 }

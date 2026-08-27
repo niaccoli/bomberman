@@ -98,6 +98,8 @@ while ( player.vivo() ) {
      //3. controlla entrata / uscita
      controllaPassaggioLivelli( player, levelList ) ;
 
+     player.aggiornaInvulnerabilita( ) ;
+
      //4. aggiorna i timer dei potenziamenti dei livelli non correnti
      //+ aggiorna il livello corrente e ritorna true se il giocatore' ha subito danno
      //- nemici
@@ -107,6 +109,7 @@ while ( player.vivo() ) {
           // il giocatore è stato colpito
           // mostra messaggio / animazione
           // gestisci perdita vita o riavvio del livello
+          reset_v1 (player, levelList ) ;
      }
      else {
           //nessun danno subito dal giocatore

@@ -39,5 +39,11 @@ void posizionaGiocatoreStart( Giocatore& player, BidirectionalList& l ) ;
 void controllaPassaggioLivelli( Giocatore& player, BidirectionalList& l ) ;
 
 
+void reset_v1( Giocatore& player, BidirectionalList& l ) ;
+//attiva l'invulnerabilita' del giocatore, disattiva i potenziamenti sulle bombe
+
+
+
+
 
 #endif
