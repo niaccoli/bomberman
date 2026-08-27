@@ -78,21 +78,90 @@ void BidirectionalList::Create_Levels(){
 }
 
 bool BidirectionalList::goToNext( ){
-    if(current->next != NULL)
-        current = current->next;
+    if(current->next != NULL){
+
+        node* next_node = current->next;
+
+        if(current->level->isCompletato()){
+            deleteNode();
+        }
+
+        current = next_node;
+        return true;
+    }
+     
+    return false;
 }
 
-bool BidirectionalList::goToPrev( ){
-    if(current->prev != NULL)
-        current = current->prev;
+bool BidirectionalList::goToPrev(){
+    if(current->prev != NULL){
+
+        node* previous_node = current->prev;
+
+        if(current->level->isCompletato()){
+            deleteNode();
+        }
+            
+        current = previous_node;
+        return true;
+    }
+        
+    return false;
 }
 
 node* BidirectionalList::getCurrent(){
     return this->current;
 }
 
-bool BidirectionalList::updateLevels( ) {
 
+void BidirectionalList::applicaEffettoItem(Giocatore& g, char type){
+    if( type == 'I')
+        g.invulnerabilitaOn(5);
+
+    else if(type == 'V')
+        g.aumentaVita();
+
+    else
+        current->level->applicaEffetto(type);
+}
+
+void BidirectionalList::deleteNode(){
+    //Variabile di appoggio per poter restituire il puntatore corretto
+    node* to_delete = this->current;
+
+    //Controllo che il nodo da eliminare non sia la testa
+    if(to_delete->prev != NULL)
+        to_delete->prev->next = to_delete->next;
+    else
+       this->head = to_delete->next;
+
+    //Controllo che il nodo da eliminare non sia la coda
+    if(to_delete->next != NULL)
+        to_delete->next->prev = to_delete->prev;
+
+    //Eliminazione effettiva del nodo
+    delete to_delete->level;
+    delete to_delete;
+}
+
+bool BidirectionalList::updateLevels(Giocatore& g){
+    node* tmp = head;
+
+    while(tmp != NULL){
+        if(tmp != current)
+            tmp->level->updateLevel();
+        else
+            current->level->updateLevel(g);
+        tmp = tmp->next;
+    }
+
+    return true;
+}
+
+bool BidirectionalList::isLastLevel(){
+    if(current->next == NULL && current->prev == NULL)
+        return true;
+    return false;
 }
 
 

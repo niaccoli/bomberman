@@ -6,11 +6,13 @@
 
 using namespace std;
 
-Map::Map(int height, int width, int start_Y, int start_X){
+Map::Map(int height, int width){
     rows = height;
     cols = width;
 
-    win = newwin(height + 2, width + 2, start_Y, start_X);
+
+    //gli ultimi 2 parametri provvisori
+    win = newwin(height + 2, width + 2, 1, 1);
 
     //allocazione dinamica della matrice
     grid = new char*[rows];
@@ -41,6 +43,14 @@ void Map::Initialize_Map(int levelID){
             r++;
             c = 0;
         } else if (c < cols) {
+            if(ch == '@'){
+                entry.x = c;
+                entry.y = r;
+            }
+            else if(ch == 'U'){
+                exit.x = c;
+                exit.y = r;
+            }
             grid[r][c] = ch;
             c++;
         }
@@ -72,6 +82,13 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
     for(int i = 0; i < rows; i++){
         for(int j=0; j < cols; j++){
             char char_to_display = grid[i][j]; // Inizia con il carattere base della mappa
+
+
+            //Priorità piu bassa, stampa entrata ed uscita come spazio vuoto
+            if(char_to_display == '@' || char_to_display == 'U'){
+                char_to_display = ' ';
+            }
+
 
             // Priorità 4: Item (la più bassa tra gli oggetti dinamici)
             // Controlla se c'è un item attivo in questa posizione
@@ -197,5 +214,41 @@ bool Map::cell_without_wall(int x, int y){
     if(grid[y][x] == 'X' || grid[y][x] == '#')
         return false;
     return true;
+}
+
+Posizione Map::getEntry(){
+    Posizione entry_position;
+
+    entry_position.x = entry.x;
+    entry_position.y = entry.y;
+
+    return entry_position;
+}
+
+Posizione Map::getExit(){
+    Posizione exit_position;
+
+    exit_position.x = exit.x;
+    exit_position.y = exit.y;
+
+    return exit_position;
+}
+
+bool Map::isEntry(Posizione position){
+    if(position.x == entry.x && position.y == entry.y)
+        return true;
+    return false;
+}
+
+bool Map::isExit(Posizione position){
+    if(position.x == exit.x && position.y == exit.y)
+        return true;
+    return false;
+}
+
+bool Map::isNearEntry(Posizione position){
+    if(position.x < entry.x + 4 && position.y <= entry.y + 2 && position.y > entry.y - 2)
+        return true;
+    return false;
 }
 
