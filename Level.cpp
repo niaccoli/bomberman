@@ -231,8 +231,8 @@ void Level::updateItems(){
 bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
     for ( int i = 0 ; i < num_nemici ; i++ ) {
         if ( stessaPosizione( g.getPosizione(), nemici[i].getPosizione())) {
-            g.diminuisciVita() ;
-            return true ;
+            if (g.diminuisciVita() )
+                return true;
         }
     }
     return false ;
@@ -256,8 +256,8 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
 
     if (stessaPosizione(g.getPosizione(), epicentro)) {
-        g.diminuisciVita();
-        giocatore_colpito = true;
+        if (g.diminuisciVita() )
+            giocatore_colpito = true;
     }
 
     for ( int i = 0 ; i < num_nemici ; i++ ) {
@@ -276,8 +276,8 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
         num_cella_esplosione++;
 
         if ( stessaPosizione( g.getPosizione(), current )) {
-            g.diminuisciVita() ;
-            giocatore_colpito = true ;
+            if (g.diminuisciVita() )
+                giocatore_colpito = true;
         }
 
         if ( map.isBreakable(current) ) {
@@ -306,8 +306,8 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
         num_cella_esplosione++;
 
         if ( stessaPosizione( g.getPosizione(), current )) {
-            g.diminuisciVita() ;
-            giocatore_colpito = true ;
+            if (g.diminuisciVita() )
+                giocatore_colpito = true;
         }
 
         if ( map.isBreakable(current) ) {
@@ -336,8 +336,8 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
         num_cella_esplosione++;
 
         if ( stessaPosizione( g.getPosizione(), current )) {
-            g.diminuisciVita() ;
-            giocatore_colpito = true ;
+            if (g.diminuisciVita() )
+                giocatore_colpito = true;
         }
 
         if ( map.isBreakable(current) ) {
@@ -366,8 +366,8 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
         num_cella_esplosione++;
 
         if ( stessaPosizione( g.getPosizione(), current )) {
-            g.diminuisciVita() ;
-            giocatore_colpito = true ;
+            if (g.diminuisciVita() )
+                giocatore_colpito = true;
         }
 
         if ( map.isBreakable(current) ) {

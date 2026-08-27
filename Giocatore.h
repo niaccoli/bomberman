@@ -35,7 +35,6 @@ public:
     // direttamente lo stato di invulnerabilità del giocatore: si limitano a
     // chiamare diminuisciVita() e controllarne il risultato.
 
-    void diminuisciVita(int danno);
 };
 
 

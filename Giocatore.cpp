@@ -46,15 +46,13 @@ void Giocatore::aggiornaInvulnerabilita(){
 }
 
 bool Giocatore::diminuisciVita() {
-    if (! invulnerabile())
+    if (! invulnerabile()) {
         Personaggio::diminuisciVita();
-    return true ;
+        return true ;
+    }
+    return false ;
 }
 
 
 
-void Giocatore::diminuisciVita(int danno) {
-    if (! invulnerabile())
-            setVite( getVite() - danno);
-}
 

@@ -100,20 +100,19 @@ while ( player.vivo() ) {
 
      player.aggiornaInvulnerabilita( ) ;
 
+     bool colpito = levelList.updateLevels( player ) ;
      //4. aggiorna i timer dei potenziamenti dei livelli non correnti
      //+ aggiorna il livello corrente e ritorna true se il giocatore' ha subito danno
      //- nemici
      //- bomba
      //- collisioni
 
-     bool colpito = levelList.updateLevels( player ) ;
-
      if ( !colpito )
           levelList.getCurrent() -> level -> raccoltaItem( player ) ;
 
      levelList.getCurrent() -> level -> stamp_map( player ) ;
 
-     if ( colpito ) {// il giocatore è stato colpito
+     if ( colpito ) {// il giocatore ha subito danno
           if ( player.vivo() ) {
                // mostra messaggio / animazione
                // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
@@ -127,7 +126,6 @@ while ( player.vivo() ) {
 
      if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
           break ;
-
 }
      if ( player.vivo()) {
           //vittoria
