@@ -105,23 +105,28 @@ while ( player.vivo() ) {
      //- nemici
      //- bomba
      //- collisioni
-     if ( levelList.updateLevels( player ) /*mostra eventuale esplosione*/) {
-          // il giocatore è stato colpito
-          // mostra messaggio / animazione
-          // gestisci perdita vita o riavvio del livello
-          reset_v1 (player, levelList ) ;
-     }
-     else {
-          //nessun danno subito dal giocatore
-          levelList.getCurrent() -> level -> raccoltaItem( player ) ; //raccoglie gli item
-          levelList.getCurrent() -> level -> stamp_map( player ) ; //stampa mappa
+
+     bool colpito = levelList.updateLevels( player ) ;
+
+     if ( !colpito )
+          levelList.getCurrent() -> level -> raccoltaItem( player ) ;
+
+     levelList.getCurrent() -> level -> stamp_map( player ) ;
+
+     if ( colpito ) {// il giocatore è stato colpito
+          if ( player.vivo() ) {
+               // mostra messaggio / animazione
+               // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
+               // Invulnerabilita' attiva per x secondi"
+               reset_v1 (player, levelList ) ;
+          }
+          else
+               break ;
+
      }
 
-
-//controlla fine partita
-     //serve funzione: bool bidirectionalList::isLastLevel()
-     //quindi controlliamo se e' l'ultimo livello ed e' completato (Level::isCompletato())
-     //e nel caso cancelliamo l'ultimo nodo, mettiamo current a nullptr e break sul ciclo
+     if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
+          break ;
 
 }
      if ( player.vivo()) {
