@@ -34,147 +34,84 @@ private:
     bool completato;
 
     Posizione posizioneRandomValida_v2() ;
+    // Restituisce una posizione casuale calpestabile, non occupata da nemici vivi
+    // e sufficientemente lontana dall'entrata del livello.
 
     void posizionaNemici_v2( ) ;
+    // Posiziona tutti i nemici del livello in posizioni casuali valide.
 
     int isThereAnEnemy_v2( Posizione posizione) ;
-    //se e' presente un nemico vivo in posizione ritorna l'indice del nemico, altrimenti ritorna -1 ;
+    // Restituisce l'indice del nemico vivo presente nella posizione indicata;
+    // restituisce -1 se la posizione non è occupata da alcun nemico vivo.
 
 public:
     Level(Map& m, int chasers_enemies, int items);
+    // Costruisce un livello con nemici inseguitori e un numero massimo di item.
 
     Level(Map& m, int chasers_enemies, int random_enemies, int items);
+    // Costruisce un livello con nemici inseguitori, nemici random e un numero massimo di item.
 
     Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
+    // Costruisce un livello con nemici inseguitori, random, tank e un numero massimo di item.
 
     Map& getMap( );
+    // Restituisce un riferimento alla mappa associata al livello.
 
     void stamp_map(Giocatore& g) ;
+    // Visualizza lo stato corrente del livello; se è presente un'esplosione,
+    // ne mostra le celle e successivamente ne azzera la memorizzazione.
 
     bool isCompletato( );
+    // Restituisce true se tutti i nemici del livello sono stati sconfitti,
+    // false altrimenti.
 
     bool updateLevel(Giocatore& g) ;
-    /* MIA IDEA:
-     * nel loop del main:
-     * leggiInput
-     *
-    *  updateLevel:
-    *       |--updateEnemies(muovi i nemici)
-    *       |
-    *       |--collisioneGiocatoreNemici
-    *       |           \g ha subito danno -> return true -> reset
-    *       |--updateBomba
-    *       |            \b.esplode -> controllaCollisioniEsplosione. se g colpito return true
-            |
-            |
-            |--return false ;
-
-        chat:
-    deve esserci un modo chiaro per sapere che “in questo turno la bomba è appena esplosa”.
-    Quindi devi stare attento a non fare concettualmente:
-    aggiornaBomba()
-
-    if (b.innescata())
-        collisioneEsplosione()
-
-    MIA IDEA:
-    fare una pdateLevel come bool e se il giocatore viene colpito ritornare subito true
-
-    SUGGERIMENTO CHAT:
-    C'è però una distinzione importante da fare adesso, prima di implementarla:
-    vuoi riavviare il livello quando il giocatore viene "colpito" oppure quando perde effettivamente una vita?
-    Non sono necessariamente la stessa cosa, visto che hai l'invulnerabilità.
-    collisione
-        ↓
-    g.diminuisciVita()
-        ↓
-    return true
-    Ma se Giocatore::diminuisciVita() non diminuisce la vita perché il giocatore è invulnerabile,
-    la collisione restituisce comunque true.
-
-    possibilità proposte da chat:
-    A)void updateLevel() e poi controllare dal main lo stato del giocatore, per esempio confrontando le vite.
-    B)Oppure potresti avere uno stato dentro Level, ad esempio un booleano: livelloDaResettare
-    e poi:
-    updateLevel(g)
-i   f (level.daResettare())
-    ...
-    C)altra possibilità sarebbe restituire un int o un char per distinguere più risultati:
-    0 → continua
-    1 → giocatore colpito
-    2 → livello completato
-    3 → game over
-
-    MIA IDEA( DOMANDA A CHAT )
-    per adesso non considererei l'invulnerabilita' del giocatore, quella forse la implementeremo piu' avanti,
-    e nel caso la mia idea sarebbe quella di aggiornare e collisioniGiocatoreNemici e Esplosione metteno negli
-    if anche un parametro && !g.invulnerrabile( )
-
-    RISPOSTA CHAT:
-    aggiungere il controllo nella collisione tipo:
-    è coerente, perché in quel caso stai dicendo: considero “collisione dannosa” solo una collisione che può
-    effettivamente togliere vita.
-    problema:
-    Se Giocatore::diminuisciVita() già controlla internamente invulnerabile(), allora mettere anche && !g.invulnerabile()
-    in tutte le collisioni diventa un doppio controllo.
-    Hai quindi due modelli possibili:
-    A) Collisione controlla invulnerabilità
-       collisione -> se non invulnerabile -> diminuisciVita()
-    B) Giocatore controlla invulnerabilità
-       collisione -> diminuisciVita()
-                             ↓
-                     Giocatore decide
-                     se perdere vita
-
-    MIA IDEA:
-    rendere diminuisci vita un bool
-
-    RSIPOSTA CHAT:
-    Sì, e nel tuo caso sarebbe una soluzione pulita.
-    Potresti dare a diminuisciVita() questo significato:
-    bool diminuisciVita();
-
-
-
-    */
+    // Aggiorna il livello corrente: muove i nemici, controlla le collisioni
+    // con il giocatore e aggiorna la bomba e l'eventuale esplosione.
+    // Restituisce true solo se il giocatore perde effettivamente una vita.
 
 
     void updateEnemies(Giocatore& g);
-    //muove i nemici
+    // Aggiorna la posizione di tutti i nemici vivi del livello.
 
     void updateItems( );
-    //questa funzione avra' senso quando gli item avranno una durata
+    // Aggiorna lo stato degli item del livello.
+    // Attualmente predisposta per una futura gestione degli item con durata.
 
     bool collisioneGiocatoreNemici_v2(Giocatore& g ) ;
+    // Controlla la collisione tra giocatore e nemici.
+    // Restituisce true solo se la collisione provoca effettivamente una perdita di vita.
 
     bool collisioneEsplosione( Giocatore& g ) ;
+    // Calcola l'area dell'esplosione, gestisce le collisioni con giocatore,
+    // nemici e muri e restituisce true se il giocatore perde una vita.
     //precedentemente nominata come: bool collisioneEsplosioneMuriNemiciGiocatore_v2( Giocatore& g ) ;
 
     char raccoltaItem(Giocatore& g ) ;
-    //se il giocatore occupa la stessa posizione di un Item attivo, l'item viene raccolto ( attivo == false) e applicato
-    //l'effetto
+    // Se il giocatore si trova su un item attivo, ne restituisce il tipo;
+    // restituisce ' ' se non è presente alcun item raccoglibile.
 
     void dropItem(Posizione posizione) ; ;
-    /*  Quando muore un nemico in (x,y) oppure viene distrutto un muro in (x,y), fai il lancio casuale:*/
+    // Tenta di generare casualmente un item nella posizione indicata,
+    // se non è stato raggiunto il numero massimo di item del livello.
 
     void piazzaBomba(Giocatore& g) ;
-    //posiziona una bomba nella posizione occupata dal giocatore e ne attiva il timer (timer default = 4).
+    // Piazza e innesca la bomba nella posizione del giocatore,
+    // se non è già presente una bomba attiva.
 
     void reset_v1( ) ;
-    //disattiva bomba e potenziamenti
+    // Disattiva la bomba del livello, ne rimuove i potenziamenti
+    // e la riposiziona fuori dalla mappa.
 
     void reset_v2( ) ;
     //riporta tutti i nemici vivi e li riposiziona casualmente, rimette gli item a 0 (da valuare), resetta la bomba
     //e ne disattiva eventuali potenziamenti
 
     void updateLevel( ) ;
-    //aggiorna il timer dei potenziamenti sulle bombe
-    //se vogliamo congelare il livello precedente  ma allo stesso tempo applicare l'effetto degli item a tutte le bombe
-    //di tutti i livelli bisogna avere una funzione che aggiorni il timer degli effetti nei livelli dove non e' presente
-    //il giocatore
+    // Aggiorna la durata dei potenziamenti associati alla bomba del livello.
 
     void applicaEffetto(char tipo ) ;
-    //applica gli effetti sulle bombe
+    // Applica alla bomba il potenziamento identificato dal tipo ricevuto.
 
     // ---------------------------------------- DA VALUTARE---------------------------------------------
 
@@ -184,7 +121,7 @@ i   f (level.daResettare())
     //per il livello corrente e updateLevel_v3( ) per gli altri livelli
 
     void updateLevel_v3 ( ) ;
-    //chiama una versione moificata di updateEnemies ( muove i nemici ). Non essendo presente il giocatore in quel
+    //chiama una versione modificata di updateEnemies ( muove i nemici ). Non essendo presente il giocatore in quel
     //livello fa muovere i nemici_inseguitore come nemici_random chiamando Nemico::nuovaPosizione( )
 
     void updateEnemies_v3( ) ;
