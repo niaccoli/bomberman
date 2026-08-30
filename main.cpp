@@ -35,47 +35,34 @@ int main() {
      initscr(); //inizializza lo schermo
      noecho(); //Non mostra il carattere della tastiera in input
      curs_set(0); //Nasconde il cursore
+
+     timeout(100);
+
      refresh();
+
+     if (has_colors()) {
+          start_color();
+          use_default_colors(); // Mantiene lo sfondo trasparente/predefinito del terminale
+
+          // init_pair(ID_COPPIA, COLORE_TESTO, COLORE_SFONDO);
+          init_pair(1, COLOR_CYAN,    COLOR_BLACK); // Giocatore
+          init_pair(2, COLOR_RED,     COLOR_BLACK); // Nemici
+          init_pair(3, COLOR_YELLOW,  COLOR_BLACK); // Bomba / Esplosione
+          init_pair(4, COLOR_GREEN,   COLOR_BLACK); // Item / Valuta
+          init_pair(5, COLOR_WHITE,   COLOR_BLACK); // Muri indistruttibili
+     }
 
      BidirectionalList levelList;
      levelList.Create_Levels(); 
-
-     // CHECKPOINT 1
-     printw("1. Livelli creati correttamente!\n"); 
-     refresh(); 
-     getch(); // Aspetta che tu prema un tasto
 
      //2 CREAZIONE ENTITÀ
      Giocatore player(3, 1, 1);
      char input;
 
-     // CHECKPOINT 2
-     printw("2. Sto per chiamare posizionaGiocatoreStart...\n"); 
-     refresh(); 
-     getch();
-
      posizionaGiocatoreStart(player, levelList);
-
-     if (levelList.getCurrent() == NULL || levelList.getCurrent()->level == NULL) {
-          endwin();
-          cout << "ERRORE CRITICO: Livello non caricato o lista vuota!" << endl;
-          return 1;
-     }
-
-     // CHECKPOINT 3
-     printw("3. Giocatore posizionato! Sto per chiamare stamp_map...\n"); 
-     refresh(); 
-     getch();
 
      //3 PRIMA STAMPA
      levelList.getCurrent()->level->stamp_map(player);
-
-     // CHECKPOINT 4
-     printw("4. Mappa stampata con successo!\n"); 
-     refresh(); 
-     getch();
-
-
 
      /*
      //Puntatore alla finestra window
@@ -123,47 +110,59 @@ int main() {
 
      //posizionaGiocatoreStart( player, levelList ) ;
 
+     // Prima del while, dichiara un contatore
+     int debug_contatore = 0;
+
 
      //INIZIO CICLO
-while ( player.vivo() ) {
-     //1. leggi input
-     input = getch();
+     while ( player.vivo() ) {
+          //1. leggi input
+          input = getch();
 
-     //2. esegui azione giocatore
-     gestisciInput(player, levelList, input ) ;
-
-     //3. controlla entrata / uscita
-     controllaPassaggioLivelli( player, levelList ) ;
-
-     player.aggiornaInvulnerabilita( ) ;
-
-     bool colpito = levelList.updateLevels( player ) ;
-     //4. aggiorna i timer dei potenziamenti dei livelli non correnti
-     //+ aggiorna il livello corrente e ritorna true se il giocatore' ha subito danno
-     //- nemici
-     //- bomba
-     //- collisioni
-
-     if ( !colpito )
-          levelList.getCurrent() -> level -> raccoltaItem( player ) ;
-
-     levelList.getCurrent() -> level -> stamp_map( player ) ;
-
-     if ( colpito ) {// il giocatore ha subito danno
-          if ( player.vivo() ) {
-               // mostra messaggio / animazione
-               // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
-               // Invulnerabilita' attiva per x secondi"
-               reset_v1 (player, levelList ) ;
+          if(input != ERR){
+               //2. esegui azione giocatore
+               gestisciInput(player, levelList, input ) ;
           }
-          else
+
+
+          //3. controlla entrata / uscita
+          controllaPassaggioLivelli( player, levelList ) ;
+
+          player.aggiornaInvulnerabilita( ) ;
+
+          bool colpito = levelList.updateLevels( player ) ;
+          //4. aggiorna i timer dei potenziamenti dei livelli non correnti
+          //+ aggiorna il livello corrente e ritorna true se il giocatore' ha subito danno
+          //- nemici
+          //- bomba
+          //- collisioni
+
+          if ( !colpito )
+               levelList.getCurrent() -> level -> raccoltaItem( player ) ;
+
+          levelList.getCurrent() -> level -> stamp_map( player ) ;
+
+          if ( colpito ) {// il giocatore ha subito danno
+               if ( player.vivo() ) {
+                    // mostra messaggio / animazione
+                    // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
+                    // Invulnerabilita' attiva per x secondi"
+                    reset_v1 (player, levelList ) ;
+               }
+               else
+                    break ;
+
+          }
+
+          if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
                break ;
 
+          // --- AGGIUNGI QUESTE TRE RIGHE ALLA FINE DEL WHILE ---
+          debug_contatore++;
+          mvprintw(0, 0, "Battito loop: %d | Ultimo input: %d", debug_contatore, input);
+          refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
      }
 
-     if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
-          break ;
-}
      if ( player.vivo()) {
           //vittoria
      }
@@ -173,11 +172,6 @@ while ( player.vivo() ) {
 
      //dopo la fine della partita bisogna richiedere il nome del giocatore, sia in caso di vittoria che in caso di
      //sconfitta
-
-
-
-
-
 
     //set_border();
     //stamp_screen();

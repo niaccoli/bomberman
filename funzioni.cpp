@@ -24,7 +24,8 @@ void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char in
 
     Posizione temp = {player.getX() + dx , player.getY() + dy};
 
-    if ( lista_livelli.getCurrent() -> level -> getMap().mossavalida(temp.x, temp.y) )
+    //Ho sostituito isWalkable() al posto di mossaValida()
+    if ( lista_livelli.getCurrent() -> level -> getMap().isWalkable(temp) )
         player.muovi( temp );
 }
 

@@ -139,18 +139,30 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
 
             // 2. RENDERIZZAZIONE GRAFICA MODERNA
             // Stampiamo con OFFSET di +1 per salvare i bordi della finestra
-            if (char_to_display == '#') {
-                // MURO INDISTRUTTIBILE: Blocco Unicode pieno (senza fessure!)
-                mvwaddstr(this->win, i + 1, j + 1, "█"); 
-            } 
-            else if (char_to_display == 'X') {
-                // MURO DISTRUTTIBILE: Blocco sfumato
-                mvwaddstr(this->win, i + 1, j + 1, "▒"); 
+            if (char_to_display == '#')
+                mvwaddstr(this->win, i + 1, j + 1, "█");
+            else if(char_to_display == 'X')
+                mvwaddstr(this->win, i + 1, j + 1, "▒");
+            else if(char_to_display == 'P'){
+                wattron(this->win, COLOR_PAIR(1) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "@");
+                wattroff(this->win, COLOR_PAIR(1) | A_BOLD);
             }
+            else if(char_to_display == 'N'){
+                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "Ö");
+                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
+            }
+            else if(char_to_display == 'O'){
+                wattron(this->win, COLOR_PAIR(3) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "¤");
+                wattroff(this->win, COLOR_PAIR(3) | A_BOLD);
+            }       
             else {
                 // Per tutti gli altri caratteri normali ('P', 'N', ' ') usiamo mvwaddch
                 mvwaddch(this->win, i + 1, j + 1, char_to_display);
             }
+
         }
     }
 
@@ -167,6 +179,11 @@ void Map::breakWall() {
 
 
 bool Map::isWalkable (Posizione posizione ) {
+
+    if (posizione.y < 0 || posizione.y >= rows || posizione.x < 0 || posizione.x >= cols) {
+        return false;
+    }
+
     char current_cell = grid[posizione.y][posizione.x];
 
     if( current_cell == '#' || current_cell == 'X')
@@ -183,8 +200,8 @@ Posizione Map::walkableRandomPosition( ) {
     static mt19937 gen(rnd());
 
     //Escludo la prima e ultima riga/colonna sapendo che, essendo i bordi della mappa non sono mai calpestabili
-    uniform_int_distribution<int> random_row(1, rows - 1);
-    uniform_int_distribution<int> random_col(1, cols - 1);
+    uniform_int_distribution<int> random_row(1, rows - 2);
+    uniform_int_distribution<int> random_col(1, cols - 2);
 
     Posizione rnd_position;
 
