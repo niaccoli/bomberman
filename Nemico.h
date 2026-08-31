@@ -30,7 +30,7 @@ private:
         Nemico (char tipo) ;
         Nemico (int vite, int x, int y, char tipo ) ;
         Nemico (int vite, Posizione posizione, char tipo ) ;
-        void setTipo ( char Tipo ) ;
+        void setTipo ( char tipo ) ;
         char getTipo ( ) ;
         Posizione nuovaPosizione (Giocatore& g, Map& m);
     //----------------------------------------------DA VALUTARE (guarda Level) -----------------------------------------

@@ -8,16 +8,16 @@ Level::Level(Map& m, int random_enemies, int items) : map(m) {
 
     num_nemici = 0 ;
 
-    if ( random_enemies <= MAX_NEMICI_INS) {
+    if ( random_enemies <= MAX_NEMICI_RND && random_enemies >= 0) {
         num_nemici = random_enemies ;
-        num_nemici_ins = random_enemies ;
+        num_nemici_rnd = random_enemies ;
         for ( int i = 0 ; i < random_enemies ; i++ )
             nemici[i].setTipo( 'R' ) ;
     }
     else
-        random_enemies = 0 ;
+        num_nemici_rnd = 0 ;
 
-    num_nemici_rnd = 0 ;
+    num_nemici_ins = 0 ;
     num_nemici_tank = 0 ;
 
     posizionaNemici_v2() ;
@@ -40,24 +40,28 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int items) : map(m
     
     num_nemici = 0 ;
 
-    if ( chasers_enemies <= MAX_NEMICI_INS) {
+    if ( chasers_enemies <= MAX_NEMICI_INS && chasers_enemies >= 0 ) {
         num_nemici = chasers_enemies ;
         num_nemici_ins = chasers_enemies ;
         for ( int i = 0 ; i < chasers_enemies ; i++ )
             nemici[i].setTipo( 'I' ) ;
     }
-    else
+    else {
+        num_nemici_ins = 0 ;
         chasers_enemies = 0 ;
+    }
 
-    if (random_enemies <= MAX_NEMICI_RND) {
+    if ( random_enemies <= MAX_NEMICI_RND && random_enemies >= 0 ) {
         num_nemici += random_enemies ;
         num_nemici_rnd = random_enemies ;
-        for ( int i = num_nemici; i < chasers_enemies + random_enemies ; i++ ) {
+        for ( int i = num_nemici_ins ; i < chasers_enemies + random_enemies ; i++ ) {
             nemici[i].setTipo( 'R') ;
         }
     }
-    else
+    else {
+        num_nemici_rnd = 0 ;
         random_enemies = 0 ;
+    }
 
     num_nemici_tank = 0 ;
 
@@ -81,33 +85,40 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, 
     num_nemici = 0 ;
 
 
-    if ( chasers_enemies <= MAX_NEMICI_INS) {
+    if ( chasers_enemies <= MAX_NEMICI_INS && chasers_enemies >= 0) {
         num_nemici = chasers_enemies ;
+        num_nemici_ins = chasers_enemies ;
         for ( int i = 0 ; i < chasers_enemies ; i++ )
             nemici[i].setTipo( 'I' ) ;
     }
-    else
+    else {
+        num_nemici_ins = 0 ;
         chasers_enemies = 0 ;
+    }
 
-    if (random_enemies <= MAX_NEMICI_RND) {
+    if (random_enemies <= MAX_NEMICI_RND && random_enemies >= 0 ) {
         num_nemici += random_enemies ;
-        num_nemici_ins = chasers_enemies ;
-        for ( int i = num_nemici; i < chasers_enemies + random_enemies ; i++ ) {
+        num_nemici_rnd = random_enemies ;
+        for ( int i = num_nemici_ins; i < chasers_enemies + random_enemies ; i++ ) {
             nemici[i].setTipo( 'R') ;
         }
     }
-    else
+    else {
+        num_nemici_rnd = 0 ;
         random_enemies = 0 ;
+    }
 
-    if (tank_enemies <= MAX_NEMICI_TANK) {
+    if (tank_enemies <= MAX_NEMICI_TANK && tank_enemies >= 0) {
         num_nemici += tank_enemies ;
         num_nemici_tank = tank_enemies ;
-        for ( int i = num_nemici; i < chasers_enemies + random_enemies + tank_enemies; i++ ) {
+        for ( int i = num_nemici_ins + num_nemici_rnd ; i < chasers_enemies + random_enemies + tank_enemies; i++ ) {
             nemici[i].setTipo( 'T') ;
         }
     }
-    else
+    else {
+        num_nemici_tank = 0 ;
         tank_enemies = 0 ;
+    }
 
     posizionaNemici_v2() ;
 
@@ -209,14 +220,12 @@ bool Level::updateLevel(Giocatore& g) {
     updateEnemies( g )  ;
 
     if ( collisioneGiocatoreNemici_v2( g )) {
-        stamp_map( g ) ;
         return true ;
     }
 
     if ( b.aggiornaBomba( ) ) {
         bool giocatore_colpito = collisioneEsplosione( g ) ;
         //collisione esplsione inizializza le cella_esplosione[]
-        stamp_map( g ) ;
         if ( giocatore_colpito)
             return true ;
     }
@@ -229,25 +238,29 @@ bool Level::updateLevel(Giocatore& g) {
 
 
 
-/*
+
 void Level::updateEnemies(Giocatore& g){
 
     for ( int i = 0 ; i < num_nemici ; i++ ) {
         
         bool mosso = false ;
-        while ( !mosso && nemici[i].vivo()) {
+        int tentativo = 0 ;
+
+        while ( !mosso && nemici[i].vivo() && tentativo < 10) {
             Posizione new_posizione = nemici[i].nuovaPosizione(g, map) ;
-            if ( map.isWalkable( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
-                nemici[i].muovi( new_posizione) ;
+            if ( map.isWalkable( new_posizione ) && ( isThereAnEnemy_v2( new_posizione ) == -1 )) {
+                nemici[i].muovi( new_posizione ) ;
                 mosso = true ;
             }
+            tentativo++ ;
         }
     }
 }
-*/
+
 
 //Nuovo metodo post debug(creava un loop infinito)
-void Level::updateEnemies(Giocatore& g){
+
+/*void Level::updateEnemies(Giocatore& g){
 
     for ( int i = 0 ; i < num_nemici ; i++ ) {
         
@@ -269,7 +282,7 @@ void Level::updateEnemies(Giocatore& g){
             tentativi++;
         }
     }
-}
+}*/
 
 
 

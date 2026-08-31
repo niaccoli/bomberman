@@ -29,9 +29,7 @@ Nemico::Nemico (int vite, Posizione posizione, char tipo ): Personaggio( vite, p
 
 void Nemico::setTipo ( char tipo ) {
     //ha senso usare else if o meglio if a cascata e non assegnare niente se il tipo non e' previsto?
-    if (tipo == 'I')
-        this -> tipo = tipo ;
-    else if (tipo == 'R')
+    if (tipo == 'I' || tipo == 'R')
         this -> tipo = tipo ;
     else if (tipo == 'T') {
         this -> tipo = tipo ;
@@ -45,54 +43,58 @@ char Nemico::getTipo( ) {
     return this -> tipo ;
 }
 
-Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) { //meglio degli else if?
+Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) {
+
+    Posizione temp = posizione ;
+
     if ( tipo == 'I') {
         int x_diff = g.getX() - getX() ;
         int y_diff = g.getY() - getY() ;
+
         if ( abs(x_diff) > abs(y_diff)) {
             if ( x_diff > 0 )
-                posizione.x += 1 ;
+                temp.x += 1 ;
             else
-                posizione.x -= 1 ;
+                temp.x -= 1 ;
         }
         else {
             if ( y_diff > 0 ) {
-                posizione.y -= 1 ;
+                temp.y -= 1 ;
             }
             else
-                posizione.y += 1 ;
+                temp.y += 1 ;
         }
-        return posizione ;
+        return temp ;
     }
     else if (tipo == 'R') {
         int random = rand() % 3 ;
         if ( random == 0 )
-            posizione.x -= 1 ;
+            temp.x -= 1 ;
         if ( random == 1 )
-            posizione.y += 1 ;
+            temp.y += 1 ;
         if ( random == 2 )
-            posizione.x += 1 ;
+            temp.x += 1 ;
         if ( random == 3 )
-            posizione.y -= 1 ;
-        return posizione ;
+            temp.y -= 1 ;
+        return temp ;
     }
     else if ( tipo == 'T') {
         if ( rand() % 1 ) {
             int random = rand() % 3 ;
             if ( random == 0 )
-                posizione.x -= 1 ;
+                temp.x -= 1 ;
             if ( random == 1 )
-                posizione.y += 1 ;
+                temp.y += 1 ;
             if ( random == 2 )
-                posizione.x += 1 ;
+                temp.x += 1 ;
             if ( random == 3 )
-                posizione.y -= 1 ;
+                temp.y -= 1 ;
             
         }
-        return posizione ;
+        return temp ;
     }
     else
-        return posizione ;
+        return temp ;
 }
 
 Posizione Nemico::nuovaPosizione_v3 (Map& m) {
@@ -106,7 +108,6 @@ Posizione Nemico::nuovaPosizione_v3 (Map& m) {
             posizione.x += 1 ;
         if ( random == 3 )
             posizione.y -= 1 ;
-        return posizione ;
     }
     else if ( tipo == 'T') {
         if ( rand() % 1 ) {
@@ -121,9 +122,7 @@ Posizione Nemico::nuovaPosizione_v3 (Map& m) {
                 posizione.y -= 1 ;
             
         }
-        return posizione ;
     }
-    else
         return posizione ;
 }
 
