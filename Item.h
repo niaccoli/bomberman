@@ -168,7 +168,7 @@ class Item{
 
         bool isAttivo() const ;
         void raccogli() ;
-        void disattiva() ;
+        void disattiva() ; //riposizionare fuori mappa?
         void attiva( ) ;
         //void aggiornaItem();
 

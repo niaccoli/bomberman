@@ -13,7 +13,7 @@ Map::Map(int height, int width){
 
 
     //gli ultimi 2 parametri provvisori (Devo controllare se sono giusti)
-    win = newwin(height + 2, width + 2, entry.x, entry.y);
+    win = newwin(height + 2, width + 2, 1, 1);
 
     //allocazione dinamica della matrice
     grid = new char*[rows];

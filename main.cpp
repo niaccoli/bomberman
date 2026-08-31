@@ -27,7 +27,23 @@ int main() {
      Senza questa riga, l'ambiente di debug di VS Code non comunicava a ncurses quale tipo di schermo stesse usando, 
      impedendole di caricare le sequenze di escape corrette dal database di sistema (terminfo).
      */
-     setenv("TERM", "xterm-256color", 1);
+     //setenv() è una funzione tipica dei sistemi POSIX/Linux e non è disponibile normalmente nella compilazione nativa
+     //Windows con MinGW.
+
+
+     #ifdef _WIN32
+          // Su Windows con PDCurses non è necessario impostare TERM
+     #else
+          setenv("TERM", "xterm-256color", 1);
+     #endif
+     /*La logica è:
+
+     Windows
+     → usa PDCurses nativa
+     → non esegue setenv()
+
+     Linux/macOS
+     → esegue setenv("TERM", ...)*/
 
 
      //INIZIALIZZAZIONE
