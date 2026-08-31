@@ -67,7 +67,7 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) {
         return temp ;
     }
     else if (tipo == 'R') {
-        int random = rand() % 3 ;
+        int random = rand() % 4 ;
         if ( random == 0 )
             temp.x -= 1 ;
         if ( random == 1 )
@@ -79,8 +79,8 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) {
         return temp ;
     }
     else if ( tipo == 'T') {
-        if ( rand() % 1 ) {
-            int random = rand() % 3 ;
+        if ( rand() % 2 ) {
+            int random = rand() % 4 ;
             if ( random == 0 )
                 temp.x -= 1 ;
             if ( random == 1 )
@@ -99,7 +99,7 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) {
 
 Posizione Nemico::nuovaPosizione_v3 (Map& m) {
     if (tipo == 'R' || tipo == 'I') {
-        int random = rand() % 3 ;
+        int random = rand() % 4 ;
         if ( random == 0 )
             posizione.x -= 1 ;
         if ( random == 1 )
@@ -110,8 +110,8 @@ Posizione Nemico::nuovaPosizione_v3 (Map& m) {
             posizione.y -= 1 ;
     }
     else if ( tipo == 'T') {
-        if ( rand() % 1 ) {
-            int random = rand() % 3 ;
+        if ( rand() % 2 ) {
+            int random = rand() % 4 ;
             if ( random == 0 )
                 posizione.x -= 1 ;
             if ( random == 1 )

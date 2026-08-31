@@ -1,6 +1,6 @@
 #include "Bomba.h"
 
-Bomba::Bomba(): posizione{ -1, -1 }, timer(5), danno(1), raggio(1), attivo(false)/*, boostDanno(false), durataBoostDanno(5),
+Bomba::Bomba(): posizione{ -1, -1 }, timer(2), danno(1), raggio(1), attivo(false)/*, boostDanno(false), durataBoostDanno(5),
                 boostRaggio(false), durataBoostRaggio(5)*/, boostTimer(false), durataBoostTimer(5) {}
 
 

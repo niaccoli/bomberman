@@ -320,17 +320,26 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
 
     if (stessaPosizione(g.getPosizione(), epicentro)) {
-        if (g.diminuisciVita() )
+        if (g.diminuisciVita( ) )
             giocatore_colpito = true;
     }
 
-    for ( int i = 0 ; i < num_nemici ; i++ ) {
-        if ( isThereAnEnemy_v2( current )) {
-            nemici[i].diminuisciVita( ) ;
-            if ( !nemici[i].vivo( ))
-                dropItem( current ) ;
-        }
+
+
+    int index_enemy_in_current = isThereAnEnemy_v2( current ) ; //fondamentale sia perche' evita piu' chiamate
+    //poi perche in
+    // nemici[ isThereAnEnemy_v2( current )].diminuisciVita( );
+    // se il nemico muore isThereAnEnemy_v2( current ) ritorna -1 quindi accedi fuori array
+    //if ( !nemici[ index_enemy_in_current ].vivo( ))
+
+    if ( index_enemy_in_current != -1 ) {
+        nemici[ index_enemy_in_current ].diminuisciVita( ) ;
+        if ( !nemici[ index_enemy_in_current ].vivo( ))
+            dropItem( current ) ;
     }
+
+
+
 
     //SU:
     current = { epicentro.x, epicentro.y - 1 } ;
@@ -350,12 +359,12 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
             dropItem( current) ;
         }
 
-        for ( int i = 0 ; i < num_nemici ; i++ ) {
-            if ( isThereAnEnemy_v2( current )) {
-                nemici[i].diminuisciVita( ) ;
-                if ( !nemici[i].vivo( ))
-                    dropItem( current ) ;
-            }
+        index_enemy_in_current = isThereAnEnemy_v2( current ) ;
+
+        if ( index_enemy_in_current != -1 ) {
+            nemici[ index_enemy_in_current ].diminuisciVita( ) ;
+            if ( !nemici[ index_enemy_in_current ].vivo( ))
+                dropItem( current ) ;
         }
 
         current.y-- ;
@@ -379,12 +388,14 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
             muro_distrutto = true ;
             dropItem(current) ;
         }
-        for ( int i = 0 ; i < num_nemici ; i++ ) {
-            if ( isThereAnEnemy_v2( current )) {
-                nemici[i].diminuisciVita( ) ;
-                if ( !nemici[i].vivo( ))
-                    dropItem( current ) ;
-            }
+
+
+        index_enemy_in_current = isThereAnEnemy_v2( current ) ;
+
+        if ( index_enemy_in_current != -1 ) {
+            nemici[ index_enemy_in_current ].diminuisciVita( ) ;
+            if ( !nemici[ index_enemy_in_current ].vivo( ))
+                dropItem( current ) ;
         }
 
         current.y++ ;
@@ -410,12 +421,13 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
             dropItem( current ) ;
         }
 
-        for ( int i = 0 ; i < num_nemici ; i++ ) {
-            if ( isThereAnEnemy_v2( current )) {
-                nemici[i].diminuisciVita( ) ;
-                if ( !nemici[i].vivo( ))
-                    dropItem( current ) ;
-            }
+
+        index_enemy_in_current = isThereAnEnemy_v2( current ) ;
+
+        if ( index_enemy_in_current != -1 ) {
+            nemici[ index_enemy_in_current ].diminuisciVita( ) ;
+            if ( !nemici[ index_enemy_in_current ].vivo( ))
+                dropItem( current ) ;
         }
 
         current.x-- ;
@@ -440,12 +452,13 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
             dropItem( current ) ;
         }
 
-        for ( int i = 0 ; i < num_nemici ; i++ ) {
-            if ( isThereAnEnemy_v2( current )) {
-                nemici[i].diminuisciVita( ) ;
-                if ( !nemici[i].vivo( ))
-                    dropItem( current ) ;
-            }
+
+        index_enemy_in_current = isThereAnEnemy_v2( current ) ;
+
+        if ( index_enemy_in_current != -1 ) {
+            nemici[ index_enemy_in_current ].diminuisciVita( ) ;
+            if ( !nemici[ index_enemy_in_current ].vivo( ))
+                dropItem( current ) ;
         }
 
         current.x++ ;

@@ -52,7 +52,7 @@ int main() {
      noecho(); //Non mostra il carattere della tastiera in input
      curs_set(0); //Nasconde il cursore
 
-     timeout(100);
+     timeout(500);
 
      refresh();
 
