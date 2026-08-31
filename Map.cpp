@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <cmath> //Usato per funzione abs() (Valore assoluto)
 
 using namespace std;
 
@@ -11,8 +12,8 @@ Map::Map(int height, int width){
     cols = width;
 
 
-    //gli ultimi 2 parametri provvisori
-    win = newwin(height + 2, width + 2, 1, 1);
+    //gli ultimi 2 parametri provvisori (Devo controllare se sono giusti)
+    win = newwin(height + 2, width + 2, entry.x, entry.y);
 
     //allocazione dinamica della matrice
     grid = new char*[rows];
@@ -74,8 +75,15 @@ bool Map::mossavalida(int x, int y){
     return false;
 }
 
+// 1. Versione standard (chiamata quando non c'è esplosione)
+void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
+                    const Item items[], int numItems, const Bomba& b) {
+    // Chiama direttamente la versione completa passando NULL e 0
+    this->stamp_map(p, nemici, numNemici, items, numItems, b, NULL, 0);
+}
 
-void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b ){
+
+void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione){
 
     box(this->win, 0, 0);
 
@@ -90,7 +98,7 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
             }
 
 
-            // Priorità 4: Item (la più bassa tra gli oggetti dinamici)
+            // Priorità 5: Item (la più bassa tra gli oggetti dinamici)
             // Controlla se c'è un item attivo in questa posizione
             for(int k = 0; k < numItems; k++){
                 if(items[k].isAttivo() && i == items[k].getY() && j == items[k].getX()){
@@ -99,41 +107,62 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
                 }
             }
 
-            // Priorità 3: Nemico (sovrascrive l'item se presente)
+            // Priorità 4: Nemico (sovrascrive l'item se presente)
             // Controlla se c'è un nemico in questa posizione
             for(int k = 0; k < numNemici; k++){
-                for(int k=0; k < numNemici; k++){
-                    if(i == nemici[k].getY() && j == nemici[k].getX()){
-                        char_to_display = 'N'; // 'N' per nemico (de gestire poi i vari tipi di nemici)
-                        break; // Trovato un nemico, non serve controllare gli altri per questa cella
-                    }
+                if(i == nemici[k].getY() && j == nemici[k].getX()){
+                    char_to_display = 'N'; // 'N' per nemico (de gestire poi i vari tipi di nemici)
+                    break; // Trovato un nemico, non serve controllare gli altri per questa cella
                 }
             }
 
-            // Priorità 2: Bomba (sovrascrive nemico e item se presente)
+            // Priorità 3: Bomba (sovrascrive nemico e item se presente)
             if(b.innescata() && i == b.getY() && j == b.getX()){
                 char_to_display = 'O'; // 'O' per bomba
             }
 
+            //Priorità 2: Esplosione bomba
+            //Visualizzazione esplosione bomba (True da sostituire con meotodo per capire se la boma è esplosa)
+            if(true){
+                for (int k = 0; k < num_celle_esplosione; k++) {
+                    if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
+                        char_to_display = 'E';
+                        break;
+                    }
+                }
+            }
+
             // Priorità 1: Giocatore (la più alta, sovrascrive tutto)
-            if(i == p.getY() && j == p.getX()){
+            if(p.vivo() && i == p.getY() && j == p.getX()){
                 char_to_display = 'P'; // 'P' per giocatore
             }
 
             // 2. RENDERIZZAZIONE GRAFICA MODERNA
             // Stampiamo con OFFSET di +1 per salvare i bordi della finestra
-            if (char_to_display == '#') {
-                // MURO INDISTRUTTIBILE: Blocco Unicode pieno (senza fessure!)
-                mvwaddstr(this->win, i + 1, j + 1, "█"); 
-            } 
-            else if (char_to_display == 'X') {
-                // MURO DISTRUTTIBILE: Blocco sfumato
-                mvwaddstr(this->win, i + 1, j + 1, "▒"); 
+            if (char_to_display == '#')
+                mvwaddstr(this->win, i + 1, j + 1, "█");
+            else if(char_to_display == 'X')
+                mvwaddstr(this->win, i + 1, j + 1, "▒");
+            else if(char_to_display == 'P'){
+                wattron(this->win, COLOR_PAIR(1) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "@");
+                wattroff(this->win, COLOR_PAIR(1) | A_BOLD);
             }
+            else if(char_to_display == 'N'){
+                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "Ö");
+                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
+            }
+            else if(char_to_display == 'O'){
+                wattron(this->win, COLOR_PAIR(3) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "¤");
+                wattroff(this->win, COLOR_PAIR(3) | A_BOLD);
+            }       
             else {
                 // Per tutti gli altri caratteri normali ('P', 'N', ' ') usiamo mvwaddch
                 mvwaddch(this->win, i + 1, j + 1, char_to_display);
             }
+
         }
     }
 
@@ -150,6 +179,11 @@ void Map::breakWall() {
 
 
 bool Map::isWalkable (Posizione posizione ) {
+
+    if (posizione.y < 0 || posizione.y >= rows || posizione.x < 0 || posizione.x >= cols) {
+        return false;
+    }
+
     char current_cell = grid[posizione.y][posizione.x];
 
     if( current_cell == '#' || current_cell == 'X')
@@ -166,8 +200,8 @@ Posizione Map::walkableRandomPosition( ) {
     static mt19937 gen(rnd());
 
     //Escludo la prima e ultima riga/colonna sapendo che, essendo i bordi della mappa non sono mai calpestabili
-    uniform_int_distribution<int> random_row(1, rows - 1);
-    uniform_int_distribution<int> random_col(1, cols - 1);
+    uniform_int_distribution<int> random_row(1, rows - 2);
+    uniform_int_distribution<int> random_col(1, cols - 2);
 
     Posizione rnd_position;
 
@@ -188,13 +222,13 @@ void Map::breakWall(Posizione posizione) {
 
 
 bool Map::isBreakable( Posizione posizione ) {
-    if(grid[posizione.y][posizione.x] = 'X')
+    if(grid[posizione.y][posizione.x] == 'X')
         return true;
     return false;
 }
 
 bool Map::isUnbreakableWall ( Posizione posizione ) {
-    if(grid[posizione.y][posizione.x] = '#')
+    if(grid[posizione.y][posizione.x] == '#')
         return true;
     return false;
 }

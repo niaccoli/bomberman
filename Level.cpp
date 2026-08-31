@@ -34,6 +34,7 @@ Level::Level(Map& m, int chasers_enemies, int items) : map(m) {
 
 Level::Level(Map& m, int chasers_enemies, int random_enemies, int items) : map(m) {
 
+    
     num_nemici = 0 ;
 
     if ( chasers_enemies <= MAX_NEMICI_INS) {
@@ -117,7 +118,7 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, 
     completato = false;
 }
 
-
+/*
 Posizione Level::posizioneRandomValida_v2() {
     Posizione temp = map.walkableRandomPosition( ) ;
 
@@ -127,6 +128,22 @@ Posizione Level::posizioneRandomValida_v2() {
 
     return posizioneRandomValida_v2() ;
 }
+*/
+Posizione Level::posizioneRandomValida_v2() {
+    Posizione temp;
+    int tentativi = 0;
+
+    do {
+        temp = map.walkableRandomPosition();
+        tentativi++;
+    } while ((isThereAnEnemy_v2(temp) || map.isNearEntry(temp)) && tentativi < 1000);
+
+    return temp;
+}
+
+
+
+
 /*chat suggerisce:
 Posizione Level::posizioneRandomValida() {
 
@@ -205,10 +222,11 @@ bool Level::updateLevel(Giocatore& g) {
 
 
 
-
+/*
 void Level::updateEnemies(Giocatore& g){
 
     for ( int i = 0 ; i < num_nemici ; i++ ) {
+        
         bool mosso = false ;
         while ( !mosso && nemici[i].vivo()) {
             Posizione new_posizione = nemici[i].nuovaPosizione(g, map) ;
@@ -216,6 +234,32 @@ void Level::updateEnemies(Giocatore& g){
                 nemici[i].muovi( new_posizione) ;
                 mosso = true ;
             }
+        }
+    }
+}
+*/
+
+//Nuovo metodo post debug(creava un loop infinito)
+void Level::updateEnemies(Giocatore& g){
+
+    for ( int i = 0 ; i < num_nemici ; i++ ) {
+        
+        if ( !nemici[i].vivo() ) {
+            continue;
+        }
+
+        bool mosso = false ;
+        int tentativi = 0;
+
+        while ( !mosso && tentativi < 10) {
+            Posizione new_posizione = nemici[i].nuovaPosizione(g, map);
+            
+            if ( map.isWalkable( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
+                nemici[i].muovi( new_posizione) ;
+                mosso = true ;
+            }
+
+            tentativi++;
         }
     }
 }
@@ -422,7 +466,7 @@ void Level::dropItem(Posizione posizione) {
 void Level::piazzaBomba(Giocatore& g) {
     if ( !b.innescata()) {
         b.setPosizione( g.getPosizione()) ;
-        b.setTimer( 4 ) ; //forse inutile perche' il costruttore inizializza gia il timer a 4 e non viene aggiornato se la bomba non e' innescata
+        b.setTimer(20) ; //forse inutile perche' il costruttore inizializza gia il timer a 4 e non viene aggiornato se la bomba non e' innescata
         b.innesca( ) ;
     }
 }

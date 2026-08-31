@@ -87,8 +87,9 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) { //meglio degli else 
                 posizione.x += 1 ;
             if ( random == 3 )
                 posizione.y -= 1 ;
-            return posizione ;
+            
         }
+        return posizione ;
     }
     else
         return posizione ;
@@ -118,8 +119,9 @@ Posizione Nemico::nuovaPosizione_v3 (Map& m) {
                 posizione.x += 1 ;
             if ( random == 3 )
                 posizione.y -= 1 ;
-            return posizione ;
+            
         }
+        return posizione ;
     }
     else
         return posizione ;

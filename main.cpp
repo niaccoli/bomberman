@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
-//#include <ncurses.h>
-#include <curses.h>
+#include <ncurses.h>
+//#include <curses.h>
 #include "Map.hpp"
 #include "BidirectionalList.hpp"
 #include "funzioni.h"
@@ -21,112 +21,148 @@ void menu(){
 }
 
 int main() {
-
-    
-    setlocale(LC_ALL, "");
-    
-    //inizializza lo schermo
-    //setta la memoria e pulisce lo schermo (ncurses)
-    initscr();
-    noecho(); //Non mostra il carattere della tastiera in input
-    curs_set(0); //Nasconde il cursore
-
-    BidirectionalList levelList;
-
-    levelList.Create_Levels(); //TEST
-
-    int const start_y = 3;
-    int const start_x = 5;
+     // 1. Forza il terminale corretto per evitare che initscr fallisca
+     /*
+     Imposta la variabile d'ambiente che definisce l'identità del terminale. 
+     Senza questa riga, l'ambiente di debug di VS Code non comunicava a ncurses quale tipo di schermo stesse usando, 
+     impedendole di caricare le sequenze di escape corrette dal database di sistema (terminfo).
+     */
+     setenv("TERM", "xterm-256color", 1);
 
 
-    /*
-    //Puntatore alla finestra window
-    WINDOW *win = newwin(height, width, start_y, start_x);
+     //INIZIALIZZAZIONE
+     setlocale(LC_ALL, "");
+     initscr(); //inizializza lo schermo
+     noecho(); //Non mostra il carattere della tastiera in input
+     curs_set(0); //Nasconde il cursore
 
-    //Aggiorna lo schermo per farlo matchare a ciò c he è presente in memoria
-    refresh();
+     timeout(100);
 
-    //Crea un bordo attorno alla window
-    box(win, 0, 0);
-    wrefresh(win);
-    */
+     refresh();
 
-    refresh();
-    // TEST
+     if (has_colors()) {
+          start_color();
+          use_default_colors(); // Mantiene lo sfondo trasparente/predefinito del terminale
 
-    node* currentNode = levelList.getCurrent();
-    Map& m = currentNode->level->getMap();
-
-    // 2. Variabili fittizie per far funzionare stamp_map (temporanee)
-    Giocatore player(3, 1, 1);
-    Nemico dummy_nemici[1];
-    Item dummy_items[1];
-    Bomba b;
-
-    // 3. STAMPA IL LIVELLO!
-    m.stamp_map(player, dummy_nemici, 0, dummy_items, 0, b);
-    //FINE TEST
-
-
-    //Prende l'input dell'utente restituendo il valore int corrispondente al tasto premuto
-    getch();
-
-    //Muove il cursore alle coordinate specificate
-    //move(y, x);
-
-    //dealloca la memoria e termina ncurses
-    //endwin();
-
-
-
-
-
-   //Giocatore player(3, 1, 1);
-     char input ;
-
-     posizionaGiocatoreStart( player, levelList ) ;
-
-
-   //INIZIO CICLO
-while ( player.vivo() ) {
-     //1. leggi input
-     cin >> input ;
-
-     //2. esegui azione giocatore
-     gestisciInput(player, levelList, input ) ;
-
-     //3. controlla entrata / uscita
-     controllaPassaggioLivelli( player, levelList ) ;
-
-     player.aggiornaInvulnerabilita( ) ;
-
-     bool colpito = levelList.updateLevels( player ) ;
-     //4. aggiorna i timer dei potenziamenti dei livelli non correnti
-     //+ aggiorna il livello corrente e ritorna true se il giocatore' ha subito danno
-     //- nemici
-     //- bomba
-     //- collisioni
-
-     if ( !colpito )
-          levelList.getCurrent() -> level -> raccoltaItem( player ) ;
-
-     levelList.getCurrent() -> level -> stamp_map( player ) ;
-
-     if ( colpito ) {// il giocatore ha subito danno
-          if ( player.vivo() ) {
-               // mostra messaggio / animazione
-               // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
-               // Invulnerabilita' attiva per x secondi"
-               reset_v1 (player, levelList ) ;
-          }
-          else
-               break ;
-
+          // init_pair(ID_COPPIA, COLORE_TESTO, COLORE_SFONDO);
+          init_pair(1, COLOR_CYAN,    COLOR_BLACK); // Giocatore
+          init_pair(2, COLOR_RED,     COLOR_BLACK); // Nemici
+          init_pair(3, COLOR_YELLOW,  COLOR_BLACK); // Bomba / Esplosione
+          init_pair(4, COLOR_GREEN,   COLOR_BLACK); // Item / Valuta
+          init_pair(5, COLOR_WHITE,   COLOR_BLACK); // Muri indistruttibili
      }
 
-     if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
-          break ;
-}
+     BidirectionalList levelList;
+     levelList.Create_Levels(); 
+
+     //2 CREAZIONE ENTITÀ
+     Giocatore player(3, 1, 1);
+     char input;
+
+     posizionaGiocatoreStart(player, levelList);
+
+     //3 PRIMA STAMPA
+     levelList.getCurrent()->level->stamp_map(player);
+
+     /*
+     //Puntatore alla finestra window
+     WINDOW *win = newwin(height, width, start_y, start_x);
+
+     //Aggiorna lo schermo per farlo matchare a ciò c he è presente in memoria
+     refresh();
+
+     //Crea un bordo attorno alla window
+     box(win, 0, 0);
+     wrefresh(win);
+     */
+
+     // TEST
+
+     //node* currentNode = levelList.getCurrent();
+     //Map& m = currentNode->level->getMap();
+
+     // 2. Variabili fittizie per far funzionare stamp_map (temporanee)
+     //Giocatore player(3, 1, 1);
+     //Nemico dummy_nemici[1];
+     //Item dummy_items[1];
+     //Bomba b;
+
+     // 3. STAMPA IL LIVELLO!
+     //m.stamp_map(player, dummy_nemici, 0, dummy_items, 0, b);
+     //FINE TEST
+
+
+       //Prende l'input dell'utente restituendo il valore int corrispondente al tasto premuto
+      //getch();
+
+      //Muove il cursore alle coordinate specificate
+      //move(y, x);
+
+      //dealloca la memoria e termina ncurses
+      //endwin();
+
+
+
+
+
+     //Giocatore player(3, 1, 1);
+     //char input ;
+
+     //posizionaGiocatoreStart( player, levelList ) ;
+
+     // Prima del while, dichiara un contatore
+     int debug_contatore = 0;
+
+
+     //INIZIO CICLO
+     while ( player.vivo() ) {
+          //1. leggi input
+          input = getch();
+
+          if(input != ERR){
+               //2. esegui azione giocatore
+               gestisciInput(player, levelList, input ) ;
+          }
+
+
+          //3. controlla entrata / uscita
+          controllaPassaggioLivelli( player, levelList ) ;
+
+          player.aggiornaInvulnerabilita( ) ;
+
+          bool colpito = levelList.updateLevels( player ) ;
+          //4. aggiorna i timer dei potenziamenti dei livelli non correnti
+          //+ aggiorna il livello corrente e ritorna true se il giocatore' ha subito danno
+          //- nemici
+          //- bomba
+          //- collisioni
+
+          if ( !colpito )
+               levelList.getCurrent() -> level -> raccoltaItem( player ) ;
+
+          levelList.getCurrent() -> level -> stamp_map( player ) ;
+
+          if ( colpito ) {// il giocatore ha subito danno
+               if ( player.vivo() ) {
+                    // mostra messaggio / animazione
+                    // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
+                    // Invulnerabilita' attiva per x secondi"
+                    reset_v1 (player, levelList ) ;
+               }
+               else
+                    break ;
+
+          }
+
+          if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
+               break ;
+
+          // --- AGGIUNGI QUESTE TRE RIGHE ALLA FINE DEL WHILE ---
+          debug_contatore++;
+          mvprintw(0, 0, "Battito loop: %d | Ultimo input: %d", debug_contatore, input);
+          refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
+     }
+
      if ( player.vivo()) {
           //vittoria
      }
@@ -136,11 +172,6 @@ while ( player.vivo() ) {
 
      //dopo la fine della partita bisogna richiedere il nome del giocatore, sia in caso di vittoria che in caso di
      //sconfitta
-
-
-
-
-
 
     //set_border();
     //stamp_screen();
