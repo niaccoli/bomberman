@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
-#include <ncurses.h>
-//#include <curses.h>
+//#include <ncurses.h>
+#include <curses.h>
 #include "Map.hpp"
 #include "BidirectionalList.hpp"
 #include "funzioni.h"
