@@ -45,7 +45,7 @@ private:
     // restituisce -1 se la posizione non è occupata da alcun nemico vivo.
 
 public:
-    Level(Map& m, int chasers_enemies, int items);
+    Level(Map& m, int random_enemies, int items);
     // Costruisce un livello con nemici inseguitori e un numero massimo di item.
 
     Level(Map& m, int chasers_enemies, int random_enemies, int items);

@@ -4,18 +4,21 @@
 #include "Map.hpp"
 
 
-Level::Level(Map& m, int chasers_enemies, int items) : map(m) {
+Level::Level(Map& m, int random_enemies, int items) : map(m) {
 
     num_nemici = 0 ;
 
-    if ( chasers_enemies <= MAX_NEMICI_INS) {
-        num_nemici = chasers_enemies ;
-        num_nemici_ins = chasers_enemies ;
-        for ( int i = 0 ; i < chasers_enemies ; i++ )
-            nemici[i].setTipo( 'I' ) ;
+    if ( random_enemies <= MAX_NEMICI_INS) {
+        num_nemici = random_enemies ;
+        num_nemici_ins = random_enemies ;
+        for ( int i = 0 ; i < random_enemies ; i++ )
+            nemici[i].setTipo( 'R' ) ;
     }
     else
-        chasers_enemies = 0 ;
+        random_enemies = 0 ;
+
+    num_nemici_rnd = 0 ;
+    num_nemici_tank = 0 ;
 
     posizionaNemici_v2() ;
 
@@ -55,6 +58,8 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int items) : map(m
     }
     else
         random_enemies = 0 ;
+
+    num_nemici_tank = 0 ;
 
     posizionaNemici_v2() ;
 
@@ -118,17 +123,19 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, 
     completato = false;
 }
 
-/*
+
 Posizione Level::posizioneRandomValida_v2() {
     Posizione temp = map.walkableRandomPosition( ) ;
 
 
-    if ( !isThereAnEnemy_v2( temp ) && !map.isNearEntry(temp))
+    if (( isThereAnEnemy_v2( temp ) == -1) && !map.isNearEntry(temp))
         return temp ;
 
     return posizioneRandomValida_v2() ;
 }
-*/
+
+
+/*
 Posizione Level::posizioneRandomValida_v2() {
     Posizione temp;
     int tentativi = 0;
@@ -136,10 +143,10 @@ Posizione Level::posizioneRandomValida_v2() {
     do {
         temp = map.walkableRandomPosition();
         tentativi++;
-    } while ((isThereAnEnemy_v2(temp) || map.isNearEntry(temp)) && tentativi < 1000);
+    } while ((isThereAnEnemy_v2(temp) != -1) || map.isNearEntry(temp) && tentativi < 1000);
 
     return temp;
-}
+}*/
 
 
 
