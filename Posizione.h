@@ -12,4 +12,6 @@ struct Posizione {
 
 bool stessaPosizione(Posizione p1, Posizione p2) ;
 
+double distanza (Posizione p1, Posizione p2) ;
+
 #endif //BOMBERMAN_POSIZIONE_H

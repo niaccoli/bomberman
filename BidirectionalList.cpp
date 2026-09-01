@@ -33,7 +33,7 @@ void BidirectionalList::Create_Levels(){
     node* node1 = new node;
 
     node1->levelID = 1;
-    node1->level = new Level(*map1, 0, 8,  1);
+    node1->level = new Level(*map1, 0, 4,  1);
     node1->prev = NULL;
 
     node* node2 = new node;

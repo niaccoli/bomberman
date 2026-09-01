@@ -67,3 +67,18 @@ void reset_v1( Giocatore& player, BidirectionalList& l) {
 }
 
 
+int min(int n1, int n2, int n3, int n4 ) {
+
+    int min = n1 ;
+
+    if ( n2 < min)
+        min = n2 ;
+
+    if (n3 < min)
+        min = n3 ;
+
+    if ( n4 < min)
+        min = n4 ;
+
+    return min ;
+}

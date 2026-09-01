@@ -24,6 +24,7 @@ private:
     char tipo ; //'I' = Inseguitore, 'R' = random, 'T'=tank
     //int velocita ; //forse piuttosto che aggiungere un campo velocita' mi conviene aggiungere un randomico 1 su 2 per il
     //movimento del nemico tank in questo modo sembrera'  piu' lento
+    int percorsoBreve( Posizione player, Posizione nemico, Map& map, char& wasd) ;
 
     public:
         Nemico () ;

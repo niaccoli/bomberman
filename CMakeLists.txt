@@ -42,6 +42,8 @@ add_executable(bomberman
         Level.cpp
         Posizione.cpp
         Posizione.h
+        Timer.cpp
+        Timer.h
 )
 
 if(USE_MSYS2_PDCURSES)

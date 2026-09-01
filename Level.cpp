@@ -248,7 +248,8 @@ void Level::updateEnemies(Giocatore& g){
 
         while ( !mosso && nemici[i].vivo() && tentativo < 10) {
             Posizione new_posizione = nemici[i].nuovaPosizione(g, map) ;
-            if ( map.isWalkable( new_posizione ) && ( isThereAnEnemy_v2( new_posizione ) == -1 )) {
+            if ( map.isWalkable( new_posizione ) && ( isThereAnEnemy_v2( new_posizione ) == -1 ) &&
+                !(stessaPosizione( new_posizione, b.getPosizione()) && b.innescata())) {
                 nemici[i].muovi( new_posizione ) ;
                 mosso = true ;
             }
@@ -292,12 +293,20 @@ void Level::updateItems(){
 }
 
 
-bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
+/*bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
     for ( int i = 0 ; i < num_nemici ; i++ ) {
-        if ( stessaPosizione( g.getPosizione(), nemici[i].getPosizione())) {
+        if ( stessaPosizione( g.getPosizione(), nemici[i].getPosizione()) && nemici[i].vivo()) {
             if (g.diminuisciVita() )
                 return true;
         }
+    }
+    return false ;
+}*/
+
+bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
+    if ( isThereAnEnemy_v2(g.getPosizione()) != -1 ) {
+        if (g.diminuisciVita() )
+            return true;
     }
     return false ;
 }

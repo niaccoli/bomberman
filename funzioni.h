@@ -43,7 +43,7 @@ void reset_v1( Giocatore& player, BidirectionalList& l ) ;
 //attiva l'invulnerabilita' del giocatore, disattiva i potenziamenti sulle bombe
 
 
-
+int min(int n1, int n2, int n3, int n4 ) ;
 
 
 #endif
