@@ -13,7 +13,8 @@ protected:
 public:
     Timer(int tempo) ;
     int getTimer( ) ;
-    void setTimer( int tempo ) ;
+    void attivaTimer( int tempo ) ;
+    void diminuisci(int tempo) ;
     bool scaduto ( ) ;
 
 

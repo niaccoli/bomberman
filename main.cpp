@@ -5,6 +5,7 @@
 #include "Map.hpp"
 #include "BidirectionalList.hpp"
 #include "funzioni.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -52,7 +53,7 @@ int main() {
      noecho(); //Non mostra il carattere della tastiera in input
      curs_set(0); //Nasconde il cursore
 
-     timeout(500);
+     timeout(0);
 
      refresh();
 
@@ -129,9 +130,12 @@ int main() {
      // Prima del while, dichiara un contatore
      int debug_contatore = 0;
 
+     Timer timerGioco(300000) ;
+     Timer timerAggiornamentoLivello( 250 ) ;
+
 
      //INIZIO CICLO
-     while ( player.vivo() ) {
+     while ( player.vivo() && !timerGioco.scaduto( )) {
           //1. leggi input
           input = getch();
 
@@ -140,45 +144,57 @@ int main() {
                gestisciInput(player, levelList, input ) ;
           }
 
-
-
-
-          //3. controlla entrata / uscita
           controllaPassaggioLivelli( player, levelList ) ;
 
-          player.aggiornaInvulnerabilita( ) ;
+          bool colpito = false;
 
-          bool colpito = levelList.updateLevels( player ) ;
-          //4. aggiorna i timer dei potenziamenti dei livelli non correnti
-          //+ aggiorna il livello corrente e ritorna true se il giocatore' ha subito danno
-          //- nemici
-          //- bomba
-          //- collisioni
+          if ( timerAggiornamentoLivello.scaduto()) {
 
-          if ( !colpito )
-               levelList.getCurrent() -> level -> raccoltaItem( player ) ;
 
-          levelList.getCurrent() -> level -> stamp_map( player ) ;
+               player.aggiornaInvulnerabilita( ) ;
 
-          if ( colpito ) {// il giocatore ha subito danno
-               if ( player.vivo() ) {
-                    // mostra messaggio / animazione
-                    // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
-                    // Invulnerabilita' attiva per x secondi"
-                    reset_v1 (player, levelList ) ;
-               }
-               else
-                    break ;
+               colpito = levelList.updateLevels( player ) ;
 
+               //4. aggiorna i timer dei potenziamenti dei livelli non correnti
+               //+ aggiorna il livello corrente e ritorna true se il giocatore' ha subito danno
+               //- nemici
+               //- bomba
+               //- collisioni
+
+               timerAggiornamentoLivello.attivaTimer(250 ) ;
           }
 
-          if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
-               break ;
+               if ( !colpito )
+                    levelList.getCurrent() -> level -> raccoltaItem( player ) ;
+
+               levelList.getCurrent() -> level -> stamp_map( player ) ;
+
+               if ( colpito ) {// il giocatore ha subito danno
+                    if ( player.vivo() ) {
+                         // mostra messaggio / animazione
+                         // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
+                         // Invulnerabilita' attiva per x secondi"
+                         reset_v1 (player, levelList ) ;
+                    }
+                    else
+                         break ;
+
+               }
+
+               if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
+                    break ;
+
+
+
 
           // --- AGGIUNGI QUESTE TRE RIGHE ALLA FINE DEL WHILE ---
           debug_contatore++;
           mvprintw(0, 0, "Battito loop: %d | Ultimo input: %d", debug_contatore, input);
           refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
+
+          timerAggiornamentoLivello.diminuisci( 50) ;
+          timerGioco.diminuisci(50) ;
+          napms(50) ;
      }
 
      if ( player.vivo()) {
@@ -199,5 +215,4 @@ int main() {
 
     return 0;
 }
-
 
