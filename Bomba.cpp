@@ -97,7 +97,8 @@ void Bomba::esplodi() {
 }
 
 bool Bomba::aggiornaBomba() {
-    aggiornaPotenziamenti() ;
+    aggiornaPotenziamenti();
+
     if (innescata()) {
         diminuisciTimer();
         if (getTimer() <= 0) {

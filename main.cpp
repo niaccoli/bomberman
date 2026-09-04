@@ -63,10 +63,11 @@ int main() {
 
           // init_pair(ID_COPPIA, COLORE_TESTO, COLORE_SFONDO);
           init_pair(1, COLOR_CYAN,    COLOR_BLACK); // Giocatore
-          init_pair(2, COLOR_RED,     COLOR_BLACK); // Nemici
-          init_pair(3, COLOR_YELLOW,  COLOR_BLACK); // Bomba / Esplosione
+          init_pair(2, COLOR_RED,     COLOR_BLACK); // Nemici / Bomba
+          init_pair(3, COLOR_YELLOW,  COLOR_BLACK); // Bomba
           init_pair(4, COLOR_GREEN,   COLOR_BLACK); // Item / Valuta
           init_pair(5, COLOR_WHITE,   COLOR_BLACK); // Muri indistruttibili
+          init_pair(6, COLOR_RED,  COLOR_RED);   // Esplosione
      }
 
      BidirectionalList levelList;
