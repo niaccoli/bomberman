@@ -220,6 +220,14 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
         }
     }
 
+    // Calcola la coordinata Y del bordo inferiore (rows + 1 a causa dell'offset dei bordi)
+    int y_bottom = rows + 1;
+
+    // Stampa il testo delle vite (puoi colorarlo con un Color Pair, es. rosso per il cuore)
+    wattron(this->win, COLOR_PAIR(4) | A_BOLD);
+    mvwprintw(this->win, y_bottom, 2, "[ VITE: %d ]", p.getVite());
+    wattroff(this->win, COLOR_PAIR(4) | A_BOLD);
+
     //Aggiorna la finestra
     wrefresh(this->win);
 }
