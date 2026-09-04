@@ -33,6 +33,9 @@ private:
 
     bool completato;
 
+    Timer visualize_explosion{0};
+    bool active_explosion = false;
+
     Posizione posizioneRandomValida_v2() ;
     // Restituisce una posizione casuale calpestabile, non occupata da nemici vivi
     // e sufficientemente lontana dall'entrata del livello.
@@ -43,6 +46,7 @@ private:
     int isThereAnEnemy_v2( Posizione posizione) ;
     // Restituisce l'indice del nemico vivo presente nella posizione indicata;
     // restituisce -1 se la posizione non è occupata da alcun nemico vivo.
+
 
 public:
     Level(Map& m, int random_enemies, int items);
