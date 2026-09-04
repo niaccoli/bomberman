@@ -28,6 +28,7 @@ class Personaggio {
         void setVite(int vite);
         void aumentaVita();
         void diminuisciVita();
+        void diminuisciVita( int danno ) ;
         bool vivo() const;
         int getVite() const;
 };

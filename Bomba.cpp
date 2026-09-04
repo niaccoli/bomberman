@@ -1,7 +1,7 @@
 #include "Bomba.h"
 
-Bomba::Bomba(): posizione{ -1, -1 }, timer(2), danno(1), raggio(1), attivo(false)/*, boostDanno(false), durataBoostDanno(5),
-                boostRaggio(false), durataBoostRaggio(5)*/, boostTimer(false), durataBoostTimer(5) {}
+Bomba::Bomba(): posizione{ -1, -1 }, timer(0), danno(1), raggio(1), attivo(false), boostDanno(false), durataBoostDanno(5),
+                boostRaggio(false), durataBoostRaggio(5), boostTimer(false), durataBoostTimer(5) {}
 
 
 /*Bomba::Bomba(int x, int y, int timer, int danno, int raggio, bool attivo) {
@@ -55,10 +55,6 @@ void Bomba::diminuisciTimer() {
     this -> timer-- ;
 }
 
-void Bomba::velocizza( ) {
-    this -> timer /= 2;
-}
-
 int Bomba::getDanno() const {
     return this -> danno;
 }
@@ -88,8 +84,8 @@ bool Bomba::innescata() const {
 }
 
 void Bomba::innesca() {
-    //aggiungere controllo? if ( !innescata )
     this -> attivo = true;
+    setTimer( defaultTimer ) ;
 }
 
 void Bomba::esplodi() {
@@ -97,14 +93,18 @@ void Bomba::esplodi() {
 }
 
 bool Bomba::aggiornaBomba() {
-    aggiornaPotenziamenti() ;
     if (innescata()) {
-        diminuisciTimer();
+
+        diminuisciTimer() ;
+        if (boostTimerAttivo( ))
+            diminuisciTimer( ) ;
         if (getTimer() <= 0) {
-            esplodi();
+            esplodi() ;
             return true ;
         }
     }
+
+    aggiornaPotenziamenti( ) ;
     return false ;
 }
 
@@ -189,12 +189,10 @@ void Bomba::aggiornaBoostRaggio() {
 void Bomba::attivaBoostTimer() {
     boostTimer = true;
     setDurataBoostTimer(5);
-    velocizza();
 }
 
 void Bomba::disattivaBoostTimer() {
     boostTimer = false;
-    timer = 1;
 }
 
 void Bomba::setDurataBoostTimer(int durata) {

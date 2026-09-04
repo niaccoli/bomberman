@@ -54,5 +54,13 @@ bool Giocatore::diminuisciVita() {
 }
 
 
+bool Giocatore::diminuisciVita( int danno ) {
+    if (! invulnerabile()) {
+        Personaggio::diminuisciVita(danno);
+        return true ;
+    }
+    return false ;
+}
+
 
 

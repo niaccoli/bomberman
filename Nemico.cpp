@@ -229,7 +229,7 @@ Posizione Nemico::nuovaPosizione_v3 (Map& m) {
 void Nemico::rianima( ) {
     if ( tipo == 'I' || tipo == 'R' )
         setVite( 1 ) ;
-    if ( tipo == 'R' )
+    if ( tipo == 'T' )
         setVite( 2 ) ;
 }
 

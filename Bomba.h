@@ -7,7 +7,10 @@ class Bomba {
         /*int x;
         int y;*/
         Posizione posizione ;
-        int timer; //tempo che la bomba impiega ad esplodere
+
+        const int defaultTimer = 2 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
+        //defaultTimer *  timerAggiornamentoLivello
+        int timer;
         int danno;
         int raggio;
         bool attivo;
@@ -66,7 +69,6 @@ class Bomba {
         int getTimer() const; //ritorna il tempo rimanente prima di esplodere
         void setTimer(int tempo); //imposta il timer della bomba
         void diminuisciTimer(); //diminuisce il timer della bomba
-        void velocizza(); // (per item 'T' = diminuzione tempo esplosione)
 
         int getDanno() const; //ritorna il danno della bomba
         void setDanno(int danno); //imposta il danno della bomba

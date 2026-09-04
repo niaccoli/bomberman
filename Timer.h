@@ -8,7 +8,7 @@
 
 class Timer {
 protected:
-    int tempo ;
+    int tempo ; //unita': ms
 
 public:
     Timer(int tempo) ;

@@ -57,6 +57,11 @@ void Personaggio::diminuisciVita() {
     this -> vite -= 1;
 }
 
+void Personaggio::diminuisciVita(int danno) {
+    this -> vite -= danno ;
+}
+
+
 bool Personaggio::vivo () const{
     return (vite > 0);
 }
