@@ -9,8 +9,20 @@ class Bomba {
         int y;*/
         Posizione posizione ;
 
-        const int defaultTimer = 20 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
+        const int defaultDanno = 1 ;
+        const int defaultRaggio = 1 ;
+        const int defaultTimer = 2 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
         //defaultTimer *  timerAggiornamentoLivello
+        const int defaultDurataBoostDanno = 5;
+        const int defaultDurataBoostRaggio = 5;
+        const int defaultDurataBoostTimer = 5;
+
+        //queste funzioni non servono se decidiamo che se un boost gia' attivo viene preso si resetta il tempo invece
+        //di sommarlo ( in tal caso modificare anche funzioni di attivazione boost )
+        void setDurataBoostDanno(int durata);
+        void setDurataBoostRaggio(int durata);
+        void setDurataBoostTimer(int durata);
+
         int timer;
         int danno;
         int raggio;
@@ -88,7 +100,6 @@ class Bomba {
         //POTENZIAMENTI
         void attivaBoostDanno();
         void disattivaBoostDanno();
-        void setDurataBoostDanno(int durata);
         void diminuisciDurataBoostDanno();
         int getDurataBoostDanno() const;
         bool boostDannoAttivo() const;
@@ -96,7 +107,6 @@ class Bomba {
 
         void attivaBoostRaggio();
         void disattivaBoostRaggio();
-        void setDurataBoostRaggio(int durata);
         void diminuisciDurataBoostRaggio();
         int getDurataBoosRaggio() const;
         bool boostRaggioAttivo() const;
@@ -104,8 +114,7 @@ class Bomba {
 
 
         void attivaBoostTimer( );
-        void disattivaBoostTimer( );
-        void setDurataBoostTimer(int durata);
+        void disattivaBoostTimer( ) ;
         void diminuisciDurataBoostTimer( );
         int getDurataBoostTimer( ) const;
         bool boostTimerAttivo( ) const;

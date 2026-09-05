@@ -150,11 +150,6 @@ int main() {
           if (input != ERR)
                gestisciInput(player, levelList, input);
 
-          if(input != ERR){
-               //2. esegui azione giocatore
-               gestisciInput(player, levelList, input ) ;
-          }
-
           controllaPassaggioLivelli( player, levelList ) ;
 
           if ( timerInvulnerabilita.scaduto()) {

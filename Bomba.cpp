@@ -1,7 +1,12 @@
 #include "Bomba.h"
 
-Bomba::Bomba(): posizione{ -1, -1 }, timer(0), danno(1), raggio(1), attivo(false), boostDanno(false), durataBoostDanno(5),
-                boostRaggio(false), durataBoostRaggio(5), boostTimer(false), durataBoostTimer(5) {}
+Bomba::Bomba():
+posizione{ -1, -1 },
+timer(0), boostTimer(false), durataBoostTimer(0),
+raggio(defaultRaggio), boostRaggio(false), durataBoostRaggio(0),
+attivo(false),
+danno(defaultDanno), boostDanno(false), durataBoostDanno(0)
+{ }
 
 
 /*Bomba::Bomba(int x, int y, int timer, int danno, int raggio, bool attivo) {
@@ -64,7 +69,7 @@ void Bomba::setDanno(int danno) {
 }
 
 void Bomba::duplicaDanno() {
-    this -> danno *= 2;
+    this -> danno *= 2 ;
 }
 
 int Bomba::getRaggio() const {
@@ -113,14 +118,19 @@ bool Bomba::aggiornaBomba() {
 
 
 void Bomba::attivaBoostDanno() {
-    boostDanno = true;
-    setDurataBoostDanno(5);
-    duplicaDanno();
+    if ( !boostDannoAttivo()) {
+        boostDanno = true;
+        setDurataBoostDanno( defaultDurataBoostDanno );
+        duplicaDanno();
+    }
+    else {
+        setDurataBoostDanno( getDurataBoostDanno() + defaultDurataBoostDanno ) ;
+    }
 }
 
 void Bomba::disattivaBoostDanno() {
     boostDanno = false;
-    danno = 1;
+    danno = defaultDanno ;
 }
 
 void Bomba::setDurataBoostDanno(int durata) {
@@ -150,14 +160,19 @@ void Bomba::aggiornaBoostDanno() {
 
 
 void Bomba::attivaBoostRaggio() {
-    boostRaggio = true;
-    setDurataBoostRaggio(5);
-    raddoppiaRaggio();
+    if ( !boostRaggioAttivo()) {
+        boostRaggio = true;
+        setDurataBoostRaggio( defaultDurataBoostRaggio );
+        raddoppiaRaggio();
+    }
+    else {
+        setDurataBoostRaggio( getDurataBoosRaggio() + defaultDurataBoostRaggio) ;
+    }
 }
 
 void Bomba::disattivaBoostRaggio() {
     boostRaggio = false;
-    raggio = 1;
+    raggio = defaultRaggio ;
 }
 void Bomba::setDurataBoostRaggio(int durata) {
     durataBoostRaggio = durata;
@@ -188,8 +203,13 @@ void Bomba::aggiornaBoostRaggio() {
 
 
 void Bomba::attivaBoostTimer() {
-    boostTimer = true;
-    setDurataBoostTimer(5);
+    if ( !boostTimerAttivo()) {
+        boostTimer = true;
+        setDurataBoostTimer( defaultDurataBoostTimer);
+    }
+    else {
+        setDurataBoostTimer( getDurataBoostTimer( ) + defaultDurataBoostTimer) ;
+    }
 }
 
 void Bomba::disattivaBoostTimer() {
