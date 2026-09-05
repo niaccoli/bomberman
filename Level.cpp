@@ -201,7 +201,7 @@ void Level::stamp_map(Giocatore& g) {
     else {
         map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione) ;
 
-        num_cella_esplosione = 0 ;
+        //num_cella_esplosione = 0 ;
     }
 }
 
@@ -223,8 +223,21 @@ bool Level::updateLevel(Giocatore& g) {
         return true ;
     }
 
+    if(active_explosion){
+        visualize_explosion.diminuisci(1);
+
+        if(visualize_explosion.scaduto()){
+            active_explosion = false;
+
+            num_cella_esplosione = 0;
+        }
+    }
+
     if ( b.aggiornaBomba( ) ) {
         bool giocatore_colpito = collisioneEsplosione( g ) ;
+
+        active_explosion = true;
+        visualize_explosion.attivaTimer(10);
         //collisione esplsione inizializza le cella_esplosione[]
         if ( giocatore_colpito)
             return true ;

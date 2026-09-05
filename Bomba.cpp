@@ -93,6 +93,7 @@ void Bomba::esplodi() {
 }
 
 bool Bomba::aggiornaBomba() {
+
     if (innescata()) {
 
         diminuisciTimer() ;

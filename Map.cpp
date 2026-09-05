@@ -4,6 +4,7 @@
 #include <iostream>
 #include <random>
 #include <cmath> //Usato per funzione abs() (Valore assoluto)
+#include "Timer.h"
 
 using namespace std;
 
@@ -82,10 +83,21 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici,
     this->stamp_map(p, nemici, numNemici, items, numItems, b, NULL, 0);
 }
 
+bool change_bomb_color = false;
+Timer color_switch(1);
 
 void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione){
 
     box(this->win, 0, 0);
+
+    //GESTIONE TIMER
+    // Gestione lampeggio bomba
+    color_switch.diminuisci(1);
+    if(color_switch.scaduto()){                   
+        change_bomb_color = !change_bomb_color;
+        color_switch.attivaTimer(5); // Cambia colore ogni 5 frame
+    }
+    
 
     for(int i = 0; i < rows; i++){
         for(int j=0; j < cols; j++){
@@ -123,14 +135,42 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
 
             //Priorità 2: Esplosione bomba
             //Visualizzazione esplosione bomba (True da sostituire con meotodo per capire se la boma è esplosa)
+            /*
             if(true){
                 for (int k = 0; k < num_celle_esplosione; k++) {
                     if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
                         char_to_display = 'E';
+                        visualize_explosion.attivaTimer(150);
+                        explosion = true;
                         break;
                     }
                 }
             }
+            
+
+            if(num_celle_esplosione > 0){
+
+                if(!explosion){
+                    explosion = true;
+                    visualize_explosion.attivaTimer(30);
+                }
+
+                if(explosion){
+                    for (int k = 0; k < num_celle_esplosione; k++) {
+                        if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
+                            char_to_display = 'E';
+                            break;
+                        }
+                    }
+                }
+            }
+            */
+            for (int k = 0; k < num_celle_esplosione; k++) {
+                        if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
+                            char_to_display = 'E';
+                            break;
+                        }
+                    }
 
             // Priorità 1: Giocatore (la più alta, sovrascrive tutto)
             if(p.vivo() && i == p.getY() && j == p.getX()){
@@ -154,9 +194,23 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
                 wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
             }
             else if(char_to_display == 'O'){
-                wattron(this->win, COLOR_PAIR(3) | A_BOLD);
-                mvwaddstr(this->win, i + 1, j + 1, "¤");
-                wattroff(this->win, COLOR_PAIR(3) | A_BOLD);
+
+                if(change_bomb_color == true){
+                    wattron(this->win, COLOR_PAIR(3) | A_BOLD);
+                    mvwaddstr(this->win, i + 1, j + 1, "¤");
+                    wattroff(this->win, COLOR_PAIR(3) | A_BOLD);
+                }
+                else{
+                    wattron(this->win, COLOR_PAIR(2) | A_BOLD);
+                    mvwaddstr(this->win, i + 1, j + 1, "¤");
+                    wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
+                }
+                
+            }
+            else if(char_to_display == 'E'){
+                wattron(this->win, COLOR_PAIR(6) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "█");
+                wattroff(this->win, COLOR_PAIR(6) | A_BOLD);
             }       
             else {
                 // Per tutti gli altri caratteri normali ('P', 'N', ' ') usiamo mvwaddch
@@ -165,6 +219,14 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
 
         }
     }
+
+    // Calcola la coordinata Y del bordo inferiore (rows + 1 a causa dell'offset dei bordi)
+    int y_bottom = rows + 1;
+
+    // Stampa il testo delle vite (puoi colorarlo con un Color Pair, es. rosso per il cuore)
+    wattron(this->win, COLOR_PAIR(4) | A_BOLD);
+    mvwprintw(this->win, y_bottom, 2, "[ VITE: %d ]", p.getVite());
+    wattroff(this->win, COLOR_PAIR(4) | A_BOLD);
 
     //Aggiorna la finestra
     wrefresh(this->win);

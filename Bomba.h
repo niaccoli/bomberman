@@ -1,6 +1,7 @@
 #ifndef BOMBERMAN_BOMBA_H
 #define BOMBERMAN_BOMBA_H
 #include "Posizione.h"
+#include "Timer.h"
 
 class Bomba {
     protected:
