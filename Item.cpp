@@ -38,38 +38,29 @@ Posizione Item::getPosizione( ) const {
 
 
 void Item::setTipo(char tipo) {
-    this -> tipo = tipo;
+    if ( tipo == 'D' || tipo == 'R' || tipo == 'T' || tipo == 'I' || tipo == 'V')
+        this -> tipo = tipo;
+    else
+        this -> tipo = ' ' ;
 }
 
-void Item::setTipoRandom() {
-    int i = rand() % 3 ;
-    if (i == 0) {
-        this -> tipo = 'D' ;
-    }
-    else if (i == 1) {
-        this -> tipo = 'B' ;
-    }
-    else {
-        this -> tipo = 'T' ;
-    }
-}
 
 void Item::setTipoRandom_v2() {
-    int i = rand() % 101 ;
+    int i = rand() % 100 ;
     if (i >= 0 && i < 30) {
-        this -> tipo = 'D' ;
+        setTipo('D') ;
     }
     else if (i >= 30 && i < 60) {
-        this -> tipo = 'B' ;
+        setTipo('R') ;
     }
     else if (i >= 60 && i < 90) {
-        this -> tipo = 'T' ;
+        setTipo('T') ;
     }
     else if (i >= 90 && i < 95) {
-        this -> tipo = 'I' ;
+        setTipo('I') ;
     }
     else {
-        this -> tipo = 'V' ;
+        setTipo('V') ;
     }
 }
 

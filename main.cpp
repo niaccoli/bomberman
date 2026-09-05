@@ -171,8 +171,12 @@ int main() {
 		}
 
 
-          if ( !colpito )
-               levelList.getCurrent() -> level -> raccoltaItem( player ) ;
+          if (!colpito) {
+               char tipo = levelList.getCurrent()->level->raccoltaItem(player);
+
+               if (tipo != ' ')
+                    levelList.applicaEffettoItem(player, tipo);
+          }
 
           levelList.getCurrent() -> level -> stamp_map( player ) ;
 

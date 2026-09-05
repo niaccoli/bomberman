@@ -132,7 +132,7 @@ class Item{
         /*int x;
         int y;*/
         Posizione posizione ;
-        char tipo; //danno('D'), riduzione tempo bomba('T'), aumento raggio bomba('B'), invulnerabilità('I'), 1pt.vita('V')
+        char tipo; //danno('D'), riduzione tempo bomba('T'), aumento raggio bomba('R'), invulnerabilità('I'), 1pt.vita('V')
         //int durata; //per quanto rempo rimane sulla mappa
         bool attivo;//il tempo per quanto dura il suo effetto lo mettiamo in una funzione generale
 
@@ -151,7 +151,6 @@ class Item{
 
         void setTipo(char tipo) ;
         char getTipo() const ;
-        void setTipoRandom() ; //imposta un tipo causale
 
         void setTipoRandom_v2() ;
         /*imposta un tipo casuale:

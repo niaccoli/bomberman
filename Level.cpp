@@ -513,8 +513,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 char Level::raccoltaItem(Giocatore& g ) {
     for (int i = 0 ; i < next_item ; i++ )
 
-        if ( stessaPosizione( g.getPosizione(), items[i].getPosizione()) && items[i].isAttivo() )
+        if ( stessaPosizione( g.getPosizione(), items[i].getPosizione()) && items[i].isAttivo() ) {
+            items[i].raccogli( ) ;
             return items[i].getTipo() ;
+        }
 
     return (' ') ;
 }
@@ -527,7 +529,7 @@ void Level::dropItem(Posizione posizione) {
 
         if (random == 1) {
             items[next_item].setPosizione( posizione ) ;
-            items[next_item].setTipoRandom( ) ;
+            items[next_item].setTipoRandom_v2( ) ;
             items[next_item].attiva( ) ;
             next_item++ ;
         }
