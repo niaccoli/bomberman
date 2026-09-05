@@ -141,7 +141,14 @@ int main() {
      //INIZIO CICLO
      while ( player.vivo() && !timerGioco.scaduto( )) {
           //1. leggi input
-          input = getch();
+          char temp;
+          input = ERR;
+
+          while ((temp = getch()) != ERR) //svuota la coda di input tenendo solo l'ultimo
+               input = temp;
+
+          if (input != ERR)
+               gestisciInput(player, levelList, input);
 
           if(input != ERR){
                //2. esegui azione giocatore
