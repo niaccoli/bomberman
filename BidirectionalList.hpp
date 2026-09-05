@@ -56,6 +56,12 @@ public:
      livello corrente  → Level::updateLevel(g) // deve ritornare questo valore cosi' sappiamo se il giocatore e' stato colpito
      */
 
+    bool updateEnemies(Giocatore& g) ;
+    //muove i nemici del livello corrente, ritorna true se il giocatore collide con un nemico, false altrimenti
+
+    bool updateBombs(Giocatore& g) ;
+
+
     bool isLastLevel( ) ;
     //ritorna true se il livello corrente e' l'ultimo livello rimasto
 

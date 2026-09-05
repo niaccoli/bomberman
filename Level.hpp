@@ -69,13 +69,17 @@ public:
     // Restituisce true se tutti i nemici del livello sono stati sconfitti,
     // false altrimenti.
 
-    bool updateLevel(Giocatore& g) ;
+    //bool updateLevel(Giocatore& g) ;
     // Aggiorna il livello corrente: muove i nemici, controlla le collisioni
     // con il giocatore e aggiorna la bomba e l'eventuale esplosione.
     // Restituisce true solo se il giocatore perde effettivamente una vita.
 
+    bool updateEnemies( Giocatore& g ) ;
 
-    void updateEnemies(Giocatore& g);
+    bool aggiornaEsplosioni(Giocatore& g ) ;
+
+
+    void moveEnemies(Giocatore& g);
     // Aggiorna la posizione di tutti i nemici vivi del livello.
 
     void updateItems( );
@@ -111,7 +115,7 @@ public:
     //riporta tutti i nemici vivi e li riposiziona casualmente, rimette gli item a 0 (da valuare), resetta la bomba
     //e ne disattiva eventuali potenziamenti
 
-    void updateLevel( ) ;
+    void aggiornaPotenziamenti( ) ;
     // Aggiorna la durata dei potenziamenti associati alla bomba del livello.
 
     void applicaEffetto(char tipo ) ;

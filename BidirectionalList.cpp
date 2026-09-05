@@ -150,6 +150,7 @@ void BidirectionalList::deleteNode(){
     delete to_delete;
 }
 
+/*
 bool BidirectionalList::updateLevels(Giocatore& g){
     node* tmp = head;
 
@@ -164,6 +165,27 @@ bool BidirectionalList::updateLevels(Giocatore& g){
     }
 
     return is_hitted;
+}*/
+
+bool BidirectionalList::updateEnemies(Giocatore& g) {
+    return (current -> level -> updateEnemies( g )) ;
+}
+
+bool BidirectionalList::updateBombs(Giocatore& g) {
+
+    node* temp = head ;
+    bool colpito = false ;
+
+    while ( temp != nullptr) {
+
+        if ( temp == current )
+            colpito = temp -> level -> aggiornaEsplosioni( g ) ;
+        else
+            temp -> level -> aggiornaPotenziamenti( ) ;
+
+        temp = temp -> next ;
+    }
+    return colpito ;
 }
 
 bool BidirectionalList::isLastLevel(){

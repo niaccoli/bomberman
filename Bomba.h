@@ -9,7 +9,7 @@ class Bomba {
         int y;*/
         Posizione posizione ;
 
-        const int defaultTimer = 2 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
+        const int defaultTimer = 20 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
         //defaultTimer *  timerAggiornamentoLivello
         int timer;
         int danno;

@@ -131,8 +131,11 @@ int main() {
      // Prima del while, dichiara un contatore
      int debug_contatore = 0;
 
+
      Timer timerGioco(300000) ;
-     Timer timerAggiornamentoLivello( 500 ) ;
+     Timer timerNemici (1000) ;
+     Timer timerBombe (100);
+     Timer timerInvulnerabilita (100) ;
 
 
      //INIZIO CICLO
@@ -147,48 +150,56 @@ int main() {
 
           controllaPassaggioLivelli( player, levelList ) ;
 
+          if ( timerInvulnerabilita.scaduto()) {
+               player.aggiornaInvulnerabilita( ) ;
+               timerInvulnerabilita.attivaTimer(100) ;
+          }
+
+
           bool colpito = false;
 
-          if ( timerAggiornamentoLivello.scaduto()) {
-
-               player.aggiornaInvulnerabilita( ) ;
-               //chiedere conferma:
-               //attualmente l'invulnerabilita' dura 4 venendo aggiornata ogni 250ms dovrebbe
-
-               colpito = levelList.updateLevels( player ) ;
-               timerAggiornamentoLivello.attivaTimer(500 ) ;
+          if ( timerNemici.scaduto()) {
+               colpito = levelList.updateEnemies( player ) ;
+               timerNemici.attivaTimer(1000 ) ;
           }
+
+
+          if ( !colpito && timerBombe. scaduto() ){
+
+			  colpito = levelList.updateBombs( player ) ;
+			  timerBombe.attivaTimer(100) ;
+		}
+
 
           if ( !colpito )
                levelList.getCurrent() -> level -> raccoltaItem( player ) ;
 
           levelList.getCurrent() -> level -> stamp_map( player ) ;
 
+
           if ( colpito ) {// il giocatore ha subito danno
-               if ( player.vivo() ) {
+                if ( player.vivo() ) {
                          // mostra messaggio / animazione
                          // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
                          // Invulnerabilita' attiva per x secondi"
-                    reset_v1 (player, levelList ) ;
-               }
-               else
+                         reset_v1 (player, levelList ) ;
+                }
+                else
                     break ;
-
                }
 
           if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
-               break ;
-
-
-
+                break ;
 
           // --- AGGIUNGI QUESTE TRE RIGHE ALLA FINE DEL WHILE ---
           debug_contatore++;
           mvprintw(0, 0, "Battito loop: %d | Ultimo input: %d", debug_contatore, input);
           refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
 
-          timerAggiornamentoLivello.diminuisci( 100) ;
+          timerNemici.diminuisci(100) ;
+	     timerBombe.diminuisci(100) ;
           timerGioco.diminuisci(100) ;
+          timerInvulnerabilita.diminuisci(100);
 
           napms(100) ;
      }
@@ -211,4 +222,3 @@ int main() {
 
     return 0;
 }
-

@@ -201,7 +201,7 @@ void Level::stamp_map(Giocatore& g) {
     else {
         map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione) ;
 
-        //num_cella_esplosione = 0 ;
+        num_cella_esplosione = 0 ;
     }
 }
 
@@ -214,10 +214,10 @@ bool Level::isCompletato( ) {
     return completato ;
 }
 
-
+/*
 bool Level::updateLevel(Giocatore& g) {
 
-    updateEnemies( g )  ;
+    moveEnemies( g )  ;
 
     if ( collisioneGiocatoreNemici_v2( g )) {
         return true ;
@@ -247,12 +247,29 @@ bool Level::updateLevel(Giocatore& g) {
     //quando gli item avranno una durata
 
     return false ;
+} */
+
+bool Level::updateEnemies(Giocatore& g) {
+
+    moveEnemies( g )  ;
+
+    if ( collisioneGiocatoreNemici_v2( g ))
+        return true ;
+    else
+        return false ;
+}
+
+bool Level::aggiornaEsplosioni(Giocatore& g){
+
+    if ( b.aggiornaBomba( ) )
+        return ( collisioneEsplosione( g )) ;
+    //collisione esplsione inizializza le cella_esplosione[]
+
+    return false ;
 }
 
 
-
-
-void Level::updateEnemies(Giocatore& g){
+void Level::moveEnemies(Giocatore& g){
 
     for ( int i = 0 ; i < num_nemici ; i++ ) {
         
@@ -557,7 +574,7 @@ void Level::reset_v2() {
 }
 
 
-void Level::updateLevel() {
+void Level::aggiornaPotenziamenti() {
     b.aggiornaPotenziamenti( ) ;
 }
 
