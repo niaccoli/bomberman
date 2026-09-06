@@ -78,8 +78,7 @@ public:
 
     bool updateEnemies( Giocatore& g ) ;
 
-    bool aggiornaEsplosioni(Giocatore& g ) ;
-
+    bool aggiornaEsplosioni(Giocatore& g ,int durata ) ;
 
     void moveEnemies(Giocatore& g);
     // Aggiorna la posizione di tutti i nemici vivi del livello.
@@ -109,21 +108,18 @@ public:
     // Piazza e innesca la bomba nella posizione del giocatore,
     // se non è già presente una bomba attiva.
 
-    void reset_v1( ) ;
+    void resetBombeEPotenziamenti( ) ;
     // Disattiva la bomba del livello, ne rimuove i potenziamenti
     // e la riposiziona fuori dalla mappa.
 
-    void reset_v2( ) ;
-    //riporta tutti i nemici vivi e li riposiziona casualmente, rimette gli item a 0 (da valuare), resetta la bomba
-    //e ne disattiva eventuali potenziamenti
+    void reset_v3( ) ;
 
-    void aggiornaPotenziamenti( ) ;
-    // Aggiorna la durata dei potenziamenti associati alla bomba del livello.
+    void aggiornaPotenziamenti(int durata ) ;
 
     void applicaEffetto(char tipo ) ;
     // Applica alla bomba il potenziamento identificato dal tipo ricevuto.
 
-    // ---------------------------------------- DA VALUTARE---------------------------------------------
+    /* ---------------------------------------- DA VALUTARE---------------------------------------------
 
     //se vogliamo che se una bomba viene piazzata in un livello e il giocatore si sposta nel livello sucessivo la bomba
     //continui ad esplodere, i nemici si muovano e quando la bomba esplode crei danno ai nemici
@@ -140,5 +136,6 @@ public:
 
     void collisioneEplosione_v3( ) ;
     //fa esplodere la bomba causando danno a muri e nemici
+    */
 
 };

@@ -131,11 +131,12 @@ int main() {
      // Prima del while, dichiara un contatore
      int debug_contatore = 0;
 
+     const int INTERVALLO_CICLO_MS = 100;
+     const int TEMPO_AGGIORNAMENTO_NEMICI_MS = 1000 ;
+     const int DURATA_PARTITA_MINUTI = 5 ;
 
-     Timer timerGioco(300000) ;
-     Timer timerNemici (1000) ;
-     Timer timerBombe (100);
-     Timer timerInvulnerabilita (100) ;
+     Timer timerGioco(DURATA_PARTITA_MINUTI * 60 * 1000) ;
+     Timer timerNemici (TEMPO_AGGIORNAMENTO_NEMICI_MS) ;
 
 
      //INIZIO CICLO
@@ -147,30 +148,27 @@ int main() {
           while ((temp = getch()) != ERR) //svuota la coda di input tenendo solo l'ultimo
                input = temp;
 
+
           if (input != ERR)
                gestisciInput(player, levelList, input);
 
           controllaPassaggioLivelli( player, levelList ) ;
 
-          if ( timerInvulnerabilita.scaduto()) {
-               player.aggiornaInvulnerabilita( ) ;
-               timerInvulnerabilita.attivaTimer(100) ;
-          }
+          player.aggiornaInvulnerabilita( INTERVALLO_CICLO_MS ) ;
+
+          levelList.updateBoostBombe(INTERVALLO_CICLO_MS ) ;
 
 
           bool colpito = false;
 
           if ( timerNemici.scaduto()) {
                colpito = levelList.updateEnemies( player ) ;
-               timerNemici.attivaTimer(1000 ) ;
+               timerNemici.attivaTimer(TEMPO_AGGIORNAMENTO_NEMICI_MS ) ;
           }
 
 
-          if ( !colpito && timerBombe. scaduto() ){
-
-			  colpito = levelList.updateBombs( player ) ;
-			  timerBombe.attivaTimer(100) ;
-		}
+          if ( !colpito )
+			  colpito = levelList.updateBombs( player, INTERVALLO_CICLO_MS ) ;
 
 
           if (!colpito) {
@@ -188,7 +186,7 @@ int main() {
                          // mostra messaggio / animazione
                          // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
                          // Invulnerabilita' attiva per x secondi"
-                         reset_v1 (player, levelList ) ;
+                         reset_v3 (player, levelList ) ;
                 }
                 else
                     break ;
@@ -202,12 +200,10 @@ int main() {
           mvprintw(0, 0, "Battito loop: %d | Ultimo input: %d", debug_contatore, input);
           refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
 
-          timerNemici.diminuisci(100) ;
-	     timerBombe.diminuisci(100) ;
-          timerGioco.diminuisci(100) ;
-          timerInvulnerabilita.diminuisci(100);
+          timerNemici.diminuisci(INTERVALLO_CICLO_MS) ;
+          timerGioco.diminuisci(INTERVALLO_CICLO_MS) ;
 
-          napms(100) ;
+          napms(INTERVALLO_CICLO_MS) ;
      }
 
      if ( player.vivo()) {

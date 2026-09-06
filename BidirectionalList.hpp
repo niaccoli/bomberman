@@ -45,13 +45,12 @@ public:
     //al livello 1
 
 
-    //Andrea x Matte: devi chiamarlo per tutti i nodi
     void applicaEffettoItem ( Giocatore& g, char type ) ;
     // se tipo == 'I' g.invulnerabilitaOn()
     //se tipo == 'V' g.aumentaVita()
     //altrimenti chiami per tutti i livelli Level::applicaEffetto( tipo )
 
-    bool updateLevels(Giocatore& g) ;
+    //bool updateLevels(Giocatore& g) ;
     /* per tutti i livelli non correnti → Level::updateLevel() //aggiorna soltanto i timer dei potenziamenti
      livello corrente  → Level::updateLevel(g) // deve ritornare questo valore cosi' sappiamo se il giocatore e' stato colpito
      */
@@ -59,14 +58,19 @@ public:
     bool updateEnemies(Giocatore& g) ;
     //muove i nemici del livello corrente, ritorna true se il giocatore collide con un nemico, false altrimenti
 
-    bool updateBombs(Giocatore& g) ;
+    bool updateBombs(Giocatore& g, int durata) ;
+    //aggiorna la bomba del livello corrente
 
+    void updateBoostBombe(int durata) ;
+    //aggiorna i Boost delle bombe di tutti i livelli
 
     bool isLastLevel( ) ;
     //ritorna true se il livello corrente e' l'ultimo livello rimasto
 
     void reset_v1( ) ;
-    //chiama void Level::reset_v1() per tutti i livelli attivi disattivando i potenziamenti bomba
+    //chiama void Level::resetBombeEPotenziamenti() per tutti i livelli attivi disattivando i potenziamenti bomba
+
+    void reset_v3( ) ;
 
     //Eliminazione del nodo(Utilizzato in goToNext e goToPrev)
     void deleteNode();

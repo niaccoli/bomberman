@@ -261,9 +261,10 @@ bool Level::updateEnemies(Giocatore& g) {
         return false ;
 }
 
-bool Level::aggiornaEsplosioni(Giocatore& g){
 
-    if ( b.aggiornaBomba( ) )
+
+bool Level::aggiornaEsplosioni(Giocatore& g ,int durata ) {
+    if ( b.aggiornaBomba( durata ) )
         return ( collisioneEsplosione( g )) ;
     //collisione esplsione inizializza le cella_esplosione[]
 
@@ -546,40 +547,33 @@ void Level::piazzaBomba(Giocatore& g) {
     }
 }
 
-void Level::reset_v1() {
+void Level::resetBombeEPotenziamenti() {
     b.esplodi( );
     b.disattivaPotenziamenti() ;
     b.setPosizione( -1, -1 ) ;
 }
 
 
-void Level::reset_v2() {
 
-    // riporta tutti i nemici vivi
-    for ( int i = 0 ; i < num_nemici; i++ ) {
-        nemici[i].rianima( ) ;
-    }
-    // riposiziona tutti i nemici
-    posizionaNemici_v2( ) ;
+void Level::reset_v3( ) {
 
-    next_item = 0 ;
-    for (int i = 0 ; i < num_items ; i++ ) {
-        items[i].disattiva() ;
-        items[i].setPosizione (-1, -1) ;
+    posizionaNemici_v2() ;
+
+    /*
+    for ( int i = 0 ; i < next_item ; i++ ) { //da valutare
+        if ( items[i].isAttivo() )
+            items[i].disattiva() ;
     }
+    */
 
     // reset bomba
-    b.esplodi( );
-    b.disattivaPotenziamenti() ;
-    b.setPosizione( -1, -1 ) ;
-
-    completato = false;
-
+    Level::resetBombeEPotenziamenti() ;
 }
 
 
-void Level::aggiornaPotenziamenti() {
-    b.aggiornaPotenziamenti( ) ;
+
+void Level::aggiornaPotenziamenti(int durata ) {
+    b.aggiornaPotenziamenti(durata) ;
 }
 
 void Level::applicaEffetto(char tipo ) {
@@ -594,7 +588,7 @@ void Level::applicaEffetto(char tipo ) {
     }
 }
 
-//---------------------------------------------------DA VALUTARE-------------------------------------------------------
+/*---------------------------------------------------DA VALUTARE-------------------------------------------------------
 
 
 void Level::updateLevel_v3() {
@@ -728,5 +722,5 @@ void Level::collisioneEplosione_v3( ) {
         current.x++ ;
     }
 }
-
+*/
 

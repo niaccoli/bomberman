@@ -63,6 +63,8 @@ void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char inpu
 }
 
 
+
+
 void posizionaGiocatoreStart( Giocatore& player, BidirectionalList& l ) {
     player.muovi( l.getCurrent() -> level -> getMap().getEntry()) ;
 }
@@ -84,6 +86,11 @@ void controllaPassaggioLivelli( Giocatore& player, BidirectionalList& l ) {
 void reset_v1( Giocatore& player, BidirectionalList& l) {
     l.reset_v1() ;
     player.invulnerabilitaOn() ;
+}
+
+void reset_v3(Giocatore& player, BidirectionalList& l ) {
+    l.reset_v3( ) ;
+    posizionaGiocatoreStart( player, l ) ;
 }
 
 
