@@ -88,6 +88,8 @@ Timer color_switch(1);
 
 void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione){
 
+    
+    werase(this->win);
     box(this->win, 0, 0);
 
     //GESTIONE TIMER
@@ -107,6 +109,16 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
             //Priorità piu bassa, stampa entrata ed uscita come spazio vuoto
             if(char_to_display == '@' || char_to_display == 'U'){
                 char_to_display = ' ';
+
+                // TRUCCO: Cancelliamo il pezzo di bordo di ncurses!
+                if (j == 0)             // Bordo Sinistro
+                    mvwaddch(this->win, i + 1, 0, ' ');
+                else if (j == cols - 1) // Bordo Destro
+                    mvwaddch(this->win, i + 1, cols + 1, ' ');
+                else if (i == 0)        // Bordo Superiore
+                    mvwaddch(this->win, 0, j + 1, ' ');
+                else if (i == rows - 1) // Bordo Inferiore
+                    mvwaddch(this->win, rows + 1, j + 1, ' ');
             }
 
 
@@ -133,38 +145,6 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
                 char_to_display = 'O'; // 'O' per bomba
             }
 
-            //Priorità 2: Esplosione bomba
-            //Visualizzazione esplosione bomba (True da sostituire con meotodo per capire se la boma è esplosa)
-            /*
-            if(true){
-                for (int k = 0; k < num_celle_esplosione; k++) {
-                    if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
-                        char_to_display = 'E';
-                        visualize_explosion.attivaTimer(150);
-                        explosion = true;
-                        break;
-                    }
-                }
-            }
-            
-
-            if(num_celle_esplosione > 0){
-
-                if(!explosion){
-                    explosion = true;
-                    visualize_explosion.attivaTimer(30);
-                }
-
-                if(explosion){
-                    for (int k = 0; k < num_celle_esplosione; k++) {
-                        if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
-                            char_to_display = 'E';
-                            break;
-                        }
-                    }
-                }
-            }
-            */
             for (int k = 0; k < num_celle_esplosione; k++) {
                         if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
                             char_to_display = 'E';
@@ -364,4 +344,8 @@ bool Map::isSurroundedByWalls(Posizione p){
     else
         return false;
 
+}
+
+char Map::getCell(Posizione position){
+    return grid[position.y][position.x];
 }

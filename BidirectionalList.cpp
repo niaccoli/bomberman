@@ -16,7 +16,7 @@ void BidirectionalList::Create_Levels(){
     //Creazione delle mappe
     //parametri momentanei
     Map* map1 = new Map(21, 41);
-    Map* map2 = new Map(24, 46);
+    Map* map2 = new Map(23, 46);
     Map* map3 = new Map(30, 30);
     Map* map4 = new Map(30, 30);
     Map* map5 = new Map(30, 30);

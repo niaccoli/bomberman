@@ -41,9 +41,30 @@ void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char in
         bool bloccato_da_bomba = (livello_corrente->getBomb().innescata() && 
                                   stessaPosizione(temp, livello_corrente->getBomb().getPosizione()));
 
-        // 3. Muovi il giocatore solo se è calpestabile E non c'è la bomba
+        // 3. Muovi il giocatore o cambia livello solo se è calpestabile E non c'è la bomba
         if (calpestabile && !bloccato_da_bomba) {
+
             player.muovi(temp);
+            /*
+            char destination_cell = livello_corrente->getMap().getCell(temp);
+
+            if(destination_cell == 'U'){
+                lista_livelli.goToNext();
+                Level* new_level = lista_livelli.getCurrent()->level;
+                Posizione pos_entry = new_level->getMap().getEntry();
+                pos_entry.x = pos_entry.x + 1; 
+                player.muovi(pos_entry);
+            }
+            else if(destination_cell == '@'){
+                lista_livelli.goToPrev();
+                Level* new_level = lista_livelli.getCurrent()->level;
+                Posizione pos_exit = new_level->getMap().getExit();
+                pos_exit.x = pos_exit.x - 1;
+                player.muovi(pos_exit);
+            }
+            else
+                player.muovi(temp);
+            */
         }
     }
 
@@ -66,18 +87,32 @@ void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char inpu
 
 
 void posizionaGiocatoreStart( Giocatore& player, BidirectionalList& l ) {
-    player.muovi( l.getCurrent() -> level -> getMap().getEntry()) ;
+    Posizione p = l.getCurrent() -> level -> getMap().getEntry();
+    p.x = p.x + 1;
+    player.muovi(p);
 }
 
 
 void controllaPassaggioLivelli( Giocatore& player, BidirectionalList& l ) {
     if ( l.getCurrent() -> level -> getMap().isEntry( player.getPosizione())) {
-        if (l.goToPrev( ) ) //aggiorna il current della lista
-            player.muovi( l.getCurrent() -> level -> getMap().getExit() ) ;
+        if (l.goToPrev( )){ //aggiorna il current della lista
+            clear(); 
+            refresh();
+
+            Posizione pos_exit = l.getCurrent() -> level -> getMap().getExit();
+            pos_exit.x = pos_exit.x - 1;
+            player.muovi(pos_exit);
+        }
     }
     else if ( l.getCurrent() -> level -> getMap().isExit( player.getPosizione())) {
-        if ( l.goToNext( )) //aggiorna il current della lista
-            player.muovi(l.getCurrent() -> level -> getMap().getEntry() );
+        if ( l.goToNext( )){ //aggiorna il current della lista
+            clear(); 
+            refresh();
+
+            Posizione pos_entry = l.getCurrent() -> level -> getMap().getEntry();
+            pos_entry.x = pos_entry.x + 1;
+            player.muovi(pos_entry);
+        }
     }
     else
         return ;

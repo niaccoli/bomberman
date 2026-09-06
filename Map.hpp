@@ -22,7 +22,7 @@ public:
     //costruttore
     Map(int h, int w);
 
-    char getCell(int x, int y);
+    char getCell(Posizione position);
 
     void setCell(int x, int y, char c);
 
