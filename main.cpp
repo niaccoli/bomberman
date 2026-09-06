@@ -162,10 +162,11 @@ int main() {
           bool colpito = false;
 
           if ( timerNemici.scaduto()) {
-               colpito = levelList.updateEnemies( player ) ;
+               levelList.moveEnemies( player ) ;
                timerNemici.attivaTimer(TEMPO_AGGIORNAMENTO_NEMICI_MS ) ;
           }
 
+          colpito = levelList.collisioniGiocatoreNemici(player ) ;
 
           if ( !colpito )
 			  colpito = levelList.updateBombs( player, INTERVALLO_CICLO_MS ) ;

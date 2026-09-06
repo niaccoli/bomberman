@@ -249,16 +249,6 @@ bool Level::updateLevel(Giocatore& g) {
     return false ;
 } */
 
-bool Level::updateEnemies(Giocatore& g) {
-
-    moveEnemies( g )  ;
-
-    if ( collisioneGiocatoreNemici_v2( g ))
-        return true ;
-    else
-        return false ;
-}
-
 
 
 bool Level::aggiornaEsplosioni(Giocatore& g ,int durata ) {
@@ -335,6 +325,7 @@ void Level::updateItems(){
 }*/
 
 bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
+
     if ( isThereAnEnemy_v2(g.getPosizione()) != -1 ) {
         if (g.diminuisciVita() )
             return true;

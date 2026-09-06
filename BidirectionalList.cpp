@@ -167,10 +167,13 @@ bool BidirectionalList::updateLevels(Giocatore& g){
     return is_hitted;
 }*/
 
-bool BidirectionalList::updateEnemies(Giocatore& g) {
-    return (current -> level -> updateEnemies( g )) ;
+void BidirectionalList::moveEnemies(Giocatore& g) {
+    return (current -> level -> moveEnemies( g )) ;
 }
 
+bool BidirectionalList::collisioniGiocatoreNemici(Giocatore& g) {
+    return (current -> level -> collisioneGiocatoreNemici_v2(g)) ;
+}
 
 void BidirectionalList::updateBoostBombe(int durata) {
     node* temp = head ;
