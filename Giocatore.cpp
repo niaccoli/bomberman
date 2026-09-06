@@ -4,14 +4,17 @@
 
 Giocatore::Giocatore(): Personaggio(3,-1,-1) {
     invulnerabilitaOff();
+    this -> punteggio = 0 ;
 }
 
 Giocatore::Giocatore(int vite, int x, int y): Personaggio(vite, x, y) {
     invulnerabilitaOff();
+    this -> punteggio = 0 ;
 }
 
 Giocatore::Giocatore(int vite, Posizione posizione): Personaggio( vite, posizione ) {
     invulnerabilitaOff() ;
+    this -> punteggio = 0 ;
 }
 
 
@@ -64,4 +67,12 @@ bool Giocatore::diminuisciVita( int danno ) {
 }
 
 
+
+int Giocatore::getPunteggio() const{
+    return this -> punteggio ;
+}
+
+void Giocatore::aumentaPunteggio( int punti ) {
+    this -> punteggio += punti ;
+}
 

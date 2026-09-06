@@ -251,16 +251,6 @@ bool Level::updateLevel(Giocatore& g) {
     return false ;
 } */
 
-bool Level::updateEnemies(Giocatore& g) {
-
-    moveEnemies( g )  ;
-
-    if ( collisioneGiocatoreNemici_v2( g ))
-        return true ;
-    else
-        return false ;
-}
-
 
 
 bool Level::aggiornaEsplosioni(Giocatore& g ,int durata ) {
@@ -337,6 +327,7 @@ void Level::updateItems(){
 }*/
 
 bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
+
     if ( isThereAnEnemy_v2(g.getPosizione()) != -1 ) {
         if (g.diminuisciVita() )
             return true;
@@ -376,8 +367,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
     if ( index_enemy_in_current != -1 ) {
         nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno() ) ;
-        if ( !nemici[ index_enemy_in_current ].vivo( ))
+        if ( !nemici[ index_enemy_in_current ].vivo( )) {
             dropItem( current ) ;
+            g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+        }
     }
 
 
@@ -405,8 +398,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno( )) ;
-            if ( !nemici[ index_enemy_in_current ].vivo( ))
+            if ( !nemici[ index_enemy_in_current ].vivo( )) {
                 dropItem( current ) ;
+                g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+            }
         }
 
         current.y-- ;
@@ -436,8 +431,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno() ) ;
-            if ( !nemici[ index_enemy_in_current ].vivo( ))
+            if ( !nemici[ index_enemy_in_current ].vivo( )) {
                 dropItem( current ) ;
+                g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+            }
         }
 
         current.y++ ;
@@ -468,8 +465,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita(b.getDanno() ) ;
-            if ( !nemici[ index_enemy_in_current ].vivo( ))
+            if ( !nemici[ index_enemy_in_current ].vivo( )) {
                 dropItem( current ) ;
+                g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+            }
         }
 
         current.x-- ;
@@ -499,8 +498,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita(b.getDanno() ) ;
-            if ( !nemici[ index_enemy_in_current ].vivo( ))
+            if ( !nemici[ index_enemy_in_current ].vivo( )) {
                 dropItem( current ) ;
+                g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+            }
         }
 
         current.x++ ;

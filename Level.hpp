@@ -76,7 +76,7 @@ public:
     // con il giocatore e aggiorna la bomba e l'eventuale esplosione.
     // Restituisce true solo se il giocatore perde effettivamente una vita.
 
-    bool updateEnemies( Giocatore& g ) ;
+
 
     bool aggiornaEsplosioni(Giocatore& g ,int durata ) ;
 
