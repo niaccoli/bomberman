@@ -9,6 +9,9 @@ protected:
 
     bool invulnerabilita;
     int tempoInvulnerabilita;
+
+    int punteggio ;
+
 public:
     Giocatore();
     Giocatore(int vite, int x, int y);
@@ -38,6 +41,10 @@ public:
     // chiamare diminuisciVita() e controllarne il risultato.
 
     bool diminuisciVita( int danno ) ;
+
+    int getPunteggio() const;
+
+    void aumentaPunteggio( int punti ) ;
 
 };
 

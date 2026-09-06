@@ -11,40 +11,53 @@
 #include <cstdlib>
 
 Nemico::Nemico(): Personaggio(1, {-1, -1 }) {
-    tipo = ' ' ; //valutare se assegnare il tipo rnd come predefinito o lasciare senza niente
+    this -> tipo = ' ' ;
+    this -> punti = 0 ;
 }
 
 Nemico::Nemico(char tipo): Personaggio(1, {-1, -1 }) {
-    this -> tipo = tipo ;
-    if ( tipo == 'T')
-        Personaggio::setVite( 2 ) ;
+    setTipo(tipo) ;
 }
 
 Nemico::Nemico (int vite, int x, int y, char tipo ): Personaggio( vite, x, y ) {
-    if ( tipo == 'T' )
-        Personaggio::setVite( 2 ) ;
+    setTipo(tipo) ;
 }
 
 Nemico::Nemico (int vite, Posizione posizione, char tipo ): Personaggio( vite, posizione ) {
-    if ( tipo == 'T' )
-        Personaggio::setVite( 2 ) ;
+    setTipo(tipo) ;
+
 }
 
 void Nemico::setTipo ( char tipo ) {
-    //ha senso usare else if o meglio if a cascata e non assegnare niente se il tipo non e' previsto?
-    if (tipo == 'I' || tipo == 'R')
+    if (tipo == 'I' ) {
         this -> tipo = tipo ;
+        this -> punti = 200 ;
+        setVite( 1 ) ;
+    }
     else if (tipo == 'T') {
         this -> tipo = tipo ;
+        this -> punti = 150 ;
         setVite( 2 ) ;
     }
-    else
+    else if ( tipo == 'R') {
+        this -> tipo = tipo ;
+        this -> punti = 100 ;
+        setVite( 1 ) ;
+    }
+    else {
         this -> tipo = ' ' ;
+        this -> punti = 0 ;
+    }
 }
 
 char Nemico::getTipo( ) {
     return this -> tipo ;
 }
+
+int Nemico::getPunti ( ) {
+    return this -> punti ;
+}
+
 
 int Nemico::percorsoBreve( Posizione player, Posizione n, Map& map, char& wasd) {
     if ( stessaPosizione( player, n))

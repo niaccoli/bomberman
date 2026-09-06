@@ -25,6 +25,7 @@ private:
     //int velocita ; //forse piuttosto che aggiungere un campo velocita' mi conviene aggiungere un randomico 1 su 2 per il
     //movimento del nemico tank in questo modo sembrera'  piu' lento
     int percorsoBreve( Posizione player, Posizione nemico, Map& map, char& wasd) ;
+    int punti ;
 
     public:
         Nemico () ;
@@ -33,6 +34,7 @@ private:
         Nemico (int vite, Posizione posizione, char tipo ) ;
         void setTipo ( char tipo ) ;
         char getTipo ( ) ;
+        int getPunti ( ) ;
         Posizione nuovaPosizione (Giocatore& g, Map& m);
     //----------------------------------------------DA VALUTARE (guarda Level) -----------------------------------------
         Posizione nuovaPosizione_v3 (Map& m); //se il giocatore non e' presente nel livello i nemici inseguitori si comportano

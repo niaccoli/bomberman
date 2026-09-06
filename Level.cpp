@@ -374,8 +374,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
     if ( index_enemy_in_current != -1 ) {
         nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno() ) ;
-        if ( !nemici[ index_enemy_in_current ].vivo( ))
+        if ( !nemici[ index_enemy_in_current ].vivo( )) {
             dropItem( current ) ;
+            g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+        }
     }
 
 
@@ -403,8 +405,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno( )) ;
-            if ( !nemici[ index_enemy_in_current ].vivo( ))
+            if ( !nemici[ index_enemy_in_current ].vivo( )) {
                 dropItem( current ) ;
+                g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+            }
         }
 
         current.y-- ;
@@ -434,8 +438,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno() ) ;
-            if ( !nemici[ index_enemy_in_current ].vivo( ))
+            if ( !nemici[ index_enemy_in_current ].vivo( )) {
                 dropItem( current ) ;
+                g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+            }
         }
 
         current.y++ ;
@@ -466,8 +472,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita(b.getDanno() ) ;
-            if ( !nemici[ index_enemy_in_current ].vivo( ))
+            if ( !nemici[ index_enemy_in_current ].vivo( )) {
                 dropItem( current ) ;
+                g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+            }
         }
 
         current.x-- ;
@@ -497,8 +505,10 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita(b.getDanno() ) ;
-            if ( !nemici[ index_enemy_in_current ].vivo( ))
+            if ( !nemici[ index_enemy_in_current ].vivo( )) {
                 dropItem( current ) ;
+                g.aumentaPunteggio( nemici[index_enemy_in_current].getPunti()) ;
+            }
         }
 
         current.x++ ;
