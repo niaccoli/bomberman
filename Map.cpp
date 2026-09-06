@@ -5,6 +5,7 @@
 #include <random>
 #include <cmath> //Usato per funzione abs() (Valore assoluto)
 #include "Timer.h"
+#include "funzioni.h"
 
 using namespace std;
 
@@ -77,7 +78,7 @@ bool Map::mossavalida(int x, int y){
 }
 
 // 1. Versione standard (chiamata quando non c'è esplosione)
-void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
+void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, 
                     const Item items[], int numItems, const Bomba& b) {
     // Chiama direttamente la versione completa passando NULL e 0
     this->stamp_map(p, nemici, numNemici, items, numItems, b, NULL, 0);
@@ -86,7 +87,7 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici,
 bool change_bomb_color = false;
 Timer color_switch(1);
 
-void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione){
+void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione){
 
     
     werase(this->win);
@@ -135,7 +136,17 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
             // Controlla se c'è un nemico in questa posizione
             for(int k = 0; k < numNemici; k++){
                 if(i == nemici[k].getY() && j == nemici[k].getX()){
-                    char_to_display = 'N'; // 'N' per nemico (de gestire poi i vari tipi di nemici)
+                    if(!nemici[k].vivo())
+                        char_to_display = ' ';
+                    else{
+                        if(nemici[k].getTipo() == 'I')
+                            char_to_display = 'I'; // 'I' per nemico inseguitore
+                        else if(nemici[k].getTipo() == 'T')
+                            char_to_display = 'T'; // 'T' per nemico Tank
+                        else
+                            char_to_display = 'R'; // 'R' per nemico Random
+                    }
+                    
                     break; // Trovato un nemico, non serve controllare gli altri per questa cella
                 }
             }
@@ -168,9 +179,19 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
                 mvwaddstr(this->win, i + 1, j + 1, "@");
                 wattroff(this->win, COLOR_PAIR(1) | A_BOLD);
             }
-            else if(char_to_display == 'N'){
+            else if(char_to_display == 'I'){
                 wattron(this->win, COLOR_PAIR(2) | A_BOLD);
                 mvwaddstr(this->win, i + 1, j + 1, "Ö");
+                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
+            }
+            else if(char_to_display == 'T'){
+                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "T");
+                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
+            }
+            else if(char_to_display == 'R'){
+                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "R");
                 wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
             }
             else if(char_to_display == 'O'){
@@ -200,13 +221,8 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
         }
     }
 
-    // Calcola la coordinata Y del bordo inferiore (rows + 1 a causa dell'offset dei bordi)
-    int y_bottom = rows + 1;
-
-    // Stampa il testo delle vite (puoi colorarlo con un Color Pair, es. rosso per il cuore)
-    wattron(this->win, COLOR_PAIR(4) | A_BOLD);
-    mvwprintw(this->win, y_bottom, 2, "[ VITE: %d ]", p.getVite());
-    wattroff(this->win, COLOR_PAIR(4) | A_BOLD);
+    StampInfo(p, b, this->cols);
+    
 
     //Aggiorna la finestra
     wrefresh(this->win);

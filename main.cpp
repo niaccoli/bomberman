@@ -138,7 +138,6 @@ int main() {
      Timer timerGioco(DURATA_PARTITA_MINUTI * 60 * 1000) ;
      Timer timerNemici (TEMPO_AGGIORNAMENTO_NEMICI_MS) ;
 
-
      //INIZIO CICLO
      while ( player.vivo() && !timerGioco.scaduto( )) {
           //1. leggi input
@@ -179,7 +178,7 @@ int main() {
                     levelList.applicaEffettoItem(player, tipo);
           }
 
-          levelList.getCurrent() -> level -> stamp_map( player ) ;
+          levelList.getCurrent() -> level -> stamp_map( player );
 
 
           if ( colpito ) {// il giocatore ha subito danno

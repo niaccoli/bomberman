@@ -45,26 +45,6 @@ void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char in
         if (calpestabile && !bloccato_da_bomba) {
 
             player.muovi(temp);
-            /*
-            char destination_cell = livello_corrente->getMap().getCell(temp);
-
-            if(destination_cell == 'U'){
-                lista_livelli.goToNext();
-                Level* new_level = lista_livelli.getCurrent()->level;
-                Posizione pos_entry = new_level->getMap().getEntry();
-                pos_entry.x = pos_entry.x + 1; 
-                player.muovi(pos_entry);
-            }
-            else if(destination_cell == '@'){
-                lista_livelli.goToPrev();
-                Level* new_level = lista_livelli.getCurrent()->level;
-                Posizione pos_exit = new_level->getMap().getExit();
-                pos_exit.x = pos_exit.x - 1;
-                player.muovi(pos_exit);
-            }
-            else
-                player.muovi(temp);
-            */
         }
     }
 
@@ -143,4 +123,48 @@ int min(int n1, int n2, int n3, int n4 ) {
         min = n4 ;
 
     return min ;
+}
+
+void StampInfo(const Giocatore& player,const Bomba& b, int map_cols){
+     int start_x = map_cols + 5;
+     int start_y = 2;
+
+     attron(A_BOLD);
+     mvprintw(start_y, start_x, "=== STATISTICHE ===");
+     attroff(A_BOLD);
+
+     // 1. VITE
+     attron(COLOR_PAIR(2) | A_BOLD);
+     // Usiamo %-3d per allineare i numeri e cancellare i residui (es. da 10 a 9)
+     mvprintw(start_y + 2, start_x, "Vite: %-3d", player.getVite()); 
+     attroff(COLOR_PAIR(2) | A_BOLD);
+
+     // 2. PUNTEGGIO E TEMPO (Aggiungi qui i tuoi getter se li hai)
+     char points = player.getPunteggio();
+     mvprintw(start_y + 3, start_x, "%c", points); // Esempio: player.getPunteggio()
+     mvprintw(start_y + 4, start_x, "Tempo Rimasto: 120"); // Esempio: gestoreLivello.getTempo()
+
+     // 3. POTENZIAMENTI ATTIVI
+     mvprintw(start_y + 6, start_x, "--- POTENZIAMENTI ---");
+    
+     int riga = start_y + 7;
+
+     // Usiamo i metodi che hai già scritto nella classe Bomba!
+     if (b.boostDannoAttivo()) {
+          mvprintw(riga++, start_x, "Danno Extra  [%d]  ", b.getDurataBoostDanno());
+     }
+     if (b.boostRaggioAttivo()) {
+          mvprintw(riga++, start_x, "Raggio Extra [%d]  ", b.getDurataBoosRaggio());
+     }
+     if (b.boostTimerAttivo()) {
+          mvprintw(riga++, start_x, "Bomba Veloce [%d]  ", b.getDurataBoostTimer());
+     }
+
+     // PULIZIA EFFETTO FANTASMA: Se un potenziamento scade, cancella la riga rimasta!
+     // Stampiamo un po' di spazi vuoti nelle righe successive
+     for (int i = 0; i < 3; i++) {
+          mvprintw(riga++, start_x, "                       "); 
+     }
+
+     refresh(); // Aggiorna lo schermo base per mostrare le scritte
 }

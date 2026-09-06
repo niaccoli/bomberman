@@ -28,7 +28,7 @@ void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char inpu
 //viene posizionata una bomba nella stessa posizione del giocatore.
 //Se input non valido non viene effettuata alcuna azione.
 
-
+void StampInfo(const Giocatore& player, const Bomba& b, int map_cols);
 
 
 void posizionaGiocatoreStart( Giocatore& player, BidirectionalList& l ) ;
