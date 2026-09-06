@@ -4,7 +4,7 @@ Bomba::Bomba():
 posizione{ -1, -1 },
 timer(0), boostTimer(false), durataBoostTimer(0),
 raggio(defaultRaggio), boostRaggio(false), durataBoostRaggio(0),
-attivo(false),
+attivo(false), appenaInnescata(false),
 danno(defaultDanno), boostDanno(false), durataBoostDanno(0)
 { }
 
@@ -95,10 +95,12 @@ bool Bomba::innescata() const {
 void Bomba::innesca() {
     this -> attivo = true;
     setTimer( defaultTimer ) ;
+    appenaInnescata = true ;
 }
 
 void Bomba::esplodi() {
     this -> attivo = false;
+    appenaInnescata = false ;
 }
 
 bool Bomba::aggiornaBomba() {
@@ -119,21 +121,26 @@ bool Bomba::aggiornaBomba() {
 }
 
 bool Bomba::aggiornaBomba(int durata) {
+
     if (innescata()) {
 
-        diminuisciTimer(durata) ;
-        if (boostTimerAttivo( ))
-            diminuisciTimer(durata) ;
+        if (appenaInnescata) {
+            appenaInnescata = false;
+        }
+        else {
+            diminuisciTimer(durata);
+
+            if (boostTimerAttivo())
+                diminuisciTimer(durata);
+        }
+
         if (getTimer() <= 0) {
-            esplodi() ;
-            return true ;
+            esplodi();
+            return true;
         }
     }
-
-    aggiornaPotenziamenti(durata) ;
     return false ;
 }
-
 
 
 

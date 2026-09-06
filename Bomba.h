@@ -29,6 +29,7 @@ class Bomba {
         int danno;
         int raggio;
         bool attivo;
+        bool appenaInnescata ;
 
         bool boostDanno;
         int durataBoostDanno;

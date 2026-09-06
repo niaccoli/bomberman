@@ -43,6 +43,8 @@ void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char inpu
 }
 
 
+
+
 void posizionaGiocatoreStart( Giocatore& player, BidirectionalList& l ) {
     player.muovi( l.getCurrent() -> level -> getMap().getEntry()) ;
 }

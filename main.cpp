@@ -148,12 +148,15 @@ int main() {
           while ((temp = getch()) != ERR) //svuota la coda di input tenendo solo l'ultimo
                input = temp;
 
+
           if (input != ERR)
                gestisciInput(player, levelList, input);
 
           controllaPassaggioLivelli( player, levelList ) ;
 
           player.aggiornaInvulnerabilita( INTERVALLO_CICLO_MS ) ;
+
+          levelList.updateBoostBombe(INTERVALLO_CICLO_MS ) ;
 
 
           bool colpito = false;

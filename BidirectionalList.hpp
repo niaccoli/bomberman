@@ -45,7 +45,6 @@ public:
     //al livello 1
 
 
-    //Andrea x Matte: devi chiamarlo per tutti i nodi
     void applicaEffettoItem ( Giocatore& g, char type ) ;
     // se tipo == 'I' g.invulnerabilitaOn()
     //se tipo == 'V' g.aumentaVita()
@@ -59,10 +58,13 @@ public:
     bool updateEnemies(Giocatore& g) ;
     //muove i nemici del livello corrente, ritorna true se il giocatore collide con un nemico, false altrimenti
 
-    bool updateBombs(Giocatore& g) ;
+    bool updateBombs(Giocatore& g) ; //valutare se rimuovere
 
     bool updateBombs(Giocatore& g, int durata) ;
+    //aggiorna la bomba del livello corrente
 
+    void updateBoostBombe(int durata) ;
+    //aggiorna i Boost delle bombe di tutti i livelli
 
     bool isLastLevel( ) ;
     //ritorna true se il livello corrente e' l'ultimo livello rimasto

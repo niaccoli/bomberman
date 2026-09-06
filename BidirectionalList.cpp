@@ -188,20 +188,18 @@ bool BidirectionalList::updateBombs(Giocatore& g) {
     return colpito ;
 }
 
-bool BidirectionalList::updateBombs(Giocatore& g, int durata) {
+void BidirectionalList::updateBoostBombe(int durata) {
     node* temp = head ;
-    bool colpito = false ;
 
-    while ( temp != nullptr) {
-
-        if ( temp == current )
-            colpito = temp -> level -> aggiornaEsplosioni( g, durata ) ;
-        else
-            temp -> level -> aggiornaPotenziamenti( durata ) ;
-
+    while ( temp != nullptr ) {
+        temp -> level -> aggiornaPotenziamenti(durata) ;
         temp = temp -> next ;
     }
-    return colpito ;
+}
+
+
+bool BidirectionalList::updateBombs(Giocatore& g, int durata) {
+    return current -> level -> aggiornaEsplosioni(g, durata ) ;
 }
 
 bool BidirectionalList::isLastLevel(){
