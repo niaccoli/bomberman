@@ -159,7 +159,9 @@ Posizione Level::posizioneRandomValida_v2() {
     return temp;
 }*/
 
-
+Bomba& Level::getBomb(){
+    return this->b;
+}
 
 
 /*chat suggerisce:

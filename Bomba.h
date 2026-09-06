@@ -11,7 +11,7 @@ class Bomba {
 
         const int defaultDanno = 1 ;
         const int defaultRaggio = 1 ;
-        const int defaultTimer = 2 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
+        const int defaultTimer = 20 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
         //defaultTimer *  timerAggiornamentoLivello
         const int defaultDurataBoostDanno = 5;
         const int defaultDurataBoostRaggio = 5;

@@ -56,5 +56,5 @@ if(USE_MSYS2_PDCURSES)
     target_link_libraries(bomberman winmm)
 endif()
 
-file(COPY level1.txt level2.txt level3.txt level4.txt level5.txt 
+file(COPY level1.txt level2.txt level3.txt level4.txt level5.txt
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

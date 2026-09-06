@@ -12,6 +12,7 @@
 void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char input) {
     int dx = 0;
     int dy = 0;
+    bool mossa_richiesta = true;
 
     if (input == 'w' || input == 'W')
         dy = -1;
@@ -25,8 +26,27 @@ void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char in
     Posizione temp = {player.getX() + dx , player.getY() + dy};
 
     //Ho sostituito isWalkable() al posto di mossaValida()
-    if ( lista_livelli.getCurrent() -> level -> getMap().isWalkable(temp) )
-        player.muovi( temp );
+    //if ( lista_livelli.getCurrent() -> level -> getMap().isWalkable(temp) )
+        //player.muovi( temp );
+
+    if (mossa_richiesta) {
+        Posizione temp = {player.getX() + dx , player.getY() + dy};
+        Level* livello_corrente = lista_livelli.getCurrent()->level;
+
+        // 1. Controlla se la mappa permette il passaggio (muri)
+        bool calpestabile = livello_corrente->getMap().isWalkable(temp);
+
+        // 2. Controlla se c'è una bomba attiva in quella posizione
+        // (esattamente come fanno i nemici)
+        bool bloccato_da_bomba = (livello_corrente->getBomb().innescata() && 
+                                  stessaPosizione(temp, livello_corrente->getBomb().getPosizione()));
+
+        // 3. Muovi il giocatore solo se è calpestabile E non c'è la bomba
+        if (calpestabile && !bloccato_da_bomba) {
+            player.muovi(temp);
+        }
+    }
+
 }
 
 

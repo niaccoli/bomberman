@@ -248,7 +248,7 @@ bool Map::isWalkable (Posizione posizione ) {
 
     char current_cell = grid[posizione.y][posizione.x];
 
-    if( current_cell == '#' || current_cell == 'X')
+    if( current_cell == '#' || current_cell == 'X' || current_cell == 'O')
         return false;
     return true;
 }

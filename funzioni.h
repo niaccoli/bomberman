@@ -20,6 +20,7 @@ void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char in
 
 
 
+
 void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char input);
 //precondizione: l'utente inserisce l'input da tastiera
 //postcondizione: se input ('W''A''S''D') e posizione mossa valida la posizione del giocatore viene aggiornata, altrimenti

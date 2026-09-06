@@ -49,6 +49,8 @@ private:
 
 
 public:
+    Bomba& getBomb();
+
     Level(Map& m, int random_enemies, int items);
     // Costruisce un livello con nemici inseguitori e un numero massimo di item.
 
