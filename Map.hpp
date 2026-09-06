@@ -62,15 +62,18 @@ public:
 
     WINDOW* getWin();
 
-    Posizione getEntry( ) ;
+    Posizione getEntry( );
 
-    Posizione getExit ( ) ;
+    Posizione getExit ( );
 
-    bool isEntry( Posizione posizione) ;
+    bool isEntry( Posizione posizione);
 
-    bool isExit( Posizione posizione) ;
+    bool isExit( Posizione posizione);
 
-    bool isNearEntry( Posizione posizione ) ;
+    bool isNearEntry( Posizione posizione );
+
+    //Ritorna TRUE se la cella è circondata da muri distruttibili e non, FALSE altrimenti
+    bool isSurroundedByWalls(Posizione p);
 
 };
 #endif

@@ -139,7 +139,7 @@ Posizione Level::posizioneRandomValida_v2() {
     Posizione temp = map.walkableRandomPosition( ) ;
 
 
-    if (( isThereAnEnemy_v2( temp ) == -1) && !map.isNearEntry(temp))
+    if (( isThereAnEnemy_v2( temp ) == -1) && !map.isNearEntry(temp) && map.isSurroundedByWalls(temp))
         return temp ;
 
     return posizioneRandomValida_v2() ;

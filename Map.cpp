@@ -348,3 +348,20 @@ bool Map::isNearEntry(Posizione position){
     return false;
 }
 
+bool Map::isSurroundedByWalls(Posizione p){
+    if(grid[p.y + 1][p.x] != '#' && grid[p.y + 1][p.x] != 'X'){
+        return true;
+    }
+    else if(grid[p.y - 1][p.x] != '#' && grid[p.y + 1][p.x] != 'X'){
+        return true;
+    }
+    else if(grid[p.y + 1][p.x + 1] != '#' && grid[p.y + 1][p.x] != 'X'){
+        return true;
+    }
+    else if(grid[p.y + 1][p.x - 1] != '#' && grid[p.y + 1][p.x] != 'X'){
+        return true;
+    }
+    else
+        return false;
+
+}
