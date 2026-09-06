@@ -58,8 +58,6 @@ public:
     bool updateEnemies(Giocatore& g) ;
     //muove i nemici del livello corrente, ritorna true se il giocatore collide con un nemico, false altrimenti
 
-    bool updateBombs(Giocatore& g) ; //valutare se rimuovere
-
     bool updateBombs(Giocatore& g, int durata) ;
     //aggiorna la bomba del livello corrente
 

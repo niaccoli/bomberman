@@ -22,8 +22,6 @@ public:
 
     bool invulnerabile( ) const; //ritorna true se invulnerabilita attiva, false altrimenti
 
-    void aggiornaInvulnerabilita( ); //diminuisce il tempo di invulnerabilita', se il tempo arriva a zero la disattiva
-
     void aggiornaInvulnerabilita(int durata );
 
     bool diminuisciVita();

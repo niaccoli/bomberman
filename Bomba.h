@@ -84,7 +84,6 @@ class Bomba {
 
         int getTimer() const; //ritorna il tempo rimanente prima di esplodere
         void setTimer(int tempo); //imposta il timer della bomba
-        void diminuisciTimer(); //diminuisce il timer della bomba
         void diminuisciTimer(int durata);
 
         int getDanno() const; //ritorna il danno della bomba
@@ -98,40 +97,31 @@ class Bomba {
         bool innescata() const; //o innescata
         void innesca();
         void esplodi(); // = disattiva
-        bool aggiornaBomba();  //se innescata, controlla il timer della bomba, se il timer scende a zero chiama Bomba::esplodi( )
-        //e restituisce true, altrimenti restituisce false
         bool aggiornaBomba(int durata) ;
 
         //POTENZIAMENTI
         void attivaBoostDanno();
         void disattivaBoostDanno();
-        void diminuisciDurataBoostDanno();
         void diminuisciDurataBoostDanno(int durata);
         int getDurataBoostDanno() const;
         bool boostDannoAttivo() const;
-        void aggiornaBoostDanno();
         void aggiornaBoostDanno(int durata);
 
         void attivaBoostRaggio();
         void disattivaBoostRaggio();
-        void diminuisciDurataBoostRaggio();
         void diminuisciDurataBoostRaggio(int durata);
         int getDurataBoosRaggio() const;
         bool boostRaggioAttivo() const;
-        void aggiornaBoostRaggio();
         void aggiornaBoostRaggio(int durata);
 
 
         void attivaBoostTimer( );
         void disattivaBoostTimer( ) ;
-        void diminuisciDurataBoostTimer( );
         void diminuisciDurataBoostTimer( int durata );
         int getDurataBoostTimer( ) const;
         bool boostTimerAttivo( ) const;
-        void aggiornaBoostTimer( );
         void aggiornaBoostTimer(int durata );
 
-        void aggiornaPotenziamenti( ) ;
         void aggiornaPotenziamenti(int durata ) ;
         void disattivaPotenziamenti( ) ;
 

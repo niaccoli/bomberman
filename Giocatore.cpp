@@ -36,14 +36,6 @@ bool Giocatore::invulnerabile() const {
     return invulnerabilita;
 }
 
-void Giocatore::aggiornaInvulnerabilita(){
-    if (invulnerabile()){
-        tempoInvulnerabilita -= 1;
-
-        if (tempoInvulnerabilita <= 0)
-            invulnerabilitaOff();
-    }
-}
 
 void Giocatore::aggiornaInvulnerabilita(int durata ) {
     if (invulnerabile()){

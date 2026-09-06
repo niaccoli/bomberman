@@ -171,22 +171,6 @@ bool BidirectionalList::updateEnemies(Giocatore& g) {
     return (current -> level -> updateEnemies( g )) ;
 }
 
-bool BidirectionalList::updateBombs(Giocatore& g) {
-
-    node* temp = head ;
-    bool colpito = false ;
-
-    while ( temp != nullptr) {
-
-        if ( temp == current )
-            colpito = temp -> level -> aggiornaEsplosioni( g ) ;
-        else
-            temp -> level -> aggiornaPotenziamenti( ) ;
-
-        temp = temp -> next ;
-    }
-    return colpito ;
-}
 
 void BidirectionalList::updateBoostBombe(int durata) {
     node* temp = head ;
