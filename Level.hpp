@@ -78,6 +78,7 @@ public:
 
     bool aggiornaEsplosioni(Giocatore& g ) ;
 
+    bool aggiornaEsplosioni(Giocatore& g ,int durata ) ;
 
     void moveEnemies(Giocatore& g);
     // Aggiorna la posizione di tutti i nemici vivi del livello.
@@ -119,6 +120,8 @@ public:
 
     void aggiornaPotenziamenti( ) ;
     // Aggiorna la durata dei potenziamenti associati alla bomba del livello.
+
+    void aggiornaPotenziamenti(int durata ) ;
 
     void applicaEffetto(char tipo ) ;
     // Applica alla bomba il potenziamento identificato dal tipo ricevuto.

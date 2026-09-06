@@ -60,6 +60,10 @@ void Bomba::diminuisciTimer() {
     this -> timer-- ;
 }
 
+void Bomba::diminuisciTimer(int durata) {
+    this -> timer -= durata ;
+}
+
 int Bomba::getDanno() const {
     return this -> danno;
 }
@@ -114,6 +118,22 @@ bool Bomba::aggiornaBomba() {
     return false ;
 }
 
+bool Bomba::aggiornaBomba(int durata) {
+    if (innescata()) {
+
+        diminuisciTimer(durata) ;
+        if (boostTimerAttivo( ))
+            diminuisciTimer(durata) ;
+        if (getTimer() <= 0) {
+            esplodi() ;
+            return true ;
+        }
+    }
+
+    aggiornaPotenziamenti(durata) ;
+    return false ;
+}
+
 
 
 
@@ -142,6 +162,11 @@ void Bomba::diminuisciDurataBoostDanno() {
         durataBoostDanno -= 1 ;
 }
 
+void Bomba::diminuisciDurataBoostDanno(int durata) {
+    if ( boostDannoAttivo() )
+        durataBoostDanno -= durata ;
+}
+
 int Bomba::getDurataBoostDanno() const {
     return durataBoostDanno;
 }
@@ -153,6 +178,14 @@ bool Bomba::boostDannoAttivo() const {
 void Bomba::aggiornaBoostDanno() {
     if (boostDannoAttivo()) {
         diminuisciDurataBoostDanno();
+        if (getDurataBoostDanno() <= 0)
+            disattivaBoostDanno();
+    }
+}
+
+void Bomba::aggiornaBoostDanno(int durata) {
+    if (boostDannoAttivo()) {
+        diminuisciDurataBoostDanno(durata);
         if (getDurataBoostDanno() <= 0)
             disattivaBoostDanno();
     }
@@ -183,6 +216,11 @@ void Bomba::diminuisciDurataBoostRaggio() {
         durataBoostRaggio -= 1 ;
 }
 
+void Bomba::diminuisciDurataBoostRaggio(int durata) {
+    if ( boostRaggioAttivo() )
+        durataBoostRaggio -= durata ;
+}
+
 int Bomba::getDurataBoosRaggio() const {
     return durataBoostRaggio;
 }
@@ -199,7 +237,13 @@ void Bomba::aggiornaBoostRaggio() {
     }
 }
 
-
+void Bomba::aggiornaBoostRaggio(int durata) {
+    if (boostRaggioAttivo()) {
+        diminuisciDurataBoostRaggio(durata);
+        if (getDurataBoosRaggio() <= 0)
+            disattivaBoostRaggio();
+    }
+}
 
 
 void Bomba::attivaBoostTimer() {
@@ -224,6 +268,9 @@ void Bomba::diminuisciDurataBoostTimer() {
     durataBoostTimer-- ;
 }
 
+void Bomba::diminuisciDurataBoostTimer( int durata ) {
+    durataBoostTimer -= durata ;
+}
 
 int Bomba::getDurataBoostTimer() const {
     return durataBoostTimer ;
@@ -241,12 +288,25 @@ void Bomba::aggiornaBoostTimer() {
     }
 }
 
+void Bomba::aggiornaBoostTimer(int durata ) {
+    if (boostTimerAttivo()) {
+        diminuisciDurataBoostTimer(durata);
+        if (getDurataBoostTimer() <= 0)
+            disattivaBoostTimer();
+    }
+}
+
 void Bomba::aggiornaPotenziamenti( ) {
     aggiornaBoostTimer( ) ;
     aggiornaBoostRaggio( ) ;
     aggiornaBoostDanno( ) ;
 }
 
+void Bomba::aggiornaPotenziamenti(int durata ) {
+    aggiornaBoostTimer(durata ) ;
+    aggiornaBoostRaggio(durata ) ;
+    aggiornaBoostDanno(durata ) ;
+}
 
 void Bomba::disattivaPotenziamenti( ) {
     disattivaBoostDanno( ) ;

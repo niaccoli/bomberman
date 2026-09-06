@@ -18,12 +18,12 @@ Giocatore::Giocatore(int vite, Posizione posizione): Personaggio( vite, posizion
 
 void Giocatore::invulnerabilitaOn(int durata) {
     invulnerabilita = true;
-    tempoInvulnerabilita = durata;
+    tempoInvulnerabilita += durata;
 }
 
 void Giocatore::invulnerabilitaOn( ) {
     invulnerabilita = true ;
-    tempoInvulnerabilita = 4 ;
+    tempoInvulnerabilita += defaultTimerInvulnerabilitaMs ;
 }
 
 
@@ -39,6 +39,15 @@ bool Giocatore::invulnerabile() const {
 void Giocatore::aggiornaInvulnerabilita(){
     if (invulnerabile()){
         tempoInvulnerabilita -= 1;
+
+        if (tempoInvulnerabilita <= 0)
+            invulnerabilitaOff();
+    }
+}
+
+void Giocatore::aggiornaInvulnerabilita(int durata ) {
+    if (invulnerabile()){
+        tempoInvulnerabilita -= durata;
 
         if (tempoInvulnerabilita <= 0)
             invulnerabilitaOff();

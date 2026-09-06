@@ -116,7 +116,7 @@ node* BidirectionalList::getCurrent(){
 
 void BidirectionalList::applicaEffettoItem(Giocatore& g, char type){
     if( type == 'I')
-        g.invulnerabilitaOn(5);
+        g.invulnerabilitaOn();
 
     else if(type == 'V')
         g.aumentaVita();
@@ -182,6 +182,22 @@ bool BidirectionalList::updateBombs(Giocatore& g) {
             colpito = temp -> level -> aggiornaEsplosioni( g ) ;
         else
             temp -> level -> aggiornaPotenziamenti( ) ;
+
+        temp = temp -> next ;
+    }
+    return colpito ;
+}
+
+bool BidirectionalList::updateBombs(Giocatore& g, int durata) {
+    node* temp = head ;
+    bool colpito = false ;
+
+    while ( temp != nullptr) {
+
+        if ( temp == current )
+            colpito = temp -> level -> aggiornaEsplosioni( g, durata ) ;
+        else
+            temp -> level -> aggiornaPotenziamenti( durata ) ;
 
         temp = temp -> next ;
     }

@@ -9,13 +9,15 @@ class Bomba {
         int y;*/
         Posizione posizione ;
 
+
         const int defaultDanno = 1 ;
         const int defaultRaggio = 1 ;
-        const int defaultTimer = 20 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
-        //defaultTimer *  timerAggiornamentoLivello
-        const int defaultDurataBoostDanno = 100;
-        const int defaultDurataBoostRaggio = 100;
-        const int defaultDurataBoostTimer = 100;
+
+    //durate in ms
+        const int defaultTimer = 2000 ;
+        const int defaultDurataBoostDanno = 10000;
+        const int defaultDurataBoostRaggio = 10000;
+        const int defaultDurataBoostTimer = 10000;
 
         //queste funzioni non servono se decidiamo che se un boost gia' attivo viene preso si resetta il tempo invece
         //di sommarlo ( in tal caso modificare anche funzioni di attivazione boost )
@@ -82,6 +84,7 @@ class Bomba {
         int getTimer() const; //ritorna il tempo rimanente prima di esplodere
         void setTimer(int tempo); //imposta il timer della bomba
         void diminuisciTimer(); //diminuisce il timer della bomba
+        void diminuisciTimer(int durata);
 
         int getDanno() const; //ritorna il danno della bomba
         void setDanno(int danno); //imposta il danno della bomba
@@ -96,31 +99,39 @@ class Bomba {
         void esplodi(); // = disattiva
         bool aggiornaBomba();  //se innescata, controlla il timer della bomba, se il timer scende a zero chiama Bomba::esplodi( )
         //e restituisce true, altrimenti restituisce false
+        bool aggiornaBomba(int durata) ;
 
         //POTENZIAMENTI
         void attivaBoostDanno();
         void disattivaBoostDanno();
         void diminuisciDurataBoostDanno();
+        void diminuisciDurataBoostDanno(int durata);
         int getDurataBoostDanno() const;
         bool boostDannoAttivo() const;
         void aggiornaBoostDanno();
+        void aggiornaBoostDanno(int durata);
 
         void attivaBoostRaggio();
         void disattivaBoostRaggio();
         void diminuisciDurataBoostRaggio();
+        void diminuisciDurataBoostRaggio(int durata);
         int getDurataBoosRaggio() const;
         bool boostRaggioAttivo() const;
         void aggiornaBoostRaggio();
+        void aggiornaBoostRaggio(int durata);
 
 
         void attivaBoostTimer( );
         void disattivaBoostTimer( ) ;
         void diminuisciDurataBoostTimer( );
+        void diminuisciDurataBoostTimer( int durata );
         int getDurataBoostTimer( ) const;
         bool boostTimerAttivo( ) const;
         void aggiornaBoostTimer( );
+        void aggiornaBoostTimer(int durata );
 
         void aggiornaPotenziamenti( ) ;
+        void aggiornaPotenziamenti(int durata ) ;
         void disattivaPotenziamenti( ) ;
 
 

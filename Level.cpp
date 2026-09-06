@@ -268,6 +268,14 @@ bool Level::aggiornaEsplosioni(Giocatore& g){
     return false ;
 }
 
+bool Level::aggiornaEsplosioni(Giocatore& g ,int durata ) {
+    if ( b.aggiornaBomba( durata ) )
+        return ( collisioneEsplosione( g )) ;
+    //collisione esplsione inizializza le cella_esplosione[]
+
+    return false ;
+}
+
 
 void Level::moveEnemies(Giocatore& g){
 
@@ -596,6 +604,10 @@ void Level::reset_v3( ) {
 
 void Level::aggiornaPotenziamenti() {
     b.aggiornaPotenziamenti( ) ;
+}
+
+void Level::aggiornaPotenziamenti(int durata ) {
+    b.aggiornaPotenziamenti(durata) ;
 }
 
 void Level::applicaEffetto(char tipo ) {
