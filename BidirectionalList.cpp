@@ -65,7 +65,7 @@ void BidirectionalList::Create_Levels(){
     node4->next = node5;
 
     node5->levelID = 5;
-    node5->level = new Level(*map5, 5, 5, 5);
+    node5->level = new Level(*map5, 5, 5, 2 , 5);
     node5->prev = node4;
 
     node5->next = NULL;
@@ -198,9 +198,23 @@ void BidirectionalList::reset_v1(){
     node* tmp = head;
 
         while(tmp != NULL){
-            tmp->level->reset_v1();
+            tmp->level->resetBombeEPotenziamenti();
             tmp = tmp->next;
         }
+}
+
+void BidirectionalList::reset_v3( ) {
+    node* temp = head ;
+
+    while ( temp != nullptr) {
+        if ( temp == current) {
+            temp -> level -> reset_v3() ;
+        }
+        else
+            temp -> level -> resetBombeEPotenziamenti() ;
+
+        temp = temp -> next ;
+    }
 }
 
 

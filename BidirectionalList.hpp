@@ -66,7 +66,9 @@ public:
     //ritorna true se il livello corrente e' l'ultimo livello rimasto
 
     void reset_v1( ) ;
-    //chiama void Level::reset_v1() per tutti i livelli attivi disattivando i potenziamenti bomba
+    //chiama void Level::resetBombeEPotenziamenti() per tutti i livelli attivi disattivando i potenziamenti bomba
+
+    void reset_v3( ) ;
 
     //Eliminazione del nodo(Utilizzato in goToNext e goToPrev)
     void deleteNode();

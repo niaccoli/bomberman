@@ -11,11 +11,11 @@ class Bomba {
 
         const int defaultDanno = 1 ;
         const int defaultRaggio = 1 ;
-        const int defaultTimer = 2 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
+        const int defaultTimer = 20 ; //nota: per sapere quanti secondi la bomba impiega ad esplodere
         //defaultTimer *  timerAggiornamentoLivello
-        const int defaultDurataBoostDanno = 5;
-        const int defaultDurataBoostRaggio = 5;
-        const int defaultDurataBoostTimer = 5;
+        const int defaultDurataBoostDanno = 100;
+        const int defaultDurataBoostRaggio = 100;
+        const int defaultDurataBoostTimer = 100;
 
         //queste funzioni non servono se decidiamo che se un boost gia' attivo viene preso si resetta il tempo invece
         //di sommarlo ( in tal caso modificare anche funzioni di attivazione boost )

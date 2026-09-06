@@ -66,6 +66,11 @@ void reset_v1( Giocatore& player, BidirectionalList& l) {
     player.invulnerabilitaOn() ;
 }
 
+void reset_v3(Giocatore& player, BidirectionalList& l ) {
+    l.reset_v3( ) ;
+    posizionaGiocatoreStart( player, l ) ;
+}
+
 
 int min(int n1, int n2, int n3, int n4 ) {
 

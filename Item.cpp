@@ -86,7 +86,6 @@ void Item::raccogli() {
 
 void Item::disattiva() {
     attivo = false;
-    //setDurata(0);
 }
 
 void Item::attiva() {

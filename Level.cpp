@@ -544,7 +544,7 @@ void Level::piazzaBomba(Giocatore& g) {
     }
 }
 
-void Level::reset_v1() {
+void Level::resetBombeEPotenziamenti() {
     b.esplodi( );
     b.disattivaPotenziamenti() ;
     b.setPosizione( -1, -1 ) ;
@@ -560,6 +560,7 @@ void Level::reset_v2() {
     // riposiziona tutti i nemici
     posizionaNemici_v2( ) ;
 
+
     next_item = 0 ;
     for (int i = 0 ; i < num_items ; i++ ) {
         items[i].disattiva() ;
@@ -571,8 +572,25 @@ void Level::reset_v2() {
     b.disattivaPotenziamenti() ;
     b.setPosizione( -1, -1 ) ;
 
-    completato = false;
+    completato = false; // forse da togliere perche' magari la bomba e' esplosa colpendo il giocatore ma uccidendo tutti
+    //i nemici
 
+}
+
+
+void Level::reset_v3( ) {
+
+    posizionaNemici_v2() ;
+
+    /*
+    for ( int i = 0 ; i < next_item ; i++ ) { //da valutare
+        if ( items[i].isAttivo() )
+            items[i].disattiva() ;
+    }
+    */
+
+    // reset bomba
+    Level::resetBombeEPotenziamenti() ;
 }
 
 

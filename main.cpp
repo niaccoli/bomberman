@@ -132,6 +132,7 @@ int main() {
      int debug_contatore = 0;
 
 
+
      Timer timerGioco(300000) ;
      Timer timerNemici (1000) ;
      Timer timerBombe (100);
@@ -188,7 +189,7 @@ int main() {
                          // mostra messaggio / animazione
                          // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
                          // Invulnerabilita' attiva per x secondi"
-                         reset_v1 (player, levelList ) ;
+                         reset_v3 (player, levelList ) ;
                 }
                 else
                     break ;

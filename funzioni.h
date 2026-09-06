@@ -42,6 +42,9 @@ void controllaPassaggioLivelli( Giocatore& player, BidirectionalList& l ) ;
 void reset_v1( Giocatore& player, BidirectionalList& l ) ;
 //attiva l'invulnerabilita' del giocatore, disattiva i potenziamenti sulle bombe
 
+void reset_v3(Giocatore& player, BidirectionalList& l ) ;
+//
+
 
 int min(int n1, int n2, int n3, int n4 ) ;
 
