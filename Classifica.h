@@ -25,9 +25,13 @@ public :
     void aggiungiRisultato(char nome[],int punteggio) ;
     //risultati ordinati per punteggio decrescente
 
-    void caricaDaFile( ) ;
+    void caricaDaFile( ) ; //formato classifica: nome punteggio
 
-    void salvaSuFile( ) ;
+    void caricaDaFile_v2( ) ; //formato classifica: nome ; punteggio
+
+    void salvaSuFile( ) ; //formato classifica: nome  punteggio
+
+    void salvaSuFile_v2( ) ; //formato classifica: nome ; punteggio
 
     void mostraMigliori(int n) ;
 };

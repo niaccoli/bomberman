@@ -6,6 +6,7 @@
 #include "BidirectionalList.hpp"
 #include "funzioni.h"
 #include "Timer.h"
+#include "Classifica.h"
 
 using namespace std;
 
@@ -52,6 +53,9 @@ int main() {
      initscr(); //inizializza lo schermo
      noecho(); //Non mostra il carattere della tastiera in input
      curs_set(0); //Nasconde il cursore
+
+     Classifica classifica ;
+     classifica.caricaDaFile_v2() ;
 
      timeout(0);
 
@@ -217,6 +221,30 @@ int main() {
      //dopo la fine della partita bisogna richiedere il nome del giocatore, sia in caso di vittoria che in caso di
      //sconfitta
 
+     char nome[100];
+     char ch ;
+
+     cin.get(ch) ;
+
+     int i = 0 ;
+
+     while ( i < 99 && ch != '\n' ){
+          nome[i] = ch ;
+          cin.get(ch) ;
+          i++ ;
+     }
+
+     nome[i] = '\0' ;
+     if ( i == 99 ){
+          while ( ch != '\n' && ch != '\n' ){
+               cin.get(ch) ;
+          }
+          cin.ignore() ;
+     }
+
+     classifica.aggiungiRisultato(nome, player.getPunteggio()) ;
+
+     classifica.salvaSuFile() ;
     //set_border();
     //stamp_screen();
 

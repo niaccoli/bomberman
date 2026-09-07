@@ -3,7 +3,11 @@
 //
 
 #include "Classifica.h"
+
+#include <fstream>
+
 #include "cstring"
+using namespace std ;
 
 Classifica::Classifica( ) {
     head = nullptr ;
@@ -37,5 +41,76 @@ Classifica::pris Classifica::aggiungiRisultato_aux (pris r, char nome[],int punt
 
 void Classifica::aggiungiRisultato(char nome[], int punteggio) {
     head = aggiungiRisultato_aux( head, nome, punteggio ) ;
+}
+
+void Classifica::caricaDaFile() {
+    ifstream inputFile;
+    inputFile.open("Classifica.txt");
+
+    char nome[100];
+    int punteggio;
+
+    while ( inputFile >> nome >> punteggio) {
+
+        aggiungiRisultato(nome, punteggio);
+
+    }
+
+    inputFile.close();
+}
+
+
+void Classifica::caricaDaFile_v2() {
+    ifstream inputFile;
+    inputFile.open("Classifica.txt");
+
+    char nome[100];
+    int punteggio;
+
+    while (inputFile.getline(nome, 100, ';') && inputFile >> punteggio) { //getline(..., ';')legge tutto fino al ;
+        aggiungiRisultato(nome, punteggio);
+        inputFile.ignore(); //scarta il '\n' rimasto dopo il punteggio
+    }
+
+
+    inputFile.close();
+}
+
+
+void Classifica::salvaSuFile( ) {
+    ofstream outputFile ;
+    outputFile.open("Classifica.txt") ;
+
+    pris temp = head  ;
+
+    while ( temp != nullptr ) {
+        outputFile << temp -> nome ;
+        outputFile << ' ' ;
+        outputFile << temp -> punteggio ;
+        outputFile << '\n' ;
+        temp = temp -> next ;
+    }
+
+    outputFile.close() ;
+
+}
+
+
+
+void Classifica::salvaSuFile_v2( ) {
+    ofstream outputFile ;
+    outputFile.open("Classifica.txt") ;
+
+    pris temp = head  ;
+
+    while ( temp != nullptr ) {
+        outputFile << temp -> nome ;
+        outputFile << ';' ;
+        outputFile << temp -> punteggio ;
+        outputFile << '\n' ;
+        temp = temp -> next ;
+    }
+
+    outputFile.close() ;
 }
 
