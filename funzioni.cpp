@@ -125,39 +125,52 @@ int min(int n1, int n2, int n3, int n4 ) {
     return min ;
 }
 
-void StampInfo(const Giocatore& player,const Bomba& b, int map_cols){
+void StampInfo(const Giocatore& player,const Bomba& b, int map_cols, int timer_gioco){
      int start_x = map_cols + 5;
      int start_y = 2;
+
+     int total_time_in_seconds = timer_gioco / 1000;
+
+     int minute = total_time_in_seconds / 60;
+     int seconds = total_time_in_seconds % 60;
 
      attron(A_BOLD);
      mvprintw(start_y, start_x, "=== STATISTICHE ===");
      attroff(A_BOLD);
 
      // 1. VITE
-     attron(COLOR_PAIR(2) | A_BOLD);
+     attron(COLOR_PAIR(3) | A_BOLD);
      // Usiamo %-3d per allineare i numeri e cancellare i residui (es. da 10 a 9)
      mvprintw(start_y + 2, start_x, "Vite: %-3d", player.getVite()); 
-     attroff(COLOR_PAIR(2) | A_BOLD);
+     attroff(COLOR_PAIR(3) | A_BOLD);
 
      // 2. PUNTEGGIO E TEMPO (Aggiungi qui i tuoi getter se li hai)
      char points = player.getPunteggio();
-     mvprintw(start_y + 3, start_x, "%c", points); // Esempio: player.getPunteggio()
-     mvprintw(start_y + 4, start_x, "Tempo Rimasto: 120"); // Esempio: gestoreLivello.getTempo()
+     mvprintw(start_y + 3, start_x, "Tempo rimasto: %02d:%02d   ", minute, seconds);
+     mvprintw(start_y + 4, start_x, "Punteggio: %-4d", points);
 
      // 3. POTENZIAMENTI ATTIVI
      mvprintw(start_y + 6, start_x, "--- POTENZIAMENTI ---");
     
      int riga = start_y + 7;
 
+     int timer_item = 0;
+
      // Usiamo i metodi che hai già scritto nella classe Bomba!
      if (b.boostDannoAttivo()) {
-          mvprintw(riga++, start_x, "Danno Extra  [%d]  ", b.getDurataBoostDanno());
+        timer_item = b.getDurataBoostDanno() / 1000;
+        int item_seconds = timer_item % 60;
+        mvprintw(riga++, start_x, "Danno Extra  [%02d]  ", item_seconds);
      }
      if (b.boostRaggioAttivo()) {
-          mvprintw(riga++, start_x, "Raggio Extra [%d]  ", b.getDurataBoosRaggio());
+        timer_item = b.getDurataBoosRaggio() / 1000;
+        int item_seconds = timer_item % 60;
+        mvprintw(riga++, start_x, "Raggio Extra [%02d]  ", item_seconds);
      }
      if (b.boostTimerAttivo()) {
-          mvprintw(riga++, start_x, "Bomba Veloce [%d]  ", b.getDurataBoostTimer());
+        timer_item = b.getDurataBoostTimer() / 1000;
+        int item_seconds = timer_item % 60;
+        mvprintw(riga++, start_x, "Bomba Veloce [%02d]  ", item_seconds);
      }
 
      // PULIZIA EFFETTO FANTASMA: Se un potenziamento scade, cancella la riga rimasta!

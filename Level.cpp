@@ -197,11 +197,11 @@ Map& Level::getMap(){
     return map;
 }
 
-void Level::stamp_map(Giocatore& g) {
+void Level::stamp_map(Giocatore& g, int timer_gioco) {
     if ( num_cella_esplosione == 0 )
-        map.stamp_map( g, nemici, num_nemici, items, num_items, b) ;
+        map.stamp_map( g, nemici, num_nemici, items, num_items, b, timer_gioco) ;
     else {
-        map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione) ;
+        map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione, timer_gioco) ;
 
         num_cella_esplosione = 0 ;
     }

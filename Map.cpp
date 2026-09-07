@@ -79,15 +79,15 @@ bool Map::mossavalida(int x, int y){
 
 // 1. Versione standard (chiamata quando non c'è esplosione)
 void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, 
-                    const Item items[], int numItems, const Bomba& b) {
+                    const Item items[], int numItems, const Bomba& b, int timer_gioco) {
     // Chiama direttamente la versione completa passando NULL e 0
-    this->stamp_map(p, nemici, numNemici, items, numItems, b, NULL, 0);
+    this->stamp_map(p, nemici, numNemici, items, numItems, b, NULL, 0, timer_gioco);
 }
 
 bool change_bomb_color = false;
 Timer color_switch(1);
 
-void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione){
+void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione, int timer_gioco){
 
     
     werase(this->win);
@@ -221,7 +221,7 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
         }
     }
 
-    StampInfo(p, b, this->cols);
+    StampInfo(p, b, this->cols, timer_gioco);
     
 
     //Aggiorna la finestra

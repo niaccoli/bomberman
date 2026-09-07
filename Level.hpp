@@ -63,7 +63,7 @@ public:
     Map& getMap( );
     // Restituisce un riferimento alla mappa associata al livello.
 
-    void stamp_map(Giocatore& g) ;
+    void stamp_map(Giocatore& g, int timer_gioco) ;
     // Visualizza lo stato corrente del livello; se è presente un'esplosione,
     // ne mostra le celle e successivamente ne azzera la memorizzazione.
 

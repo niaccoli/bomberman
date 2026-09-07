@@ -29,10 +29,10 @@ public:
     void Initialize_Map(int levelID);
     
     //Metodo stamp map vecchio
-    void stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b );
+    void stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, int timer_gioco);
 
     void stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems,
-        const Bomba& b , Posizione celle_esplosione[], int num_celle_esplosione);
+        const Bomba& b , Posizione celle_esplosione[], int num_celle_esplosione, int timer_gioco);
 
     bool mossavalida(int x, int y); //forse cancelare o chiamare isWalkable perche' alla fine la mossa e' valida se la cella
     //non e' un muro

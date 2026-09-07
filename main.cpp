@@ -79,56 +79,6 @@ int main() {
 
      posizionaGiocatoreStart(player, levelList);
 
-     //3 PRIMA STAMPA
-     levelList.getCurrent()->level->stamp_map(player);
-
-     /*
-     //Puntatore alla finestra window
-     WINDOW *win = newwin(height, width, start_y, start_x);
-
-     //Aggiorna lo schermo per farlo matchare a ciò c he è presente in memoria
-     refresh();
-
-     //Crea un bordo attorno alla window
-     box(win, 0, 0);
-     wrefresh(win);
-     */
-
-     // TEST
-
-     //node* currentNode = levelList.getCurrent();
-     //Map& m = currentNode->level->getMap();
-
-     // 2. Variabili fittizie per far funzionare stamp_map (temporanee)
-     //Giocatore player(3, 1, 1);
-     //Nemico dummy_nemici[1];
-     //Item dummy_items[1];
-     //Bomba b;
-
-     // 3. STAMPA IL LIVELLO!
-     //m.stamp_map(player, dummy_nemici, 0, dummy_items, 0, b);
-     //FINE TEST
-
-
-       //Prende l'input dell'utente restituendo il valore int corrispondente al tasto premuto
-      //getch();
-
-      //Muove il cursore alle coordinate specificate
-      //move(y, x);
-
-      //dealloca la memoria e termina ncurses
-      //endwin();
-
-
-
-
-
-     //Giocatore player(3, 1, 1);
-     //char input ;
-
-     //posizionaGiocatoreStart( player, levelList ) ;
-
-     // Prima del while, dichiara un contatore
      int debug_contatore = 0;
 
      const int INTERVALLO_CICLO_MS = 100;
@@ -136,7 +86,11 @@ int main() {
      const int DURATA_PARTITA_MINUTI = 5 ;
 
      Timer timerGioco(DURATA_PARTITA_MINUTI * 60 * 1000) ;
+     int timer_gioco = timerGioco.getTimer();
      Timer timerNemici (TEMPO_AGGIORNAMENTO_NEMICI_MS) ;
+
+     //3 PRIMA STAMPA
+     levelList.getCurrent()->level->stamp_map(player, timer_gioco);
 
      //INIZIO CICLO
      while ( player.vivo() && !timerGioco.scaduto( )) {
@@ -178,7 +132,9 @@ int main() {
                     levelList.applicaEffettoItem(player, tipo);
           }
 
-          levelList.getCurrent() -> level -> stamp_map( player );
+
+          timer_gioco = timerGioco.getTimer();
+          levelList.getCurrent() -> level -> stamp_map( player, timer_gioco );
 
 
           if ( colpito ) {// il giocatore ha subito danno
