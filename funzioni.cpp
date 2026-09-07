@@ -139,10 +139,10 @@ void StampInfo(const Giocatore& player,const Bomba& b, int map_cols, int timer_g
      attroff(A_BOLD);
 
      // 1. VITE
-     attron(COLOR_PAIR(3) | A_BOLD);
+     attron(COLOR_PAIR(4) | A_BOLD);
      // Usiamo %-3d per allineare i numeri e cancellare i residui (es. da 10 a 9)
      mvprintw(start_y + 2, start_x, "Vite: %-3d", player.getVite()); 
-     attroff(COLOR_PAIR(3) | A_BOLD);
+     attroff(COLOR_PAIR(4) | A_BOLD);
 
      // 2. PUNTEGGIO E TEMPO (Aggiungi qui i tuoi getter se li hai)
      char points = player.getPunteggio();

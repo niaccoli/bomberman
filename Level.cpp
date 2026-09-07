@@ -164,21 +164,6 @@ Bomba& Level::getBomb(){
 }
 
 
-/*chat suggerisce:
-Posizione Level::posizioneRandomValida() {
-
-    Posizione temp;
-
-    do {
-        temp = map.walkableRandomPosition();
-    } while (isThereAnEnemy(temp));
-
-    return
-    temp;
-}*/
-
-
-
 void Level::posizionaNemici_v2( ) {
     for (int i = 0; i < num_nemici ; i++ )
         nemici[i].setPosizione( posizioneRandomValida_v2()) ;
@@ -216,43 +201,6 @@ bool Level::isCompletato( ) {
     return completato ;
 }
 
-/*
-bool Level::updateLevel(Giocatore& g) {
-
-    moveEnemies( g )  ;
-
-    if ( collisioneGiocatoreNemici_v2( g )) {
-        return true ;
-    }
-
-    if(active_explosion){
-        visualize_explosion.diminuisci(1);
-
-        if(visualize_explosion.scaduto()){
-            active_explosion = false;
-
-            num_cella_esplosione = 0;
-        }
-    }
-
-    if ( b.aggiornaBomba( ) ) {
-        bool giocatore_colpito = collisioneEsplosione( g ) ;
-
-        active_explosion = true;
-        visualize_explosion.attivaTimer(10);
-        //collisione esplsione inizializza le cella_esplosione[]
-        if ( giocatore_colpito)
-            return true ;
-    }
-
-    //updateItem
-    //quando gli item avranno una durata
-
-    return false ;
-} */
-
-
-
 bool Level::aggiornaEsplosioni(Giocatore& g ,int durata ) {
     if ( b.aggiornaBomba( durata ) )
         return ( collisioneEsplosione( g )) ;
@@ -281,50 +229,6 @@ void Level::moveEnemies(Giocatore& g){
     }
 }
 
-
-//Nuovo metodo post debug(creava un loop infinito)
-
-/*void Level::updateEnemies(Giocatore& g){
-
-    for ( int i = 0 ; i < num_nemici ; i++ ) {
-        
-        if ( !nemici[i].vivo() ) {
-            continue;
-        }
-
-        bool mosso = false ;
-        int tentativi = 0;
-
-        while ( !mosso && tentativi < 10) {
-            Posizione new_posizione = nemici[i].nuovaPosizione(g, map);
-            
-            if ( map.isWalkable( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
-                nemici[i].muovi( new_posizione) ;
-                mosso = true ;
-            }
-
-            tentativi++;
-        }
-    }
-}*/
-
-
-
-void Level::updateItems(){
-    //Da scrivere quando gli items avranno una durata
-
-}
-
-
-/*bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
-    for ( int i = 0 ; i < num_nemici ; i++ ) {
-        if ( stessaPosizione( g.getPosizione(), nemici[i].getPosizione()) && nemici[i].vivo()) {
-            if (g.diminuisciVita() )
-                return true;
-        }
-    }
-    return false ;
-}*/
 
 bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
 

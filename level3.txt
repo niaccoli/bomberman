@@ -1,27 +1,21 @@
-###############################################
-#XX   #     #X#X    @    X#  XXX#XX         XX#
-#X### #X### #X#X#########X###X# #X###########X#
-# #I# #XXX# XX#XXX#E#   #XX # #.  #X#XXX      #
-##X#X############X#X####X######X#########
-##X#X#XXXX#XX#X#XX#XX#X#XXX#
-#######X#############X#############X#####
-#XX#XX#X#XX#XX#IX###XI#X#
-####X######X###X#X####X####X####X########
-#EX#X#XX##XX##I#XX##XXXX#XXX#
-##X####X####X#X#########X##############X###
-##X##X##X#XX#X#XX#XX#E#XX#XX#
-###########X#####X##X####X#X#####X####
-#XXXX#XX##IX####I##X##X#X#XX#
-#####X##############X############X##X###
-###XXX#X##X#XXX#XXX###E#
-##############X###########X#####X##X###
-###XXX###XX#XX##XXX##XX##
-#X##X###X##X#X####X#####X######X##########
-#XX#I#X#XXX#XX##XXX####XX#X#
-#X##################X#####X#X#X#X#####X#X###
-#XXX#XX##XX#XX#X#XXX#I#XX##X#
-#X###X###X#X###X#####X##############X######
-##XX###X#X##XX#XXX#XX#
-#########X#######X#X#####X#######X#######X#
-#IXXX#XX#XX#XE#XXXI#XXX#
-###############################################
+#########################################
+#  XXX   X  X  XXX  X       XX  XXX XX  #
+# #X# #X#X#X# # #X# # # # #X#X# #X# # #X#
+#XXXX X    XX  X     XX  XX XX  X   X   #
+#X# # #X# #X#X# #X# #X#X#X# #X#X# # #X#X#
+#     X   XX XX  XX X  X  XXX   X  X    #
+# #X#X#X#X#X# # #X# # # # # # # #X# #X#X#
+# X XX   X   X XX   X   XXX X XXXX  XXX #
+#X# # #X#X# #X# # # #X# #X# #X# #X#X# # #
+# XX  XX   XXX  XXXXXX      X   X   X   #
+# # #X# # # # # # # #X#X# # #X# #X# #X#X#
+@  XXX  XXXX  XX    X  XX X  X  XX    XX#
+#X#X# # # # # # # #X# # #X#X#X#X#X#X#X# #
+#XX  XXXX  X XXXX XXX X X X   X X X X   #
+#X# # #X# # # #X#X#X#X#X# # #X# # # #X#X#
+#   X    X  XXXX  X    XX   XX    X XX  U
+#X#X#X#X#X#X# # # # # # #X# # #X#X#X# # #
+#   XX   XXX    XXXX  XX  XXX XXX   X   #
+# # # #X# #X#X# # #X# #X#X# #X# # #X# # #
+#XX XX X     XXX  XX  XX  X   X   XX    #
+#########################################

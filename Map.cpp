@@ -139,12 +139,12 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
                     if(!nemici[k].vivo())
                         char_to_display = ' ';
                     else{
-                        if(nemici[k].getTipo() == 'I')
-                            char_to_display = 'I'; // 'I' per nemico inseguitore
+                        if(nemici[k].getTipo() == 'A')
+                            char_to_display = 'A'; // 'A' per nemico inseguitore
                         else if(nemici[k].getTipo() == 'T')
-                            char_to_display = 'T'; // 'T' per nemico Tank
+                            char_to_display = 'B'; // 'B' per nemico Tank
                         else
-                            char_to_display = 'R'; // 'R' per nemico Random
+                            char_to_display = 'C'; // 'C' per nemico Random
                     }
                     
                     break; // Trovato un nemico, non serve controllare gli altri per questa cella
@@ -179,19 +179,19 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
                 mvwaddstr(this->win, i + 1, j + 1, "@");
                 wattroff(this->win, COLOR_PAIR(1) | A_BOLD);
             }
-            else if(char_to_display == 'I'){
+            else if(char_to_display == 'A'){
+                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "$");
+                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
+            }
+            else if(char_to_display == 'B'){
+                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
+                mvwaddch(this->win, i + 1, j + 1, ACS_DIAMOND);
+                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
+            }
+            else if(char_to_display == 'C'){
                 wattron(this->win, COLOR_PAIR(2) | A_BOLD);
                 mvwaddstr(this->win, i + 1, j + 1, "Ö");
-                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
-            }
-            else if(char_to_display == 'T'){
-                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
-                mvwaddstr(this->win, i + 1, j + 1, "T");
-                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
-            }
-            else if(char_to_display == 'R'){
-                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
-                mvwaddstr(this->win, i + 1, j + 1, "R");
                 wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
             }
             else if(char_to_display == 'O'){
@@ -212,10 +212,15 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
                 wattron(this->win, COLOR_PAIR(6) | A_BOLD);
                 mvwaddstr(this->win, i + 1, j + 1, "█");
                 wattroff(this->win, COLOR_PAIR(6) | A_BOLD);
+            }
+            else if(char_to_display == ' '){
+                mvwaddch(this->win, i + 1, j + 1, char_to_display);
             }       
             else {
-                // Per tutti gli altri caratteri normali ('P', 'N', ' ') usiamo mvwaddch
+                //ITEM
+                wattron(this->win, COLOR_PAIR(4) | A_BOLD);
                 mvwaddch(this->win, i + 1, j + 1, char_to_display);
+                wattroff(this->win, COLOR_PAIR(4) | A_BOLD);
             }
 
         }

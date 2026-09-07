@@ -15,11 +15,11 @@ void BidirectionalList::Create_Levels(){
 
     //Creazione delle mappe
     //parametri momentanei
-    Map* map1 = new Map(21, 41);
-    Map* map2 = new Map(23, 46);
-    Map* map3 = new Map(30, 30);
-    Map* map4 = new Map(30, 30);
-    Map* map5 = new Map(30, 30);
+    Map* map1 = new Map(17, 25);
+    Map* map2 = new Map(18, 31);
+    Map* map3 = new Map(21, 41);
+    Map* map4 = new Map(23, 46);
+    Map* map5 = new Map(27, 47);
 
     //Inizializzazione mappe
     map1->Initialize_Map(1);
@@ -33,7 +33,7 @@ void BidirectionalList::Create_Levels(){
     node* node1 = new node;
 
     node1->levelID = 1;
-    node1->level = new Level(*map1, 0, 4,  1);
+    node1->level = new Level(*map1, 1, 3, 3);
     node1->prev = NULL;
 
     node* node2 = new node;
@@ -41,7 +41,7 @@ void BidirectionalList::Create_Levels(){
     node1->next = node2;
 
     node2->levelID = 2;
-    node2->level = new Level(*map2, 2, 2, 2);
+    node2->level = new Level(*map2, 2, 4, 5);
     node2->prev = node1;
 
     node* node3 = new node;
@@ -49,7 +49,7 @@ void BidirectionalList::Create_Levels(){
     node2->next = node3;
 
     node3->levelID = 3;
-    node3->level = new Level(*map3, 3, 3, 3);
+    node3->level = new Level(*map3, 3, 3, 1, 7);
     node3->prev = node2;
 
     node* node4 = new node;
@@ -57,7 +57,7 @@ void BidirectionalList::Create_Levels(){
     node3->next = node4;
 
     node4->levelID = 4;
-    node4->level = new Level(*map4, 4, 4, 4);
+    node4->level = new Level(*map4, 3, 1, 2, 4);
     node4->prev = node3;
 
     node* node5 = new node;
@@ -65,7 +65,7 @@ void BidirectionalList::Create_Levels(){
     node4->next = node5;
 
     node5->levelID = 5;
-    node5->level = new Level(*map5, 5, 5, 2 , 5);
+    node5->level = new Level(*map5, 3, 1, 4, 5);
     node5->prev = node4;
 
     node5->next = NULL;
