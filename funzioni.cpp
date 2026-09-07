@@ -145,7 +145,7 @@ void StampInfo(const Giocatore& player,const Bomba& b, int map_cols, int timer_g
      attroff(COLOR_PAIR(4) | A_BOLD);
 
      // 2. PUNTEGGIO E TEMPO (Aggiungi qui i tuoi getter se li hai)
-     char points = player.getPunteggio();
+     int points = player.getPunteggio();
      mvprintw(start_y + 3, start_x, "Tempo rimasto: %02d:%02d   ", minute, seconds);
      mvprintw(start_y + 4, start_x, "Punteggio: %-4d", points);
 
