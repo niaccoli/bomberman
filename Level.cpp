@@ -139,7 +139,7 @@ Posizione Level::posizioneRandomValida_v2() {
     Posizione temp = map.walkableRandomPosition( ) ;
 
 
-    if (( isThereAnEnemy_v2( temp ) == -1) && !map.isNearEntry(temp))
+    if (( isThereAnEnemy_v2( temp ) == -1) && !map.isNearEntry(temp) && map.isSurroundedByWalls(temp))
         return temp ;
 
     return posizioneRandomValida_v2() ;
@@ -159,22 +159,9 @@ Posizione Level::posizioneRandomValida_v2() {
     return temp;
 }*/
 
-
-
-
-/*chat suggerisce:
-Posizione Level::posizioneRandomValida() {
-
-    Posizione temp;
-
-    do {
-        temp = map.walkableRandomPosition();
-    } while (isThereAnEnemy(temp));
-
-    return
-    temp;
-}*/
-
+Bomba& Level::getBomb(){
+    return this->b;
+}
 
 
 void Level::posizionaNemici_v2( ) {
@@ -195,11 +182,11 @@ Map& Level::getMap(){
     return map;
 }
 
-void Level::stamp_map(Giocatore& g) {
+void Level::stamp_map(Giocatore& g, int timer_gioco) {
     if ( num_cella_esplosione == 0 )
-        map.stamp_map( g, nemici, num_nemici, items, num_items, b) ;
+        map.stamp_map( g, nemici, num_nemici, items, num_items, b, timer_gioco) ;
     else {
-        map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione) ;
+        map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione, timer_gioco) ;
 
         num_cella_esplosione = 0 ;
     }
@@ -213,43 +200,6 @@ bool Level::isCompletato( ) {
     completato = true ;
     return completato ;
 }
-
-/*
-bool Level::updateLevel(Giocatore& g) {
-
-    moveEnemies( g )  ;
-
-    if ( collisioneGiocatoreNemici_v2( g )) {
-        return true ;
-    }
-
-    if(active_explosion){
-        visualize_explosion.diminuisci(1);
-
-        if(visualize_explosion.scaduto()){
-            active_explosion = false;
-
-            num_cella_esplosione = 0;
-        }
-    }
-
-    if ( b.aggiornaBomba( ) ) {
-        bool giocatore_colpito = collisioneEsplosione( g ) ;
-
-        active_explosion = true;
-        visualize_explosion.attivaTimer(10);
-        //collisione esplsione inizializza le cella_esplosione[]
-        if ( giocatore_colpito)
-            return true ;
-    }
-
-    //updateItem
-    //quando gli item avranno una durata
-
-    return false ;
-} */
-
-
 
 bool Level::aggiornaEsplosioni(Giocatore& g ,int durata ) {
     if ( b.aggiornaBomba( durata ) )
@@ -279,50 +229,6 @@ void Level::moveEnemies(Giocatore& g){
     }
 }
 
-
-//Nuovo metodo post debug(creava un loop infinito)
-
-/*void Level::updateEnemies(Giocatore& g){
-
-    for ( int i = 0 ; i < num_nemici ; i++ ) {
-        
-        if ( !nemici[i].vivo() ) {
-            continue;
-        }
-
-        bool mosso = false ;
-        int tentativi = 0;
-
-        while ( !mosso && tentativi < 10) {
-            Posizione new_posizione = nemici[i].nuovaPosizione(g, map);
-            
-            if ( map.isWalkable( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
-                nemici[i].muovi( new_posizione) ;
-                mosso = true ;
-            }
-
-            tentativi++;
-        }
-    }
-}*/
-
-
-
-void Level::updateItems(){
-    //Da scrivere quando gli items avranno una durata
-
-}
-
-
-/*bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
-    for ( int i = 0 ; i < num_nemici ; i++ ) {
-        if ( stessaPosizione( g.getPosizione(), nemici[i].getPosizione()) && nemici[i].vivo()) {
-            if (g.diminuisciVita() )
-                return true;
-        }
-    }
-    return false ;
-}*/
 
 bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
 

@@ -50,7 +50,7 @@ void Nemico::setTipo ( char tipo ) {
     }
 }
 
-char Nemico::getTipo( ) {
+char Nemico::getTipo( ) const{
     return this -> tipo ;
 }
 

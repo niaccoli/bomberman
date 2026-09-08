@@ -5,6 +5,7 @@
 #include <random>
 #include <cmath> //Usato per funzione abs() (Valore assoluto)
 #include "Timer.h"
+#include "funzioni.h"
 
 using namespace std;
 
@@ -77,17 +78,19 @@ bool Map::mossavalida(int x, int y){
 }
 
 // 1. Versione standard (chiamata quando non c'è esplosione)
-void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
-                    const Item items[], int numItems, const Bomba& b) {
+void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, 
+                    const Item items[], int numItems, const Bomba& b, int timer_gioco) {
     // Chiama direttamente la versione completa passando NULL e 0
-    this->stamp_map(p, nemici, numNemici, items, numItems, b, NULL, 0);
+    this->stamp_map(p, nemici, numNemici, items, numItems, b, NULL, 0, timer_gioco);
 }
 
 bool change_bomb_color = false;
 Timer color_switch(1);
 
-void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione){
+void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione, int timer_gioco){
 
+    
+    werase(this->win);
     box(this->win, 0, 0);
 
     //GESTIONE TIMER
@@ -107,6 +110,16 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
             //Priorità piu bassa, stampa entrata ed uscita come spazio vuoto
             if(char_to_display == '@' || char_to_display == 'U'){
                 char_to_display = ' ';
+
+                // TRUCCO: Cancelliamo il pezzo di bordo di ncurses!
+                if (j == 0)             // Bordo Sinistro
+                    mvwaddch(this->win, i + 1, 0, ' ');
+                else if (j == cols - 1) // Bordo Destro
+                    mvwaddch(this->win, i + 1, cols + 1, ' ');
+                else if (i == 0)        // Bordo Superiore
+                    mvwaddch(this->win, 0, j + 1, ' ');
+                else if (i == rows - 1) // Bordo Inferiore
+                    mvwaddch(this->win, rows + 1, j + 1, ' ');
             }
 
 
@@ -123,7 +136,17 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
             // Controlla se c'è un nemico in questa posizione
             for(int k = 0; k < numNemici; k++){
                 if(i == nemici[k].getY() && j == nemici[k].getX()){
-                    char_to_display = 'N'; // 'N' per nemico (de gestire poi i vari tipi di nemici)
+                    if(!nemici[k].vivo())
+                        char_to_display = ' ';
+                    else{
+                        if(nemici[k].getTipo() == 'A')
+                            char_to_display = 'A'; // 'A' per nemico inseguitore
+                        else if(nemici[k].getTipo() == 'T')
+                            char_to_display = 'B'; // 'B' per nemico Tank
+                        else
+                            char_to_display = 'C'; // 'C' per nemico Random
+                    }
+                    
                     break; // Trovato un nemico, non serve controllare gli altri per questa cella
                 }
             }
@@ -133,38 +156,6 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
                 char_to_display = 'O'; // 'O' per bomba
             }
 
-            //Priorità 2: Esplosione bomba
-            //Visualizzazione esplosione bomba (True da sostituire con meotodo per capire se la boma è esplosa)
-            /*
-            if(true){
-                for (int k = 0; k < num_celle_esplosione; k++) {
-                    if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
-                        char_to_display = 'E';
-                        visualize_explosion.attivaTimer(150);
-                        explosion = true;
-                        break;
-                    }
-                }
-            }
-            
-
-            if(num_celle_esplosione > 0){
-
-                if(!explosion){
-                    explosion = true;
-                    visualize_explosion.attivaTimer(30);
-                }
-
-                if(explosion){
-                    for (int k = 0; k < num_celle_esplosione; k++) {
-                        if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
-                            char_to_display = 'E';
-                            break;
-                        }
-                    }
-                }
-            }
-            */
             for (int k = 0; k < num_celle_esplosione; k++) {
                         if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
                             char_to_display = 'E';
@@ -188,7 +179,17 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
                 mvwaddstr(this->win, i + 1, j + 1, "@");
                 wattroff(this->win, COLOR_PAIR(1) | A_BOLD);
             }
-            else if(char_to_display == 'N'){
+            else if(char_to_display == 'A'){
+                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
+                mvwaddstr(this->win, i + 1, j + 1, "$");
+                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
+            }
+            else if(char_to_display == 'B'){
+                wattron(this->win, COLOR_PAIR(2) | A_BOLD);
+                mvwaddch(this->win, i + 1, j + 1, ACS_DIAMOND);
+                wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
+            }
+            else if(char_to_display == 'C'){
                 wattron(this->win, COLOR_PAIR(2) | A_BOLD);
                 mvwaddstr(this->win, i + 1, j + 1, "Ö");
                 wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
@@ -211,22 +212,22 @@ void Map::stamp_map(const Personaggio& p, const Nemico nemici[], int numNemici, 
                 wattron(this->win, COLOR_PAIR(6) | A_BOLD);
                 mvwaddstr(this->win, i + 1, j + 1, "█");
                 wattroff(this->win, COLOR_PAIR(6) | A_BOLD);
+            }
+            else if(char_to_display == ' '){
+                mvwaddch(this->win, i + 1, j + 1, char_to_display);
             }       
             else {
-                // Per tutti gli altri caratteri normali ('P', 'N', ' ') usiamo mvwaddch
+                //ITEM
+                wattron(this->win, COLOR_PAIR(4) | A_BOLD);
                 mvwaddch(this->win, i + 1, j + 1, char_to_display);
+                wattroff(this->win, COLOR_PAIR(4) | A_BOLD);
             }
 
         }
     }
 
-    // Calcola la coordinata Y del bordo inferiore (rows + 1 a causa dell'offset dei bordi)
-    int y_bottom = rows + 1;
-
-    // Stampa il testo delle vite (puoi colorarlo con un Color Pair, es. rosso per il cuore)
-    wattron(this->win, COLOR_PAIR(4) | A_BOLD);
-    mvwprintw(this->win, y_bottom, 2, "[ VITE: %d ]", p.getVite());
-    wattroff(this->win, COLOR_PAIR(4) | A_BOLD);
+    StampInfo(p, b, this->cols, timer_gioco);
+    
 
     //Aggiorna la finestra
     wrefresh(this->win);
@@ -248,7 +249,7 @@ bool Map::isWalkable (Posizione posizione ) {
 
     char current_cell = grid[posizione.y][posizione.x];
 
-    if( current_cell == '#' || current_cell == 'X')
+    if( current_cell == '#' || current_cell == 'X' || current_cell == 'O')
         return false;
     return true;
 }
@@ -348,3 +349,24 @@ bool Map::isNearEntry(Posizione position){
     return false;
 }
 
+bool Map::isSurroundedByWalls(Posizione p){
+    if(grid[p.y + 1][p.x] != '#' && grid[p.y + 1][p.x] != 'X'){
+        return true;
+    }
+    else if(grid[p.y - 1][p.x] != '#' && grid[p.y + 1][p.x] != 'X'){
+        return true;
+    }
+    else if(grid[p.y + 1][p.x + 1] != '#' && grid[p.y + 1][p.x] != 'X'){
+        return true;
+    }
+    else if(grid[p.y + 1][p.x - 1] != '#' && grid[p.y + 1][p.x] != 'X'){
+        return true;
+    }
+    else
+        return false;
+
+}
+
+char Map::getCell(Posizione position){
+    return grid[position.y][position.x];
+}
