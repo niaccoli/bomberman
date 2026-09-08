@@ -90,6 +90,9 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) {
 
     Posizione temp = posizione ;
 
+    if (stessaPosizione(g.getPosizione(), getPosizione()))
+        return temp;
+
     /*if ( tipo == 'I') {
         char movimento = ' ' ;
         percorsoBreve( g.getPosizione(), getPosizione(), m, movimento) ;
@@ -159,40 +162,98 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) {
 
     }*/
 
-    if ( tipo == 'I'){
-        int x_diff = g.getX() - getX() ;
-        int y_diff = g.getY() - getY() ;
+if (tipo == 'I') {
 
-        if ( abs(x_diff) > abs(y_diff)) {
-            if ( x_diff > 0 )
-                temp.x += 1 ;
+    int x_diff = g.getX() - getX();
+    int y_diff = g.getY() - getY();
+
+
+    Posizione possibili[4];
+
+
+    if (abs(x_diff) > abs(y_diff)) {
+
+            // 1. movimento orizzontale verso il giocatore
+            if (x_diff > 0)
+                possibili[0] = {temp.x + 1, temp.y};
             else
-                temp.x -= 1 ;
+                possibili[0] = {temp.x - 1, temp.y};
+
+
+            // 2. movimento verticale verso il giocatore
+            if (y_diff > 0)
+                possibili[1] = {temp.x, temp.y + 1};
+            else if (y_diff < 0)
+                possibili[1] = {temp.x, temp.y - 1};
+            else
+                possibili[1] = {temp.x, temp.y + 1};
+
+
+            // 3. movimento orizzontale opposto al giocatore
+            if (x_diff > 0)
+                possibili[2] = {temp.x - 1, temp.y};
+            else
+                possibili[2] = {temp.x + 1, temp.y};
+
+
+            // 4. movimento verticale opposto
+            if (y_diff > 0)
+                possibili[3] = {temp.x, temp.y - 1};
+            else if (y_diff < 0)
+                possibili[3] = {temp.x, temp.y + 1};
+            else
+                possibili[3] = {temp.x, temp.y - 1};
         }
+
+
         else {
-            if ( y_diff > 0 ) {
-                temp.y -= 1 ;
-            }
+
+            // 1. movimento verticale verso il giocatore
+            if (y_diff > 0)
+                possibili[0] = {temp.x, temp.y + 1};
             else
-                temp.y += 1 ;
+                possibili[0] = {temp.x, temp.y - 1};
+
+
+            // 2. movimento orizzontale verso il giocatore
+            if (x_diff > 0)
+                possibili[1] = {temp.x + 1, temp.y};
+            else if (x_diff < 0)
+                possibili[1] = {temp.x - 1, temp.y};
+            else
+                possibili[1] = {temp.x + 1, temp.y};
+
+
+            // 3. movimento verticale opposto al giocatore
+            if (y_diff > 0)
+                possibili[2] = {temp.x, temp.y - 1};
+            else
+                possibili[2] = {temp.x, temp.y + 1};
+
+
+            // 4. movimento orizzontale opposto
+            if (x_diff > 0)
+                possibili[3] = {temp.x - 1, temp.y};
+            else if (x_diff < 0)
+                possibili[3] = {temp.x + 1, temp.y};
+            else
+                possibili[3] = {temp.x - 1, temp.y};
         }
-        return temp ;
+
+
+        // Provo le quattro direzioni in ordine
+        for (int i = 0; i < 4; i++) {
+
+            if (m.isWalkable(possibili[i]))
+                return possibili[i];
+        }
+
+
+        // Tutte e quattro le direzioni sono bloccate
+        return temp;
     }
 
-     else if (tipo == 'R') {
-        int random = rand() % 4 ;
-        if ( random == 0 )
-            temp.x -= 1 ;
-        if ( random == 1 )
-            temp.y += 1 ;
-        if ( random == 2 )
-            temp.x += 1 ;
-        if ( random == 3 )
-            temp.y -= 1 ;
-        return temp ;
-    }
-    else if ( tipo == 'T') {
-        if ( rand() % 2 ) {
+    if (tipo == 'R') {
             int random = rand() % 4 ;
             if ( random == 0 )
                 temp.x -= 1 ;
@@ -202,13 +263,26 @@ Posizione Nemico::nuovaPosizione ( Giocatore& g, Map& m ) {
                 temp.x += 1 ;
             if ( random == 3 )
                 temp.y -= 1 ;
-            
-        }
-        return temp ;
+            return temp ;
+    }
+    if ( tipo == 'T') {
+            if ( rand() % 2 ) {
+                int random = rand() % 4 ;
+                if ( random == 0 )
+                    temp.x -= 1 ;
+                if ( random == 1 )
+                    temp.y += 1 ;
+                if ( random == 2 )
+                    temp.x += 1 ;
+                if ( random == 3 )
+                    temp.y -= 1 ;
+                return temp ;
+            }
+
     }
     else
         return temp ;
-}
+    }
 
 Posizione Nemico::nuovaPosizione_v3 (Map& m) {
     if (tipo == 'R' || tipo == 'I') {

@@ -43,6 +43,8 @@ public:
     //Andrea:
     bool isWalkable (Posizione posizione ) ; //ritorna true se la cella non e' un muro
 
+    bool isWalkable (int x, int y ) ;
+
     //Andrea
     Posizione walkableRandomPosition( ) ; //ritorna una posizione randomica camminabile(senza muri) nella mappa
 
