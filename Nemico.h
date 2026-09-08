@@ -6,16 +6,16 @@
 #define BOMBERMAN_NEMICO_H
 
 #include "Giocatore.h"
-#include "Map.hpp"
+#include "Mappa.hpp"
 #include "Personaggio.hpp"
 
-class Map ; /* forward declaration
+class Mappa ; /* forward declaration
 Nemico.h
 ↓ include
-Map.hpp
+Mappa.hpp
 ↓ include
 Nemico.h
-void muovi(Giocatore& g, Map& m); può non aver ancora incontrato: class Map { ... };
+void muovi(Giocatore& g, Mappa& m); può non aver ancora incontrato: class Mappa { ... };
 */
 
 
@@ -24,7 +24,7 @@ private:
     char tipo ; //'I' = Inseguitore, 'R' = random, 'T'=tank
     //int velocita ; //forse piuttosto che aggiungere un campo velocita' mi conviene aggiungere un randomico 1 su 2 per il
     //movimento del nemico tank in questo modo sembrera'  piu' lento
-    int percorsoBreve( Posizione player, Posizione nemico, Map& map, char& wasd) ;
+    int percorsoBreve( Posizione player, Posizione nemico, Mappa& mappa, char& wasd) ;
     int punti ;
 
     public:
@@ -37,8 +37,8 @@ private:
         int getPunti ( ) ;
         void nuovaPosizioneInseguitore (Giocatore& g, Posizione possibili[4]) const;
         Posizione nuovaPosizioneCasuale (Giocatore& g) const;
-    //----------------------------------------------DA VALUTARE (guarda Level) -----------------------------------------
-        Posizione nuovaPosizione_v3 (Map& m); //se il giocatore non e' presente nel livello i nemici inseguitori si comportano
+    //----------------------------------------------DA VALUTARE (guarda Livello) -----------------------------------------
+        Posizione nuovaPosizione_v3 (Mappa& m); //se il giocatore non e' presente nel livello i nemici inseguitori si comportano
     //come nemici random
     //-------------------------------------------------------------------------------------------------------------------
         void rianima( ) ;

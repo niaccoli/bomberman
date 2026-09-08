@@ -7,7 +7,7 @@
 
 #include "funzioni.h"
 
-#include "Map.hpp"
+#include "Mappa.hpp"
 #include <cstdlib>
 
 Nemico::Nemico(): Personaggio(1, {-1, -1 }) {
@@ -59,15 +59,15 @@ int Nemico::getPunti ( ) {
 }
 
 
-int Nemico::percorsoBreve( Posizione player, Posizione n, Map& map, char& wasd) {
+int Nemico::percorsoBreve( Posizione player, Posizione n, Mappa& mappa, char& wasd) {
     if ( stessaPosizione( player, n))
         return 0 ;
 
 
-    int min_sinistra = percorsoBreve( player, {n.x - 1, n.y}, map, wasd );
-    int min_destra = percorsoBreve( player, {n.x + 1, n.y }, map , wasd);
-    int min_su = percorsoBreve( player, {n.x, n.y - 1}, map , wasd);
-    int min_giu = percorsoBreve( player, {n.x ,n.y + 1 }, map , wasd);
+    int min_sinistra = percorsoBreve( player, {n.x - 1, n.y}, mappa, wasd );
+    int min_destra = percorsoBreve( player, {n.x + 1, n.y }, mappa , wasd);
+    int min_su = percorsoBreve( player, {n.x, n.y - 1}, mappa , wasd);
+    int min_giu = percorsoBreve( player, {n.x ,n.y + 1 }, mappa , wasd);
 
     int piuBreve = min(min_sinistra, min_destra, min_su, min_giu) ;
 
@@ -80,7 +80,7 @@ int Nemico::percorsoBreve( Posizione player, Posizione n, Map& map, char& wasd) 
     else
         wasd == 's' ;
 
-    if ( !map.isWalkable( n ))
+    if ( !mappa.isCamminabile( n ))
         return 100 + piuBreve;
     else
         return 1 + piuBreve ;
@@ -212,7 +212,7 @@ Posizione Nemico::nuovaPosizioneCasuale(Giocatore& g ) const{
     return temp;
 }
 
-Posizione Nemico::nuovaPosizione_v3 (Map& m) {
+Posizione Nemico::nuovaPosizione_v3 (Mappa& m) {
     if (tipo == 'R' || tipo == 'I') {
         int random = rand() % 4 ;
         if ( random == 0 )

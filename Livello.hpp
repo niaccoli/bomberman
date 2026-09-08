@@ -1,4 +1,4 @@
-#include "Map.hpp"
+#include "Mappa.hpp"
 #include "Item.h"
 #include "Personaggio.hpp"
 #include "Giocatore.h"
@@ -13,10 +13,10 @@ const int MAX_NEMICI_RND = 10;
 const int MAX_NEMICI_TANK = 5;
 const int MAX_ITEMS = 10;
 
-class Level {
+class Livello {
 private:
     // Mappa associata al livello.
-    Map& map;
+    Mappa& mappa;
 
     // Celle interessate dall'ultima esplosione.
     Posizione cella_esplosione[9] ;
@@ -56,8 +56,8 @@ private:
     bool completato;
 
 
-    Timer visualize_explosion{0};
-    bool active_explosion = false;
+    Timer visualizza_esplosione{0};
+    bool esplosione_attiva = false;
 
 
     Posizione posizioneRandomValida_v2() ;
@@ -75,22 +75,22 @@ private:
 public:
     Bomba& getBomb();
 
-    Level(Map& m, int random_enemies, int items);
+    Livello(Mappa& m, int random_enemies, int items);
     // Costruisce un livello con nemici inseguitori e un numero massimo di item.
 
-    Level(Map& m, int chasers_enemies, int random_enemies, int items);
+    Livello(Mappa& m, int chasers_enemies, int random_enemies, int items);
     // Costruisce un livello con nemici inseguitori, nemici random e un numero massimo di item.
 
-    Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
+    Livello(Mappa& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
     // Costruisce un livello con nemici inseguitori, random, tank e un numero massimo di item.
 
     //Distruttore classe Level
-    ~Level();
+    ~Livello();
 
-    Map& getMap( );
+    Mappa& getMap( );
     // Restituisce un riferimento alla mappa associata al livello.
 
-    void stamp_map(Giocatore& g, int timer_gioco) ;
+    void stampaMappa(Giocatore& g, int timer_gioco) ;
     // Visualizza lo stato corrente del livello; se è presente un'esplosione,
     // ne mostra le celle e successivamente ne azzera la memorizzazione.
 
@@ -107,7 +107,7 @@ public:
 
     bool aggiornaEsplosioni(Giocatore& g ,int durata ) ;
 
-    void moveEnemies(Giocatore& g);
+    void muoviNemici(Giocatore& g);
     // Aggiorna la posizione di tutti i nemici vivi del livello.
 
     void updateItems( );

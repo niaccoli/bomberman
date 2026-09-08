@@ -1,10 +1,10 @@
-#include "Level.hpp"
+#include "Livello.hpp"
 #include "funzioni.h"
 #include <cstdlib>
-#include "Map.hpp"
+#include "Mappa.hpp"
 
 
-Level::Level(Map& m, int random_enemies, int items) : map(m) {
+Livello::Livello(Mappa& m, int random_enemies, int items) : mappa(m) {
 
     num_nemici = 0 ;
 
@@ -35,7 +35,7 @@ Level::Level(Map& m, int random_enemies, int items) : map(m) {
 }
 
 
-Level::Level(Map& m, int chasers_enemies, int random_enemies, int items) : map(m) {
+Livello::Livello(Mappa& m, int chasers_enemies, int random_enemies, int items) : mappa(m) {
 
     
     num_nemici = 0 ;
@@ -80,7 +80,7 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int items) : map(m
 }
 
 
-Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, int items) : map(m) {
+Livello::Livello(Mappa& m, int chasers_enemies, int random_enemies, int tank_enemies, int items) : mappa(m) {
 
     num_nemici = 0 ;
 
@@ -134,16 +134,16 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, 
     completato = false;
 }
 
-Level::~Level() {
-    delete &(this->map);
+Livello::~Livello() {
+    delete &(this->mappa);
 }
 
 
-Posizione Level::posizioneRandomValida_v2() {
-    Posizione temp = map.walkableRandomPosition( ) ;
+Posizione Livello::posizioneRandomValida_v2() {
+    Posizione temp = mappa.posizioneCamminabileRandom( ) ;
 
 
-    if (( isThereAnEnemy_v2( temp ) == -1) && !map.isNearEntry(temp) && map.isSurroundedByWalls(temp))
+    if (( isThereAnEnemy_v2( temp ) == -1) && !mappa.isVicinoEntrata(temp) && mappa.isCircondataDaMuri(temp))
         return temp ;
 
     return posizioneRandomValida_v2() ;
@@ -151,30 +151,30 @@ Posizione Level::posizioneRandomValida_v2() {
 
 
 /*
-Posizione Level::posizioneRandomValida_v2() {
+Posizione Livello::posizioneRandomValida_v2() {
     Posizione temp;
     int tentativi = 0;
 
     do {
-        temp = map.walkableRandomPosition();
+        temp = mappa.posizioneCamminabileRandom();
         tentativi++;
-    } while ((isThereAnEnemy_v2(temp) != -1) || map.isNearEntry(temp) && tentativi < 1000);
+    } while ((isThereAnEnemy_v2(temp) != -1) || mappa.isVicinoEntrata(temp) && tentativi < 1000);
 
     return temp;
 }*/
 
-Bomba& Level::getBomb(){
+Bomba& Livello::getBomb(){
     return this->b;
 }
 
 
-void Level::posizionaNemici_v2( ) {
+void Livello::posizionaNemici_v2( ) {
     for (int i = 0; i < num_nemici ; i++ )
         nemici[i].setPosizione( posizioneRandomValida_v2()) ;
 }
 
 
-int Level::isThereAnEnemy_v2( Posizione posizione) {
+int Livello::isThereAnEnemy_v2( Posizione posizione) {
     for (int i = 0 ; i < num_nemici ; i++) {
         if ( stessaPosizione( nemici[i].getPosizione(), posizione) && nemici[i].vivo( ))
             return i ;
@@ -182,21 +182,21 @@ int Level::isThereAnEnemy_v2( Posizione posizione) {
     return -1 ;
 }
 
-Map& Level::getMap(){
-    return map;
+Mappa& Livello::getMap(){
+    return mappa;
 }
 
-void Level::stamp_map(Giocatore& g, int timer_gioco) {
+void Livello::stampaMappa(Giocatore& g, int timer_gioco) {
     if ( num_cella_esplosione == 0 )
-        map.stamp_map( g, nemici, num_nemici, items, num_items, b, timer_gioco) ;
+        mappa.stampaMappa( g, nemici, num_nemici, items, num_items, b, timer_gioco) ;
     else {
-        map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione, timer_gioco) ;
+        mappa.stampaMappa( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione, timer_gioco) ;
 
         num_cella_esplosione = 0 ;
     }
 }
 
-bool Level::isCompletato( ) {
+bool Livello::isCompletato( ) {
     for ( int i = 0 ; i < num_nemici ; i++ ) {
         if (nemici[i].vivo( ))
             return false ;
@@ -205,7 +205,7 @@ bool Level::isCompletato( ) {
     return completato ;
 }
 
-bool Level::aggiornaEsplosioni(Giocatore& g ,int durata ) {
+bool Livello::aggiornaEsplosioni(Giocatore& g ,int durata ) {
     if ( b.aggiornaBomba( durata ) )
         return ( collisioneEsplosione( g )) ;
     //collisione esplsione inizializza le cella_esplosione[]
@@ -214,7 +214,7 @@ bool Level::aggiornaEsplosioni(Giocatore& g ,int durata ) {
 }
 
 
-void Level::moveEnemies(Giocatore& g) {
+void Livello::muoviNemici(Giocatore& g) {
 
     for (int i = 0; i < num_nemici; i++) {
 
@@ -239,7 +239,7 @@ void Level::moveEnemies(Giocatore& g) {
             while (j < 4 && !mosso) {
 
                 bool cellaLibera =
-                    map.isWalkable(possibili[j]) &&
+                    mappa.isCamminabile(possibili[j]) &&
                     isThereAnEnemy_v2(possibili[j]) == -1 &&
                     !(stessaPosizione(possibili[j], b.getPosizione()) &&
                       b.innescata());
@@ -269,7 +269,7 @@ void Level::moveEnemies(Giocatore& g) {
                 }
 
 
-                if (map.isWalkable(nuova) &&
+                if (mappa.isCamminabile(nuova) &&
                     isThereAnEnemy_v2(nuova) == -1 &&
                     !(stessaPosizione(nuova, b.getPosizione()) &&
                       b.innescata())) {
@@ -285,7 +285,7 @@ void Level::moveEnemies(Giocatore& g) {
 }
 
 
-bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
+bool Livello::collisioneGiocatoreNemici_v2(Giocatore &g) {
 
     if ( isThereAnEnemy_v2(g.getPosizione()) != -1 ) {
         if (g.diminuisciVita() )
@@ -295,7 +295,7 @@ bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
 }
 
 
-bool Level::collisioneEsplosione( Giocatore& g ) {
+bool Livello::collisioneEsplosione( Giocatore& g ) {
     Posizione epicentro = b.getPosizione() ;
 
     Posizione nord = { epicentro.x, epicentro.y - b.getRaggio() - 1} ;
@@ -337,7 +337,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
     //SU:
     current = { epicentro.x, epicentro.y - 1 } ;
-    while ( !stessaPosizione(current, nord) && !map.isUnbreakableWall(current) && !muro_distrutto ) {
+    while ( !stessaPosizione(current, nord) && !mappa.isMuroIndistruttibile(current) && !muro_distrutto ) {
 
         cella_esplosione[num_cella_esplosione] = current ;
         num_cella_esplosione++;
@@ -347,8 +347,8 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
                 giocatore_colpito = true;
         }
 
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
+        if ( mappa.isDistruttibile(current) ) {
+            mappa.distruggiMuro(current ) ;
             muro_distrutto = true ;
             dropItem( current) ;
         }
@@ -369,7 +369,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
     //GIU
     current = { epicentro.x, epicentro.y + 1 } ;
     muro_distrutto = false ;
-    while ( !stessaPosizione(current, sud) && !map.isUnbreakableWall(current) && !muro_distrutto) {
+    while ( !stessaPosizione(current, sud) && !mappa.isMuroIndistruttibile(current) && !muro_distrutto) {
 
         cella_esplosione[num_cella_esplosione] = current ;
         num_cella_esplosione++;
@@ -379,8 +379,8 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
                 giocatore_colpito = true;
         }
 
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
+        if ( mappa.isDistruttibile(current) ) {
+            mappa.distruggiMuro(current ) ;
             muro_distrutto = true ;
             dropItem(current) ;
         }
@@ -403,7 +403,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
     //SINISTRA
     current = { epicentro.x - 1, epicentro.y } ;
     muro_distrutto = false ;
-    while ( !stessaPosizione(current, est) && !map.isUnbreakableWall(current) && !muro_distrutto ) {
+    while ( !stessaPosizione(current, est) && !mappa.isMuroIndistruttibile(current) && !muro_distrutto ) {
 
         cella_esplosione[num_cella_esplosione] = current ;
         num_cella_esplosione++;
@@ -413,8 +413,8 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
                 giocatore_colpito = true;
         }
 
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
+        if ( mappa.isDistruttibile(current) ) {
+            mappa.distruggiMuro(current ) ;
             muro_distrutto = true ;
             dropItem( current ) ;
         }
@@ -436,7 +436,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
     //DESTRA
     current = { epicentro.x + 1, epicentro.y } ;
     muro_distrutto = false ;
-    while ( !stessaPosizione(current, ovest) && !map.isUnbreakableWall(current) && !muro_distrutto) {
+    while ( !stessaPosizione(current, ovest) && !mappa.isMuroIndistruttibile(current) && !muro_distrutto) {
 
         cella_esplosione[num_cella_esplosione] = current ;
         num_cella_esplosione++;
@@ -446,8 +446,8 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
                 giocatore_colpito = true;
         }
 
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
+        if ( mappa.isDistruttibile(current) ) {
+            mappa.distruggiMuro(current ) ;
             muro_distrutto = true ;
             dropItem( current ) ;
         }
@@ -473,7 +473,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
 
 
-char Level::raccoltaItem(Giocatore& g ) {
+char Livello::raccoltaItem(Giocatore& g ) {
     for (int i = 0 ; i < next_item ; i++ )
 
         if ( stessaPosizione( g.getPosizione(), items[i].getPosizione()) && items[i].isAttivo() ) {
@@ -486,7 +486,7 @@ char Level::raccoltaItem(Giocatore& g ) {
 
 
 
-void Level::dropItem(Posizione posizione) {
+void Livello::dropItem(Posizione posizione) {
     if ( next_item < num_items ) {
         int random = rand() % 5 ; //valutare a gioco creato se aumentare o diminuire
 
@@ -500,14 +500,14 @@ void Level::dropItem(Posizione posizione) {
 }
 
 
-void Level::piazzaBomba(Giocatore& g) {
+void Livello::piazzaBomba(Giocatore& g) {
     if ( !b.innescata()) {
         b.setPosizione( g.getPosizione()) ;
         b.innesca() ;
     }
 }
 
-void Level::resetBombeEPotenziamenti() {
+void Livello::resetBombeEPotenziamenti() {
     b.esplodi( );
     b.disattivaPotenziamenti() ;
     b.setPosizione( -1, -1 ) ;
@@ -515,7 +515,7 @@ void Level::resetBombeEPotenziamenti() {
 
 
 
-void Level::reset_v3( ) {
+void Livello::reset_v3( ) {
 
     posizionaNemici_v2() ;
 
@@ -527,16 +527,16 @@ void Level::reset_v3( ) {
     */
 
     // reset bomba
-    Level::resetBombeEPotenziamenti() ;
+    Livello::resetBombeEPotenziamenti() ;
 }
 
 
 
-void Level::aggiornaPotenziamenti(int durata ) {
+void Livello::aggiornaPotenziamenti(int durata ) {
     b.aggiornaPotenziamenti(durata) ;
 }
 
-void Level::applicaEffetto(char tipo ) {
+void Livello::applicaEffetto(char tipo ) {
     if ( tipo == 'D') {
         b.attivaPotenziamentoDanno( ) ;
     }
@@ -551,7 +551,7 @@ void Level::applicaEffetto(char tipo ) {
 /*---------------------------------------------------DA VALUTARE-------------------------------------------------------
 
 
-void Level::updateLevel_v3() {
+void Livello::updateLevel_v3() {
 
     updateEnemies_v3( ) ;
 
@@ -561,12 +561,12 @@ void Level::updateLevel_v3() {
     //updateItems( ) ;
 }
 
-void Level::updateEnemies_v3( ) {
+void Livello::updateEnemies_v3( ) {
     for ( int i = 0 ; i < num_nemici ; i++ ) {
         bool mosso = false ;
         while ( !mosso && nemici[i].vivo()) {
-            Posizione new_posizione = nemici[i].nuovaPosizione_v3( map ) ;
-            if ( map.isWalkable( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
+            Posizione new_posizione = nemici[i].nuovaPosizione_v3( mappa ) ;
+            if ( mappa.isCamminabile( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
                 nemici[i].muovi( new_posizione) ;
                 mosso = true ;
             }
@@ -576,7 +576,7 @@ void Level::updateEnemies_v3( ) {
 
 
 
-void Level::collisioneEplosione_v3( ) {
+void Livello::collisioneEplosione_v3( ) {
     Posizione epicentro = b.getPosizione() ;
 
     Posizione nord = { epicentro.x, epicentro.y - b.getRaggio() - 1} ;
@@ -597,10 +597,10 @@ void Level::collisioneEplosione_v3( ) {
 
     //SU:
     current = { epicentro.x, epicentro.y - 1 } ;
-    while ( !stessaPosizione(current, nord) && !map.isUnbreakableWall(current) && !muro_distrutto ) {
+    while ( !stessaPosizione(current, nord) && !mappa.isMuroIndistruttibile(current) && !muro_distrutto ) {
 
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
+        if ( mappa.isDistruttibile(current) ) {
+            mappa.distruggiMuro(current ) ;
             muro_distrutto = true ;
             dropItem( current) ;
         }
@@ -619,10 +619,10 @@ void Level::collisioneEplosione_v3( ) {
     //GIU
     current = { epicentro.x, epicentro.y + 1 } ;
     muro_distrutto = false ;
-    while ( !stessaPosizione(current, sud) && !map.isUnbreakableWall(current) && !muro_distrutto) {
+    while ( !stessaPosizione(current, sud) && !mappa.isMuroIndistruttibile(current) && !muro_distrutto) {
 
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
+        if ( mappa.isDistruttibile(current) ) {
+            mappa.distruggiMuro(current ) ;
             muro_distrutto = true ;
             dropItem(current) ;
         }
@@ -641,10 +641,10 @@ void Level::collisioneEplosione_v3( ) {
     //SINISTRA
     current = { epicentro.x - 1, epicentro.y } ;
     muro_distrutto = false ;
-    while ( !stessaPosizione(current, est) && !map.isUnbreakableWall(current) && !muro_distrutto ) {
+    while ( !stessaPosizione(current, est) && !mappa.isMuroIndistruttibile(current) && !muro_distrutto ) {
 
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
+        if ( mappa.isDistruttibile(current) ) {
+            mappa.distruggiMuro(current ) ;
             muro_distrutto = true ;
             dropItem( current ) ;
         }
@@ -663,10 +663,10 @@ void Level::collisioneEplosione_v3( ) {
     //DESTRA
     current = { epicentro.x + 1, epicentro.y } ;
     muro_distrutto = false ;
-    while ( !stessaPosizione(current, ovest) && !map.isUnbreakableWall(current) && !muro_distrutto) {
+    while ( !stessaPosizione(current, ovest) && !mappa.isMuroIndistruttibile(current) && !muro_distrutto) {
 
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
+        if ( mappa.isDistruttibile(current) ) {
+            mappa.distruggiMuro(current ) ;
             muro_distrutto = true ;
             dropItem( current ) ;
         }

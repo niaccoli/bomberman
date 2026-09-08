@@ -15,13 +15,13 @@
  *Sì, questa impostazione ha senso. Cambierei però un dettaglio: gli item fuori dalla mappa non li considererei attivi.
  *Userei attivo == true per significare “questo item è attualmente presente sulla mappa e può essere raccolto”.
  *
-Quindi ogni Level avrebbe, per esempio:
+Quindi ogni Livello avrebbe, per esempio:
 
 Item items[MAX_ITEMS];
 int num_items;
 int next_item;
 
-Poi, durante l'inizializzazione del Level, assegni casualmente il tipo ai vari item.
+Poi, durante l'inizializzazione del Livello, assegni casualmente il tipo ai vari item.
 
 Per esempio concettualmente:
 
@@ -29,7 +29,7 @@ for (int i = 0; i < num_items; i++) {
     items[i].setTipo(tipo casuale );
 }
 
-Non metterei necessariamente il rand() dentro al costruttore di Item: preferisco che sia Level a decidere quali item contiene.
+Non metterei necessariamente il rand() dentro al costruttore di Item: preferisco che sia Livello a decidere quali item contiene.
 
 Quando muore un nemico in (x,y) oppure viene distrutto un muro in (x,y), fai il lancio casuale:
 nemico muore
@@ -115,7 +115,7 @@ Tipo random nel costruttore oppure nel drop?
 Tra le due possibilità, io sceglierei assegnare il tipo durante il drop, non nel costruttore.
 
 
-Level::dropItem(Posizione posizione)
+Livello::dropItem(Posizione posizione)
 si occupa di:
 1. controllare num_items > 0
 2. stabilire casualmente se fare il drop

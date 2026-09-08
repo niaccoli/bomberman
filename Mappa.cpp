@@ -1,4 +1,4 @@
-#include "Map.hpp"
+#include "Mappa.hpp"
 #include "Nemico.h"
 #include <fstream>
 #include <iostream>
@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Map::Map(int height, int width){
+Mappa::Mappa(int height, int width){
     rows = height;
     cols = width;
 
@@ -25,7 +25,7 @@ Map::Map(int height, int width){
     }
 };
 
-Map::~Map() {
+Mappa::~Mappa() {
     // 1. Libera le colonne per ogni riga
     for (int i = 0; i < rows; i++) {
         delete[] grid[i]; 
@@ -39,7 +39,7 @@ Map::~Map() {
     }
 }
 
-void Map::Initialize_Map(int levelID){
+void Mappa::inizializzaMappa(int levelID){
     string fileName;
 
     switch(levelID) {
@@ -78,7 +78,7 @@ void Map::Initialize_Map(int levelID){
 }
 
 //Prende in input due coordinate e restituiisce TRUE se è superficie calpestabile (spazio vuoto o Item)
-bool Map::mossavalida(int x, int y){
+bool Mappa::mossavalida(int x, int y){
 
     //Controllo limiti mappa (probabilemtne non serve ma è per sicurezza)
     if (x >= cols || y >= rows || x < 0 || y < 0)
@@ -93,19 +93,19 @@ bool Map::mossavalida(int x, int y){
 }
 
 // 1. Versione standard (chiamata quando non c'è esplosione)
-void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, 
+void Mappa::stampaMappa(const Giocatore& p, const Nemico nemici[], int numNemici, 
                     const Item items[], int numItems, const Bomba& b, int timer_gioco) {
     // Chiama direttamente la versione completa passando NULL e 0
-    this->stamp_map(p, nemici, numNemici, items, numItems, b, NULL, 0, timer_gioco);
+    this->stampaMappa(p, nemici, numNemici, items, numItems, b, NULL, 0, timer_gioco);
 }
 
-bool change_bomb_color = false;
-Timer color_switch(1);
+bool cambia_colore_bomba = false;
+Timer cambia_colore(1);
 
 Posizione mappa_schermo;
 
 
-void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione, int timer_gioco){
+void Mappa::stampaMappa(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione, int timer_gioco){
 
     int larghezza_stats = 30; // Larghezza stimata per le statistiche a destra
     int total_w = this->cols + 2 + larghezza_stats;
@@ -130,21 +130,21 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
 
     //GESTIONE TIMER
     // Gestione lampeggio bomba
-    color_switch.diminuisci(1);
-    if(color_switch.scaduto()){                   
-        change_bomb_color = !change_bomb_color;
-        color_switch.attivaTimer(5); // Cambia colore ogni 5 frame
+    cambia_colore.diminuisci(1);
+    if(cambia_colore.scaduto()){                   
+        cambia_colore_bomba = !cambia_colore_bomba;
+        cambia_colore.attivaTimer(5); // Cambia colore ogni 5 frame
     }
     
 
     for(int i = 0; i < rows; i++){
         for(int j=0; j < cols; j++){
-            char char_to_display = grid[i][j]; // Inizia con il carattere base della mappa
+            char carattere_da_mostrare = grid[i][j]; // Inizia con il carattere base della mappa
 
 
             //Priorità piu bassa, stampa entrata ed uscita come spazio vuoto
-            if(char_to_display == '@' || char_to_display == 'U'){
-                char_to_display = ' ';
+            if(carattere_da_mostrare == '@' || carattere_da_mostrare == 'U'){
+                carattere_da_mostrare = ' ';
 
                 // TRUCCO: Cancelliamo il pezzo di bordo di ncurses!
                 if (j == 0)             // Bordo Sinistro
@@ -162,7 +162,7 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
             // Controlla se c'è un item attivo in questa posizione
             for(int k = 0; k < numItems; k++){
                 if(items[k].isAttivo() && i == items[k].getY() && j == items[k].getX()){
-                    char_to_display = items[k].getTipo(); // Stampa il tipo di item (es. 'B', 'T', 'D')
+                    carattere_da_mostrare = items[k].getTipo(); // Stampa il tipo di item (es. 'B', 'T', 'D')
                     break; // Trovato un item, non serve controllare gli altri per questa cella
                 }
             }
@@ -172,14 +172,14 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
             for(int k = 0; k < numNemici; k++){
                 if(i == nemici[k].getY() && j == nemici[k].getX()){
                     if(!nemici[k].vivo())
-                        char_to_display = ' ';
+                        carattere_da_mostrare = ' ';
                     else{
                         if(nemici[k].getTipo() == 'I')
-                            char_to_display = 'A'; // 'A' per nemico inseguitore
+                            carattere_da_mostrare = 'A'; // 'A' per nemico inseguitore
                         else if(nemici[k].getTipo() == 'T')
-                            char_to_display = 'B'; // 'B' per nemico Tank
+                            carattere_da_mostrare = 'B'; // 'B' per nemico Tank
                         else
-                            char_to_display = 'C'; // 'C' per nemico Random
+                            carattere_da_mostrare = 'C'; // 'C' per nemico Random
                     }
                     
                     break; // Trovato un nemico, non serve controllare gli altri per questa cella
@@ -188,50 +188,50 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
 
             // Priorità 3: Bomba (sovrascrive nemico e item se presente)
             if(b.innescata() && i == b.getY() && j == b.getX()){
-                char_to_display = 'O'; // 'O' per bomba
+                carattere_da_mostrare = 'O'; // 'O' per bomba
             }
 
             for (int k = 0; k < num_celle_esplosione; k++) {
                         if (i == celle_esplosione[k].y && j == celle_esplosione[k].x) {
-                            char_to_display = 'E';
+                            carattere_da_mostrare = 'E';
                             break;
                         }
                     }
 
             // Priorità 1: Giocatore (la più alta, sovrascrive tutto)
             if(p.vivo() && i == p.getY() && j == p.getX()){
-                char_to_display = 'P'; // 'P' per giocatore
+                carattere_da_mostrare = 'P'; // 'P' per giocatore
             }
 
             // 2. RENDERIZZAZIONE GRAFICA MODERNA
             // Stampiamo con OFFSET di +1 per salvare i bordi della finestra
-            if (char_to_display == '#')
+            if (carattere_da_mostrare == '#')
                 mvwaddstr(this->win, i + 1, j + 1, "█");
-            else if(char_to_display == 'X')
+            else if(carattere_da_mostrare == 'X')
                 mvwaddstr(this->win, i + 1, j + 1, "▒");
-            else if(char_to_display == 'P'){
+            else if(carattere_da_mostrare == 'P'){
                 wattron(this->win, COLOR_PAIR(1) | A_BOLD);
                 mvwaddstr(this->win, i + 1, j + 1, "@");
                 wattroff(this->win, COLOR_PAIR(1) | A_BOLD);
             }
-            else if(char_to_display == 'A'){
+            else if(carattere_da_mostrare == 'A'){
                 wattron(this->win, COLOR_PAIR(2) | A_BOLD);
                 mvwaddstr(this->win, i + 1, j + 1, "$");
                 wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
             }
-            else if(char_to_display == 'B'){
+            else if(carattere_da_mostrare == 'B'){
                 wattron(this->win, COLOR_PAIR(2) | A_BOLD);
                 mvwaddch(this->win, i + 1, j + 1, ACS_DIAMOND);
                 wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
             }
-            else if(char_to_display == 'C'){
+            else if(carattere_da_mostrare == 'C'){
                 wattron(this->win, COLOR_PAIR(2) | A_BOLD);
                 mvwaddstr(this->win, i + 1, j + 1, "Ö");
                 wattroff(this->win, COLOR_PAIR(2) | A_BOLD);
             }
-            else if(char_to_display == 'O'){
+            else if(carattere_da_mostrare == 'O'){
 
-                if(change_bomb_color == true){
+                if(cambia_colore_bomba == true){
                     wattron(this->win, COLOR_PAIR(3) | A_BOLD);
                     mvwaddstr(this->win, i + 1, j + 1, "¤");
                     wattroff(this->win, COLOR_PAIR(3) | A_BOLD);
@@ -243,18 +243,18 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
                 }
                 
             }
-            else if(char_to_display == 'E'){
+            else if(carattere_da_mostrare == 'E'){
                 wattron(this->win, COLOR_PAIR(6) | A_BOLD);
                 mvwaddstr(this->win, i + 1, j + 1, "█");
                 wattroff(this->win, COLOR_PAIR(6) | A_BOLD);
             }
-            else if(char_to_display == ' '){
-                mvwaddch(this->win, i + 1, j + 1, char_to_display);
+            else if(carattere_da_mostrare == ' '){
+                mvwaddch(this->win, i + 1, j + 1, carattere_da_mostrare);
             }       
             else {
                 //ITEM
                 wattron(this->win, COLOR_PAIR(4) | A_BOLD);
-                mvwaddch(this->win, i + 1, j + 1, char_to_display);
+                mvwaddch(this->win, i + 1, j + 1, carattere_da_mostrare);
                 wattroff(this->win, COLOR_PAIR(4) | A_BOLD);
             }
 
@@ -271,12 +271,12 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
 
 
 
-void Map::breakWall() {
+void Mappa::distruggiMuro() {
     //da scrivere
 }
 
 
-bool Map::isWalkable (Posizione posizione ) {
+bool Mappa::isCamminabile (Posizione posizione ) {
 
     if (posizione.y < 0 || posizione.y >= rows || posizione.x < 0 || posizione.x >= cols) {
         return false;
@@ -289,13 +289,13 @@ bool Map::isWalkable (Posizione posizione ) {
     return true;
 }
 
-bool Map::isWalkable (int x, int y ) {
+bool Mappa::isCamminabile (int x, int y ) {
     Posizione temp = {x , y} ;
-    return isWalkable(temp) ;
+    return isCamminabile(temp) ;
 }
 
 
-Posizione Map::walkableRandomPosition( ) {
+Posizione Mappa::posizioneCamminabileRandom( ) {
     //utilizzo static per iniziallizarli solo una volta
     static random_device rnd;
 
@@ -312,84 +312,84 @@ Posizione Map::walkableRandomPosition( ) {
         rnd_position.x = random_col(gen);
         rnd_position.y = random_row(gen);
 
-    }while(!isWalkable(rnd_position));
+    }while(!isCamminabile(rnd_position));
 
     return rnd_position;
 }
 
 
-void Map::breakWall(Posizione posizione) {
-    if(isBreakable(posizione))
+void Mappa::distruggiMuro(Posizione posizione) {
+    if(isDistruttibile(posizione))
         grid[posizione.y][posizione.x] = ' ';
 }
 
 
-bool Map::isBreakable( Posizione posizione ) {
+bool Mappa::isDistruttibile( Posizione posizione ) {
     if(grid[posizione.y][posizione.x] == 'X')
         return true;
     return false;
 }
 
-bool Map::isUnbreakableWall ( Posizione posizione ) {
+bool Mappa::isMuroIndistruttibile ( Posizione posizione ) {
     if(grid[posizione.y][posizione.x] == '#')
         return true;
     return false;
 }
 
 
-int Map::getRows(){
+int Mappa::getRighe(){
     return rows;
 }
 
 
-int Map::getCols(){
+int Mappa::getCols(){
     return cols;
 }
 
 
-bool Map::cell_without_wall(int x, int y){
+bool Mappa::cellaSenzaMuro(int x, int y){
     if(grid[y][x] == 'X' || grid[y][x] == '#')
         return false;
     return true;
 }
 
-Posizione Map::getEntry(){
-    Posizione entry_position;
+Posizione Mappa::getEntrata(){
+    Posizione posizione_entrata;
 
-    entry_position.x = entry.x;
-    entry_position.y = entry.y;
+    posizione_entrata.x = entry.x;
+    posizione_entrata.y = entry.y;
 
-    return entry_position;
+    return posizione_entrata;
 }
 
-Posizione Map::getExit(){
-    Posizione exit_position;
+Posizione Mappa::getUscita(){
+    Posizione posizione_uscita;
 
-    exit_position.x = exit.x;
-    exit_position.y = exit.y;
+    posizione_uscita.x = exit.x;
+    posizione_uscita.y = exit.y;
 
-    return exit_position;
+    return posizione_uscita;
 }
 
-bool Map::isEntry(Posizione position){
-    if(position.x == entry.x && position.y == entry.y)
+bool Mappa::isEntrata(Posizione posizione){
+    if(posizione.x == entry.x && posizione.y == entry.y)
         return true;
     return false;
 }
 
-bool Map::isExit(Posizione position){
-    if(position.x == exit.x && position.y == exit.y)
+bool Mappa::isUscita(Posizione posizione){
+    if(posizione.x == exit.x && posizione.y == exit.y)
         return true;
     return false;
 }
 
-bool Map::isNearEntry(Posizione position){
-    if(position.x < entry.x + 4 && position.y <= entry.y + 2 && position.y > entry.y - 2)
+bool Mappa::isVicinoEntrata(Posizione posizione){
+    if(posizione.x < entry.x + 4 && posizione.y <= entry.y + 2 && posizione.y > entry.y - 2)
         return true;
     return false;
 }
 
-bool Map::isSurroundedByWalls(Posizione p){
+bool Mappa::isCircondataDaMuri(Posizione p){
     if(grid[p.y + 1][p.x] != '#' && grid[p.y + 1][p.x] != 'X'){
         return true;
     }
@@ -407,6 +407,6 @@ bool Map::isSurroundedByWalls(Posizione p){
 
 }
 
-char Map::getCell(Posizione position){
-    return grid[position.y][position.x];
+char Mappa::getCell(Posizione posizione){
+    return grid[posizione.y][posizione.x];
 }

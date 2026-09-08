@@ -26,8 +26,8 @@ include_directories(${CURSES_INCLUDE_DIR})
 add_executable(bomberman
         main.cpp
         Personaggio.cpp
-        BidirectionalList.cpp
-        Map.cpp
+        ListaBidirezionale.cpp
+        Mappa.cpp
         funzioni.cpp
         Giocatore.cpp
         Bomba.h
@@ -37,9 +37,9 @@ add_executable(bomberman
         Nemico.cpp
         Nemico.h
         Personaggio.hpp
-        Map.hpp
-        Level.hpp
-        Level.cpp
+        Mappa.hpp
+        Livello.hpp
+        Livello.cpp
         Posizione.cpp
         Posizione.h
         Timer.cpp

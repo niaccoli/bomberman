@@ -2,8 +2,8 @@
 #include <cstring>
 //#include <ncurses.h>
 #include <curses.h>
-#include "Map.hpp"
-#include "BidirectionalList.hpp"
+#include "Mappa.hpp"
+#include "ListaBidirezionale.hpp"
 #include "funzioni.h"
 #include "Timer.h"
 #include "Classifica.h"
@@ -13,39 +13,13 @@
 using namespace std;
 
 
-//dimensioni matrice: 25x70, con due righe e due colonne in più per i bordi.
-/*
-const int width = 72;
-const int height = 27;
-char screen[height][width];
-*/
-
 int main() {
-     // 1. Forza il terminale corretto per evitare che initscr fallisca
-     /*
-     Imposta la variabile d'ambiente che definisce l'identità del terminale.
-     Senza questa riga, l'ambiente di debug di VS Code non comunicava a ncurses quale tipo di schermo stesse usando,
-     impedendole di caricare le sequenze di escape corrette dal database di sistema (terminfo).
-     */
-     //setenv() è una funzione tipica dei sistemi POSIX/Linux e non è disponibile normalmente nella compilazione nativa
-     //Windows con MinGW.
-
 
      #ifdef _WIN32
           // Su Windows con PDCurses non è necessario impostare TERM
      #else
           setenv("TERM", "xterm-256color", 1);
      #endif
-     /*La logica è:
-
-     Windows
-     → usa PDCurses nativa
-     → non esegue setenv()
-
-     Linux/macOS
-     → esegue setenv("TERM", ...)*/
-
-
 
      //INIZIALIZZAZIONE
      setlocale(LC_ALL, "");
@@ -82,17 +56,17 @@ int main() {
                     start_color(); //abilita il sistema di colori curses.
                     use_default_colors(); // Mantiene lo sfondo trasparente/predefinito del terminale
 
-                    // init_pair(ID_COPPIA, COLORE_TESTO, COLORE_SFONDO);
-                    init_pair(1, COLOR_CYAN,    -1); // Giocatore
-                    init_pair(2, COLOR_RED,     -1); // Nemici / Bomba
-                    init_pair(3, COLOR_YELLOW,  -1); // Bomba
-                    init_pair(4, COLOR_GREEN,   -1); // Item / Valuta
-                    init_pair(5, COLOR_WHITE,   -1); // Muri indistruttibili
-                    init_pair(6, COLOR_RED,  COLOR_RED);   // Esplosione
+                    // init_pair(ID_COPPIA, COLORE_TESTO, COLORE_SFONDO); (-1) usa il. default del terminale
+                    init_pair(1, COLOR_CYAN,    -1);        // Giocatore
+                    init_pair(2, COLOR_RED,     -1);        // Nemici / Bomba
+                    init_pair(3, COLOR_YELLOW,  -1);        // Bomba
+                    init_pair(4, COLOR_GREEN,   -1);        // Item
+                    init_pair(5, COLOR_WHITE,   -1);        // Muri indistruttibili
+                    init_pair(6, COLOR_RED,  COLOR_RED);    // Esplosione
                }
 
-               BidirectionalList levelList;
-               levelList.Create_Levels();
+               ListaBidirezionale levelList;
+               levelList.CreaLivelli();
 
                //2 CREAZIONE ENTITÀ
                Giocatore player(3, 1, 1);
@@ -111,7 +85,7 @@ int main() {
      Timer timerNemici (TEMPO_AGGIORNAMENTO_NEMICI_MS) ;
 
      //3 PRIMA STAMPA
-     levelList.getCurrent()->level->stamp_map(player, timer_gioco);
+     levelList.getCurrent()->level->stampaMappa(player, timer_gioco);
 
                //INIZIO CICLO
                while ( player.vivo() && !timerGioco.scaduto( )) {
@@ -141,14 +115,14 @@ int main() {
                     bool colpito = false;
 
                     if ( timerNemici.scaduto()) {
-                         levelList.moveEnemies( player ) ;
+                         levelList.muoviNemici( player ) ;
                          timerNemici.attivaTimer(TEMPO_AGGIORNAMENTO_NEMICI_MS ) ;
                     }
 
                     colpito = levelList.collisioniGiocatoreNemici(player ) ;
 
                     if ( !colpito )
-                         colpito = levelList.updateBombs( player, INTERVALLO_CICLO_MS ) ;
+                         colpito = levelList.aggiornaBomba( player, INTERVALLO_CICLO_MS ) ;
 
 
                     if (!colpito) {
@@ -160,7 +134,7 @@ int main() {
 
 
           timer_gioco = timerGioco.getTimer();
-          levelList.getCurrent() -> level -> stamp_map( player, timer_gioco );
+          levelList.getCurrent() -> level -> stampaMappa( player, timer_gioco );
 
 
           if ( colpito ) {// il giocatore ha subito danno
@@ -172,12 +146,12 @@ int main() {
                     break ;
                }
 
-                    if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
+                    if ( levelList.isUltimoLivello( ) && levelList.getCurrent() -> level -> isCompletato( ))
                          break ;
 
 
                     refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
-                    //aggiorna stdscr
+
 
                     timerNemici.diminuisci(INTERVALLO_CICLO_MS) ;
                     timerGioco.diminuisci(INTERVALLO_CICLO_MS) ;
