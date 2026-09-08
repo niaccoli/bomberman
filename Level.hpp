@@ -84,6 +84,9 @@ public:
     Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
     // Costruisce un livello con nemici inseguitori, random, tank e un numero massimo di item.
 
+    //Distruttore classe Level
+    ~Level();
+
     Map& getMap( );
     // Restituisce un riferimento alla mappa associata al livello.
 

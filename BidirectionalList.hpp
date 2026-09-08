@@ -19,6 +19,9 @@ protected:
 public:
     // Costruttore di default: inizializza una lista vuota.
     BidirectionalList();
+
+    //Distruttore per la fine del gioco per evitare memory leak
+    ~BidirectionalList();
     
     // Costruttore con parametri: inizializza la lista con una testa e un nodo corrente specificati.
     BidirectionalList(node* head, node* current);

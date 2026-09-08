@@ -14,14 +14,11 @@ using namespace std;
 
 
 //dimensioni matrice: 25x70, con due righe e due colonne in più per i bordi.
+/*
 const int width = 72;
 const int height = 27;
 char screen[height][width];
-
-
-void menu(){
-    
-}
+*/
 
 int main() {
      // 1. Forza il terminale corretto per evitare che initscr fallisca

@@ -7,8 +7,22 @@ BidirectionalList::BidirectionalList(){
 }
 
 BidirectionalList::BidirectionalList(node* HEAD, node* CURRENT){
+
     head = HEAD;
     current = CURRENT;
+}
+
+BidirectionalList::~BidirectionalList() {
+    node* current_node = head;
+    
+    while (current_node != nullptr) {
+        node* next_node = current_node->next;
+        
+        delete current_node->level;
+        delete current_node;
+        
+        current_node = next_node;
+    }
 }
 
 void BidirectionalList::Create_Levels(){
