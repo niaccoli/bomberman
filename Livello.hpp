@@ -1,4 +1,4 @@
-#include "Map.hpp"
+#include "Mappa.hpp"
 #include "Item.h"
 #include "Personaggio.hpp"
 #include "Giocatore.h"
@@ -13,10 +13,10 @@ const int MAX_NEMICI_RND = 10;
 const int MAX_NEMICI_TANK = 5;
 const int MAX_ITEMS = 10;
 
-class Level {
+class Livello {
 private:
     // Mappa associata al livello.
-    Map& map;
+    Mappa& mappa;
 
     // Celle interessate dall'ultima esplosione.
     Posizione cella_esplosione[9] ;
@@ -77,28 +77,24 @@ public:
     // Restituisce un riferimento alla bomba associata al livello.
     Bomba& getBomb();
 
-    // Costruisce un livello contenente nemici random
-    // e il numero massimo di item specificato.
-    Level(Map& m, int random_enemies, int items);
+    Livello(Mappa& m, int random_enemies, int items);
+    // Costruisce un livello con nemici inseguitori e un numero massimo di item.
 
-    // Costruisce un livello contenente nemici inseguitori,
-    // nemici random e il numero massimo di item specificato.
-    Level(Map& m, int chasers_enemies, int random_enemies, int items);
+    Livello(Mappa& m, int chasers_enemies, int random_enemies, int items);
+    // Costruisce un livello con nemici inseguitori, nemici random e un numero massimo di item.
 
-    // Costruisce un livello contenente nemici inseguitori,
-    // nemici random, nemici tank e il numero massimo di item specificato.
-    Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
+    Livello(Mappa& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
+    // Costruisce un livello con nemici inseguitori, random, tank e un numero massimo di item.
 
     //Distruttore classe Level
-    ~Level();
+    ~Livello();
 
-    Map& getMap( );
+    Mappa& getMap( );
     // Restituisce un riferimento alla mappa associata al livello.
 
-    // Visualizza lo stato corrente del livello.
-    // Se è appena avvenuta un'esplosione, visualizza anche
-    // le celle coinvolte e successivamente ne azzera la memorizzazione.
-    void stamp_map(Giocatore& g, int timer_gioco) ;
+    void stampaMappa(Giocatore& g, int timer_gioco) ;
+    // Visualizza lo stato corrente del livello; se è presente un'esplosione,
+    // ne mostra le celle e successivamente ne azzera la memorizzazione.
 
     // Controlla se tutti i nemici del livello sono stati sconfitti.
     // Restituisce true se il livello è completato, false altrimenti.
@@ -115,7 +111,7 @@ public:
     // mentre i nemici random e tank utilizzano il movimento casuale.
     // Evita inoltre che i nemici si spostino su muri,
     // altri nemici o sulla bomba attiva.
-    void moveEnemies(Giocatore& g);
+    void muoviNemici(Giocatore& g);
 
     // Controlla se il giocatore si trova nella stessa posizione
     // di un nemico vivo.

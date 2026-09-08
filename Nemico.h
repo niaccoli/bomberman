@@ -6,10 +6,10 @@
 #define BOMBERMAN_NEMICO_H
 
 #include "Giocatore.h"
-#include "Map.hpp"
+#include "Mappa.hpp"
 #include "Personaggio.hpp"
 
-class Map ;
+class Mappa ;
 
 
 class Nemico : public Personaggio {

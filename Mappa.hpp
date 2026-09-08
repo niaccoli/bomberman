@@ -1,8 +1,8 @@
-#ifndef MAP_HPP
-#define MAP_HPP
+#ifndef MAPPA_HPP
+#define MAPPA_HPP
 #include <curses.h>
 #include "Personaggio.hpp"
-#include "Nemico.h" 
+#include "Nemico.h"
 #include "Bomba.h"
 #include "Item.h"
 
@@ -10,7 +10,7 @@
 class Nemico ; 
 
 
-class Map{
+class Mappa{
 protected:
     int rows;
     int cols;
@@ -23,15 +23,15 @@ public:
     // --- Costruttori ---
 
     // Costruttore: alloca dinamicamente la matrice della mappa e inizializza la finestra ncurses.
-    Map(int h, int w);
+    Mappa(int h, int w);
 
 
     //Distruttore classe Mappa
-    ~Map();
+    ~Mappa();
 
 
     // Carica la configurazione strutturale della mappa dal file di testo corrispondente all'ID del livello (es. level1.txt).
-    void Initialize_Map(int levelID);
+    void inizializzaMappa(int levelID);
     
     // Restituisce il carattere memorizzato nella griglia statica alle coordinate specificate.
     char getCell(Posizione position);
@@ -40,38 +40,38 @@ public:
     void setCell(int x, int y, char c);
     
     // Versione overload: chiama la funzione di stampa principale passando array nulli per le celle di esplosione.
-    void stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, int timer_gioco);
+    void stampaMappa(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, int timer_gioco);
 
     // Gestisce il rendering completo della mappa centrata a schermo, il refresh delle statistiche e il posizionamento dinamico di tutte le entità.
-    void stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems,
+    void stampaMappa(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems,
         const Bomba& b , Posizione celle_esplosione[], int num_celle_esplosione, int timer_gioco);
 
     // Verifica se le coordinate passate non puntano a un muro (sia distruttibile che indistruttibile) o a una bomba. Ritorna true se lo spazio è percorribile.
-    bool isWalkable (Posizione posizione ) ; 
-    bool isWalkable (int x, int y ) ;
+    bool isCamminabile (Posizione posizione ) ; 
+    bool isCamminabile (int x, int y ) ;
     bool mossavalida(int x, int y);
 
     // Genera una coordinata causale e valida all'interno della mappa che sia calpestabile, escludendo i muri.
-    Posizione walkableRandomPosition( ) ; 
+    Posizione posizioneCamminabileRandom( ) ; 
 
     // Verifica che la posizione indicata sia priva di muri (# o X). Ritorna false in caso di ostacolo.
-    bool cell_without_wall(int x, int y);
+    bool cellaSenzaMuro(int x, int y);
 
     // Verifica se una posizione è circondata completamente o parzialmente da ostacoli fisici (muri).
-    bool isSurroundedByWalls(Posizione p);
+    bool isCircondataDaMuri(Posizione p);
 
     // Rimuove un muro distruttibile (X) trasformandolo in uno spazio vuoto ( ).
-    void breakWall(Posizione posizione) ;
-    void breakWall();
+    void distruggiMuro(Posizione posizione) ;
+    void distruggiMuro();
 
     // Ritorna true se la posizione passata corrisponde a un muro distruttibile ('X').
-    bool isBreakable( Posizione posizione ) ; 
+    bool isDistruttibile( Posizione posizione ) ; 
 
     // Ritorna true se la posizione passata corrisponde a un muro indistruttibile ('#').
-    bool isUnbreakableWall ( Posizione posizione ) ; 
+    bool isMuroIndistruttibile ( Posizione posizione ) ; 
 
     // Restituisce il numero totale di righe della mappa.
-    int getRows();
+    int getRighe();
 
     // Restituisce il numero totale di colonne della mappa.
     int getCols();
@@ -80,19 +80,19 @@ public:
     WINDOW* getWin();
 
     // Restituisce le coordinate del punto di ingresso ('@').
-    Posizione getEntry( );
+    Posizione getEntrata();
 
     // Restituisce le coordinate del punto di uscita ('U').
-    Posizione getExit ( );
+    Posizione getUscita();
 
     // Verifica se la posizione fornita corrisponde esattamente al punto d'ingresso della mappa.
-    bool isEntry( Posizione posizione);
+    bool isEntrata( Posizione posizione);
 
     // Verifica se la posizione fornita corrisponde esattamente al punto di uscita della mappa.
-    bool isExit( Posizione posizione);
+    bool isUscita( Posizione posizione);
 
     // Verifica se una determinata posizione rientra nell'area circostante la porta d'ingresso.
-    bool isNearEntry( Posizione posizione );
+    bool isVicinoEntrata( Posizione posizione );
 
 };
 #endif

@@ -2,8 +2,8 @@
 #include <cstring>
 //#include <ncurses.h>
 #include <curses.h>
-#include "Map.hpp"
-#include "BidirectionalList.hpp"
+#include "Mappa.hpp"
+#include "ListaBidirezionale.hpp"
 #include "funzioni.h"
 #include "Timer.h"
 #include "Classifica.h"
@@ -22,8 +22,6 @@ int main() {
      #else
           setenv("TERM", "xterm-256color", 1);
      #endif
-
-
 
 
      //INIZIALIZZAZIONE CURSES
@@ -72,10 +70,8 @@ int main() {
                     init_pair(6, COLOR_RED,  COLOR_RED);   // Esplosione
                }
 
-
-               // Creazione dei livelli e del giocatore.
-               BidirectionalList levelList;
-               levelList.Create_Levels();
+               ListaBidirezionale levelList;
+               levelList.CreaLivelli();
 
 
                Giocatore player(3, 1, 1);
@@ -90,9 +86,8 @@ int main() {
      int timer_gioco = timerGioco.getTimer();
      Timer timerNemici (TEMPO_AGGIORNAMENTO_NEMICI_MS) ;
 
-
-     // Prima visualizzazione del livello.
-     levelList.getCurrent()->level->stamp_map(player, timer_gioco);
+     //3 PRIMA STAMPA
+     levelList.getCurrent()->level->stampaMappa(player, timer_gioco);
 
                // Game loop.
                while ( player.vivo() && !timerGioco.scaduto( )) {
@@ -120,7 +115,7 @@ int main() {
 
                     // I nemici vengono aggiornati a intervalli più lunghi rispetto al game loop.
                     if ( timerNemici.scaduto()) {
-                         levelList.moveEnemies( player ) ;
+                         levelList.muoviNemici( player ) ;
                          timerNemici.attivaTimer(TEMPO_AGGIORNAMENTO_NEMICI_MS ) ;
                     }
 
@@ -128,7 +123,7 @@ int main() {
                     colpito = levelList.collisioniGiocatoreNemici(player ) ;
 
                     if ( !colpito )
-                         colpito = levelList.updateBombs( player, INTERVALLO_CICLO_MS ) ;
+                         colpito = levelList.aggiornaBomba( player, INTERVALLO_CICLO_MS ) ;
 
                     // Raccolta e applicazione degli item.
                     if (!colpito) {
@@ -140,7 +135,7 @@ int main() {
 
           // Aggiornamento della visualizzazione.
           timer_gioco = timerGioco.getTimer();
-          levelList.getCurrent() -> level -> stamp_map( player, timer_gioco );
+          levelList.getCurrent() -> level -> stampaMappa( player, timer_gioco );
 
           // Se il giocatore subisce danno viene riposizionato,
           // a meno che abbia esaurito le vite.
@@ -154,12 +149,12 @@ int main() {
                     break ;
                }
 
-                    // La partita termina quando viene completato l'ultimo livello.
-                    if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
+                    if ( levelList.isUltimoLivello( ) && levelList.getCurrent() -> level -> isCompletato( ))
                          break ;
 
 
-                    refresh();
+                    refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
+
 
                     // Aggiornamento dei timer.
                     timerNemici.diminuisci(INTERVALLO_CICLO_MS) ;

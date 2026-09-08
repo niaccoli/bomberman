@@ -1,53 +1,53 @@
-#include "BidirectionalList.hpp"
-#include "Level.hpp"
+#include "ListaBidirezionale.hpp"
+#include "Livello.hpp"
 
-BidirectionalList::BidirectionalList(){
+ListaBidirezionale::ListaBidirezionale(){
     head = NULL;
     current = NULL;
 }
 
-BidirectionalList::BidirectionalList(node* HEAD, node* CURRENT){
+ListaBidirezionale::ListaBidirezionale(node* HEAD, node* CURRENT){
 
     head = HEAD;
     current = CURRENT;
 }
 
-BidirectionalList::~BidirectionalList() {
+ListaBidirezionale::~ListaBidirezionale() {
     node* current_node = head;
     
     while (current_node != nullptr) {
-        node* next_node = current_node->next;
+        node* prossimo_nodo = current_node->next;
         
         delete current_node->level;
         delete current_node;
         
-        current_node = next_node;
+        current_node = prossimo_nodo;
     }
 }
 
-void BidirectionalList::Create_Levels(){
+void ListaBidirezionale::CreaLivelli(){
 
     //Creazione delle mappe
     //parametri momentanei
-    Map* map1 = new Map(21, 40);
-    Map* map2 = new Map(21, 42);
-    Map* map3 = new Map(21, 41);
-    Map* map4 = new Map(23, 46);
-    Map* map5 = new Map(27, 47);
+    Mappa* mappa1 = new Mappa(21, 40);
+    Mappa* mappa2 = new Mappa(21, 42);
+    Mappa* mappa3 = new Mappa(21, 41);
+    Mappa* mappa4 = new Mappa(23, 46);
+    Mappa* mappa5 = new Mappa(27, 47);
 
     //Inizializzazione mappe
-    map1->Initialize_Map(1);
-    map2->Initialize_Map(2);
-    map3->Initialize_Map(3);
-    map4->Initialize_Map(4);
-    map5->Initialize_Map(5);
+    mappa1->inizializzaMappa(1);
+    mappa2->inizializzaMappa(2);
+    mappa3->inizializzaMappa(3);
+    mappa4->inizializzaMappa(4);
+    mappa5->inizializzaMappa(5);
 
     
     //Creazione nodi lista
     node* node1 = new node;
 
     node1->levelID = 1;
-    node1->level = new Level(*map1, 1, 3, 3);
+    node1->level = new Livello(*mappa1, 7, 7, 3);
     node1->prev = NULL;
 
     node* node2 = new node;
@@ -55,7 +55,7 @@ void BidirectionalList::Create_Levels(){
     node1->next = node2;
 
     node2->levelID = 2;
-    node2->level = new Level(*map2, 2, 4, 5);
+    node2->level = new Livello(*mappa2, 2, 4, 5);
     node2->prev = node1;
 
     node* node3 = new node;
@@ -63,7 +63,7 @@ void BidirectionalList::Create_Levels(){
     node2->next = node3;
 
     node3->levelID = 3;
-    node3->level = new Level(*map3, 3, 3, 1, 7);
+    node3->level = new Livello(*mappa3, 3, 3, 1, 7);
     node3->prev = node2;
 
     node* node4 = new node;
@@ -71,7 +71,7 @@ void BidirectionalList::Create_Levels(){
     node3->next = node4;
 
     node4->levelID = 4;
-    node4->level = new Level(*map4, 3, 1, 2, 4);
+    node4->level = new Livello(*mappa4, 3, 1, 2, 4);
     node4->prev = node3;
 
     node* node5 = new node;
@@ -79,7 +79,7 @@ void BidirectionalList::Create_Levels(){
     node4->next = node5;
 
     node5->levelID = 5;
-    node5->level = new Level(*map5, 3, 1, 4, 5);
+    node5->level = new Livello(*mappa5, 3, 1, 4, 5);
     node5->prev = node4;
 
     node5->next = NULL;
@@ -91,44 +91,44 @@ void BidirectionalList::Create_Levels(){
  
 }
 
-bool BidirectionalList::goToNext( ){
+bool ListaBidirezionale::goToNext( ){
     if(current->next != NULL){
 
-        node* next_node = current->next;
+        node* prossimo_nodo = current->next;
 
         if(current->level->isCompletato()){
-            deleteNode();
+            eliminaNodo();
         }
 
-        current = next_node;
+        current = prossimo_nodo;
         return true;
     }
      
     return false;
 }
 
-bool BidirectionalList::goToPrev(){
+bool ListaBidirezionale::goToPrev(){
     if(current->prev != NULL){
 
-        node* previous_node = current->prev;
+        node* nodo_precedente = current->prev;
 
         if(current->level->isCompletato()){
-            deleteNode();
+            eliminaNodo();
         }
             
-        current = previous_node;
+        current = nodo_precedente;
         return true;
     }
         
     return false;
 }
 
-node* BidirectionalList::getCurrent(){
+node* ListaBidirezionale::getCurrent(){
     return this->current;
 }
 
 
-void BidirectionalList::applicaEffettoItem(Giocatore& g, char type){
+void ListaBidirezionale::applicaEffettoItem(Giocatore& g, char type){
     if( type == 'I')
         g.invulnerabilitaOn();
 
@@ -145,51 +145,34 @@ void BidirectionalList::applicaEffettoItem(Giocatore& g, char type){
     }
 }
 
-void BidirectionalList::deleteNode(){
+void ListaBidirezionale::eliminaNodo(){
     //Variabile di appoggio per poter restituire il puntatore corretto
-    node* to_delete = this->current;
+    node* nodo_da_eliminare = this->current;
 
     //Controllo che il nodo da eliminare non sia la testa
-    if(to_delete->prev != NULL)
-        to_delete->prev->next = to_delete->next;
+    if(nodo_da_eliminare->prev != NULL)
+        nodo_da_eliminare->prev->next = nodo_da_eliminare->next;
     else
-       this->head = to_delete->next;
+       this->head = nodo_da_eliminare->next;
 
     //Controllo che il nodo da eliminare non sia la coda
-    if(to_delete->next != NULL)
-        to_delete->next->prev = to_delete->prev;
+    if(nodo_da_eliminare->next != NULL)
+        nodo_da_eliminare->next->prev = nodo_da_eliminare->prev;
 
     //Eliminazione effettiva del nodo
-    delete to_delete->level;
-    delete to_delete;
+    delete nodo_da_eliminare->level;
+    delete nodo_da_eliminare;
 }
 
-/*
-bool BidirectionalList::updateLevels(Giocatore& g){
-    node* tmp = head;
-
-    bool is_hitted = false;
-
-    while(tmp != NULL){
-        if(tmp != current)
-            tmp->level->updateLevel();
-        else
-            is_hitted = current->level->updateLevel(g);
-        tmp = tmp->next;
-    }
-
-    return is_hitted;
-}*/
-
-void BidirectionalList::moveEnemies(Giocatore& g) {
-    return (current -> level -> moveEnemies( g )) ;
+void ListaBidirezionale::muoviNemici(Giocatore& g) {
+    return (current -> level -> muoviNemici( g )) ;
 }
 
-bool BidirectionalList::collisioniGiocatoreNemici(Giocatore& g) {
+bool ListaBidirezionale::collisioniGiocatoreNemici(Giocatore& g) {
     return (current -> level -> collisioneGiocatoreNemici(g)) ;
 }
 
-void BidirectionalList::updateBoostBombe(int durata) {
+void ListaBidirezionale::updateBoostBombe(int durata) {
     node* temp = head ;
 
     while ( temp != nullptr ) {
@@ -199,17 +182,17 @@ void BidirectionalList::updateBoostBombe(int durata) {
 }
 
 
-bool BidirectionalList::updateBombs(Giocatore& g, int durata) {
+bool ListaBidirezionale::aggiornaBomba(Giocatore& g, int durata) {
     return current -> level -> aggiornaEsplosioni(g, durata ) ;
 }
 
-bool BidirectionalList::isLastLevel(){
+bool ListaBidirezionale::isUltimoLivello(){
     if(current->next == NULL && current->prev == NULL)
         return true;
     return false;
 }
 
-void BidirectionalList::reset_v1(){
+void ListaBidirezionale::reset_v1(){
     node* tmp = head;
 
         while(tmp != NULL){
@@ -218,7 +201,7 @@ void BidirectionalList::reset_v1(){
         }
 }
 
-void BidirectionalList::reset_v3( ) {
+void ListaBidirezionale::reset_v3( ) {
     node* temp = head ;
 
     while ( temp != nullptr) {

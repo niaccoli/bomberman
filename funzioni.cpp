@@ -1,15 +1,15 @@
 #include "funzioni.h"
 #include "Bomba.h"
-#include "Map.hpp"
+#include "Mappa.hpp"
 #include <cstdlib>
-#include "BidirectionalList.hpp"
-#include "Level.hpp"
+#include "ListaBidirezionale.hpp"
+#include "Livello.hpp"
 
 
 
 
 
-void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char input) {
+void muoviGiocatore(Giocatore& player, ListaBidirezionale& lista_livelli, char input) {
     int dx = 0;
     int dy = 0;
     bool mossa_richiesta = true;
@@ -27,10 +27,10 @@ void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char in
 
     if (mossa_richiesta) {
         Posizione temp = {player.getX() + dx , player.getY() + dy};
-        Level* livello_corrente = lista_livelli.getCurrent()->level;
+        Livello* livello_corrente = lista_livelli.getCurrent()->level;
 
         // 1. Controlla se la mappa permette il passaggio (muri)
-        bool calpestabile = livello_corrente->getMap().isWalkable(temp);
+        bool calpestabile = livello_corrente->getMap().isCamminabile(temp);
 
         // 2. Controlla se c'è una bomba attiva in quella posizione
         // (esattamente come fanno i nemici)
@@ -48,7 +48,7 @@ void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char in
 
 
 
-void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char input) {
+void gestisciInput(Giocatore& player,ListaBidirezionale& lista_livelli, char input) {
     if (input == 'W' || input == 'w' || input == 'A' || input == 'a' || input == 's' || input == 'S' ||
         input == 'd' || input == 'D')
         muoviGiocatore(player, lista_livelli, input);
@@ -62,30 +62,30 @@ void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char inpu
 
 
 
-void posizionaGiocatoreStart( Giocatore& player, BidirectionalList& l ) {
-    Posizione p = l.getCurrent() -> level -> getMap().getEntry();
+void posizionaGiocatoreStart( Giocatore& player, ListaBidirezionale& l ) {
+    Posizione p = l.getCurrent() -> level -> getMap().getEntrata( );
     p.x = p.x + 1;
     player.muovi(p);
 }
 
 
-void controllaPassaggioLivelli( Giocatore& player, BidirectionalList& l ) {
-    if ( l.getCurrent() -> level -> getMap().isEntry( player.getPosizione())) {
+void controllaPassaggioLivelli( Giocatore& player, ListaBidirezionale& l ) {
+    if ( l.getCurrent() -> level -> getMap().isEntrata( player.getPosizione())) {
         if (l.goToPrev( )){ //aggiorna il current della lista
             clear(); 
             refresh();
 
-            Posizione pos_exit = l.getCurrent() -> level -> getMap().getExit();
+            Posizione pos_exit = l.getCurrent() -> level -> getMap().getUscita();
             pos_exit.x = pos_exit.x - 1;
             player.muovi(pos_exit);
         }
     }
-    else if ( l.getCurrent() -> level -> getMap().isExit( player.getPosizione())) {
+    else if ( l.getCurrent() -> level -> getMap().isUscita( player.getPosizione())) {
         if ( l.goToNext( )){
             clear(); 
             refresh();
 
-            Posizione pos_entry = l.getCurrent() -> level -> getMap().getEntry();
+            Posizione pos_entry = l.getCurrent() -> level -> getMap().getEntrata();
             pos_entry.x = pos_entry.x + 1;
             player.muovi(pos_entry);
         }
@@ -94,12 +94,12 @@ void controllaPassaggioLivelli( Giocatore& player, BidirectionalList& l ) {
         return ;
 }
 
-void reset_v1( Giocatore& player, BidirectionalList& l) {
+void reset_v1( Giocatore& player, ListaBidirezionale& l) {
     l.reset_v1() ;
     player.invulnerabilitaOn() ;
 }
 
-void reset_v3(Giocatore& player, BidirectionalList& l ) {
+void reset_v3(Giocatore& player, ListaBidirezionale& l ) {
     l.reset_v3( ) ;
     posizionaGiocatoreStart( player, l ) ;
 }
@@ -205,5 +205,5 @@ void StampaInfo(const Giocatore& player,const Bomba& b, int timer_gioco, Posizio
           mvprintw(riga++, start_x, "                       "); 
      }
 
-     refresh();
+     refresh(); // Aggiorna lo schermo base per mostrare le scritte
 }
