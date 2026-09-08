@@ -168,10 +168,9 @@ int main() {
 
 
                     if ( colpito ) {// il giocatore ha subito danno
-                         if ( player.vivo() ) {
+                         if ( player.vivo()) {
                               // mostra messaggio / animazione
                               // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
-                              // Invulnerabilita' attiva per x secondi"
                               reset_v3 (player, levelList ) ;
                          }
                          else
@@ -199,10 +198,12 @@ int main() {
 
                clear();
 
-               if (player.vivo()) {
+               if (player.vivo() && !timerGioco.scaduto()) {
                     player.aumentaPunteggio(timerGioco.getTimer() / 1000);
                     mvprintw(1, 1, "HAI VINTO!");
                }
+               else if (player.vivo() && timerGioco.scaduto())
+                    mvprintw(1, 1, "TEMPO SCADUTO! GAME OVER");
                else
                     mvprintw(1, 1, "GAME OVER");
 
