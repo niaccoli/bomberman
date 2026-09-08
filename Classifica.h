@@ -34,6 +34,8 @@ public :
     void salvaSuFile_v2( ) ; //formato classifica: nome ; punteggio
 
     void mostraMigliori(int n) ;
+
+    void stampaClassifica( ) ;
 };
 
 

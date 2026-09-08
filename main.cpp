@@ -232,51 +232,14 @@ int main() {
 
           else if ( selezione == 1 ) {
 
-               char numero[10];
-
-               clear();
-
-               mvprintw(1, 1, "Quanti risultati vuoi visualizzare? (Invio = 10)");
-
-               echo();
-               curs_set(1);
-               refresh();
-
-               getnstr(numero, 9);
-
-               noecho();
-               curs_set(0);
-
-               int n;
-
-               if (numero[0] == '\0') {
-                    n = 10;
-               }
-               else {
-
-                    bool valido = true;
-                    int i = 0;
-
-                    while (numero[i] != '\0' && valido) {
-
-                         if (numero[i] < '0' || numero[i] > '9')
-                              valido = false;
-
-                         i++;
-                    }
-
-                    if (valido)
-                         n = atoi(numero);
-                    else
-                         n = 0;
-               }
-
-               classifica.mostraMigliori(n);
+               classifica.stampaClassifica() ;
 
           }
 
           else {
-               //mostra info
+
+               menu.mostraInfo() ;
+
           }
 
           menu.stampa();

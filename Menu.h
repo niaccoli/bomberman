@@ -26,6 +26,8 @@ public:
 
     int getSelezione() const;
     //restituisce la selezione
+
+    void mostraInfo( ) const;
 };
 
 

@@ -8,6 +8,8 @@
 
 #include "curses.h"
 
+#include <cstdlib>
+
 #include "cstring"
 using namespace std ;
 
@@ -158,4 +160,91 @@ void Classifica::mostraMigliori(int n) {
 
     clear();
     refresh();
+}
+
+
+void Classifica::stampaClassifica( ) {
+    bool fine = false;
+
+    while (!fine) {
+
+        char numero[10];
+
+        clear();
+
+        mvprintw(1, 1, "Quanti risultati vuoi visualizzare? (Invio = 10)");
+
+        echo();
+        curs_set(1);
+        refresh();
+
+        getnstr(numero, 9);
+
+        noecho();
+        curs_set(0);
+
+        int n;
+
+        int i = 0;
+
+        // Ignora eventuali spazi iniziali
+        while (numero[i] == ' ')
+            i++;
+
+
+        // Invio oppure solo spazi -> mostra 10 risultati
+        if (numero[i] == '\0') {
+            n = 10;
+        }
+
+        else {
+
+            bool valido = true;
+            int inizioNumero = i;
+
+            while (numero[i] != '\0' && valido) {
+
+                if (numero[i] < '0' || numero[i] > '9')
+                    valido = false;
+
+                i++;
+            }
+
+            if (valido)
+                n = atoi(numero + inizioNumero);
+            else
+                n = -1;
+        }
+
+
+        if (n != -1) {
+
+            mostraMigliori(n);
+            fine = true;
+
+        }
+
+        else {
+
+            clear();
+
+            mvprintw(1, 1, "Input non valido.");
+            mvprintw(3, 1, "Riprovare? [Y/N]");
+            refresh();
+
+            int input = getch();
+
+            while (input != 'y' &&
+                   input != 'Y' &&
+                   input != 'n' &&
+                   input != 'N') {
+
+                input = getch();
+                   }
+
+
+            if (input == 'n' || input == 'N')
+                fine = true;
+        }
+    }
 }

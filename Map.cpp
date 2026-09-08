@@ -139,7 +139,7 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
                     if(!nemici[k].vivo())
                         char_to_display = ' ';
                     else{
-                        if(nemici[k].getTipo() == 'A')
+                        if(nemici[k].getTipo() == 'I')
                             char_to_display = 'A'; // 'A' per nemico inseguitore
                         else if(nemici[k].getTipo() == 'T')
                             char_to_display = 'B'; // 'B' per nemico Tank
