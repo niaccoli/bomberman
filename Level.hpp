@@ -64,6 +64,7 @@ private:
     Posizione posizioneRandomValida_v2() ;
 
     // Posiziona tutti i nemici del livello in posizioni casuali valide.
+    void posizionaNemici_v2( ) ;
 
 
     // Restituisce l'indice del nemico vivo presente nella posizione indicata.
@@ -103,12 +104,6 @@ public:
     // Restituisce true se il livello è completato, false altrimenti.
     bool isCompletato( );
 
-    //bool updateLevel(Giocatore& g) ;
-    // Aggiorna il livello corrente: muove i nemici, controlla le collisioni
-    // con il giocatore e aggiorna la bomba e l'eventuale esplosione.
-    // Restituisce true solo se il giocatore perde effettivamente una vita.
-
-
     // Aggiorna il timer della bomba.
     // Se il timer scade, gestisce l'esplosione e le relative collisioni.
     // Restituisce true se l'esplosione provoca una perdita di vita
@@ -121,7 +116,6 @@ public:
     // Evita inoltre che i nemici si spostino su muri,
     // altri nemici o sulla bomba attiva.
     void moveEnemies(Giocatore& g);
-
 
     // Controlla se il giocatore si trova nella stessa posizione
     // di un nemico vivo.
