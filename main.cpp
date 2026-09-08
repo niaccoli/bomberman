@@ -13,22 +13,8 @@
 using namespace std;
 
 
-//dimensioni matrice: 25x70, con due righe e due colonne in più per i bordi.
-/*
-const int width = 72;
-const int height = 27;
-char screen[height][width];
-*/
 
 int main() {
-     // 1. Forza il terminale corretto per evitare che initscr fallisca
-     /*
-     Imposta la variabile d'ambiente che definisce l'identità del terminale.
-     Senza questa riga, l'ambiente di debug di VS Code non comunicava a ncurses quale tipo di schermo stesse usando,
-     impedendole di caricare le sequenze di escape corrette dal database di sistema (terminfo).
-     */
-     //setenv() è una funzione tipica dei sistemi POSIX/Linux e non è disponibile normalmente nella compilazione nativa
-     //Windows con MinGW.
 
 
      #ifdef _WIN32
@@ -36,25 +22,18 @@ int main() {
      #else
           setenv("TERM", "xterm-256color", 1);
      #endif
-     /*La logica è:
-
-     Windows
-     → usa PDCurses nativa
-     → non esegue setenv()
-
-     Linux/macOS
-     → esegue setenv("TERM", ...)*/
 
 
 
-     //INIZIALIZZAZIONE
+
+     //INIZIALIZZAZIONE CURSES
      setlocale(LC_ALL, "");
-     initscr(); //crea automaticamente una finestra che rappresenta tutto il terminale. (chiamata stdscr)
-     noecho(); //Non mostra il carattere della tastiera in input
-     curs_set(0); //Nasconde il cursore
+     initscr();
+     noecho();
+     curs_set(0);
 
 
-
+     // Caricamento della classifica e creazione del menu principale.
      Classifica classifica ;
      classifica.caricaDaFile() ;
      Menu menu ;
@@ -68,21 +47,23 @@ int main() {
 
      int selezione = menu.getSelezione();
 
-
+     // Il programma continua finché l'utente non seleziona "Uscita".
      while ( selezione != 3 ) {
           if ( selezione == 0) {
-               timeout(0); //importante per il gameLoop altrimenti getch(); poptrebbe aspettare finche' l'utente non preme un testo
+
+               // Input non bloccante durante il game loop.
+               timeout(0);
 
                clear() ;
                refresh();
 
 
+               // Configurazione dei colori utilizzati durante la partita.
+               if (has_colors()) {
+                    start_color();
+                    use_default_colors();
 
-               if (has_colors()) { //controlla se il terminale supporta i colori
-                    start_color(); //abilita il sistema di colori curses.
-                    use_default_colors(); // Mantiene lo sfondo trasparente/predefinito del terminale
 
-                    // init_pair(ID_COPPIA, COLORE_TESTO, COLORE_SFONDO);
                     init_pair(1, COLOR_CYAN,    -1); // Giocatore
                     init_pair(2, COLOR_RED,     -1); // Nemici / Bomba
                     init_pair(3, COLOR_YELLOW,  -1); // Bomba
@@ -91,17 +72,16 @@ int main() {
                     init_pair(6, COLOR_RED,  COLOR_RED);   // Esplosione
                }
 
+
+               // Creazione dei livelli e del giocatore.
                BidirectionalList levelList;
                levelList.Create_Levels();
 
-               //2 CREAZIONE ENTITÀ
-               Giocatore player(3, 1, 1);
 
+               Giocatore player(3, 1, 1);
                posizionaGiocatoreStart(player, levelList);
 
-
-
-
+               // Parametri temporali della partita.
                const int INTERVALLO_CICLO_MS = 100;
                const int TEMPO_AGGIORNAMENTO_NEMICI_MS = 1000 ;
                const int DURATA_PARTITA_MINUTI = 5 ;
@@ -110,47 +90,47 @@ int main() {
      int timer_gioco = timerGioco.getTimer();
      Timer timerNemici (TEMPO_AGGIORNAMENTO_NEMICI_MS) ;
 
-     //3 PRIMA STAMPA
+
+     // Prima visualizzazione del livello.
      levelList.getCurrent()->level->stamp_map(player, timer_gioco);
 
-               //INIZIO CICLO
+               // Game loop.
                while ( player.vivo() && !timerGioco.scaduto( )) {
-                    //1. leggi input
-                    char temp; //sarebbe meglio int (valutare)
+
+
+                    char temp;
                     char input = ERR;
 
-                    while ((temp = getch()) != ERR) //svuota la coda di input tenendo solo l'ultimo
+                    //svuota la coda di input tenendo solo l'ultimo tasto premuto
+                    while ((temp = getch()) != ERR)
                          input = temp;
-                    //legge un tasto dalla tastiera.
-                    //legge un tasto dalla tastiera.
-                    //Il comportamento dipende da timeout
-                    //timeout(-1)= aspetta per sempre
-                    //timeout(0)=non aspettare, se non viene premuto niente ritorni ERR
-                    //timeout(x)= aspetta x ms, se non viene premuto niente ritorni ERR
 
                     if (input != ERR)
                          gestisciInput(player, levelList, input);
 
+                    // Gestione del passaggio tra livelli.
                     controllaPassaggioLivelli( player, levelList ) ;
 
+                    // Aggiornamento degli effetti temporanei.
                     player.aggiornaInvulnerabilita( INTERVALLO_CICLO_MS ) ;
-
                     levelList.updateBoostBombe(INTERVALLO_CICLO_MS ) ;
 
 
                     bool colpito = false;
 
+                    // I nemici vengono aggiornati a intervalli più lunghi rispetto al game loop.
                     if ( timerNemici.scaduto()) {
                          levelList.moveEnemies( player ) ;
                          timerNemici.attivaTimer(TEMPO_AGGIORNAMENTO_NEMICI_MS ) ;
                     }
 
+                    // Controllo delle collisioni con nemici ed esplosioni.
                     colpito = levelList.collisioniGiocatoreNemici(player ) ;
 
                     if ( !colpito )
                          colpito = levelList.updateBombs( player, INTERVALLO_CICLO_MS ) ;
 
-
+                    // Raccolta e applicazione degli item.
                     if (!colpito) {
                          char tipo = levelList.getCurrent()->level->raccoltaItem(player);
 
@@ -158,13 +138,15 @@ int main() {
                               levelList.applicaEffettoItem(player, tipo);
                     }
 
-
+          // Aggiornamento della visualizzazione.
           timer_gioco = timerGioco.getTimer();
           levelList.getCurrent() -> level -> stamp_map( player, timer_gioco );
 
-
-          if ( colpito ) {// il giocatore ha subito danno
+          // Se il giocatore subisce danno viene riposizionato,
+          // a meno che abbia esaurito le vite.
+          if ( colpito ) {
                 if ( player.vivo() ) {
+
                     popupGiocatoreColpito();
                     reset_v3 (player, levelList );
                 }
@@ -172,21 +154,23 @@ int main() {
                     break ;
                }
 
+                    // La partita termina quando viene completato l'ultimo livello.
                     if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
                          break ;
 
 
-                    refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
-                    //aggiorna stdscr
+                    refresh();
 
+                    // Aggiornamento dei timer.
                     timerNemici.diminuisci(INTERVALLO_CICLO_MS) ;
                     timerGioco.diminuisci(INTERVALLO_CICLO_MS) ;
 
+                    // Mantiene costante la frequenza del game loop.
                     napms(INTERVALLO_CICLO_MS) ;
                }
 
 
-
+               // Gestione della fine della partita.
                char nome[100];
 
                timeout(-1);
@@ -194,6 +178,7 @@ int main() {
                clear();
 
                if (player.vivo() && !timerGioco.scaduto()) {
+                    // Il tempo residuo viene aggiunto al punteggio in caso di vittoria.
                     player.aumentaPunteggio(timerGioco.getTimer() / 1000);
                     mvprintw(1, 1, "HAI VINTO!");
                }
@@ -215,13 +200,12 @@ int main() {
                noecho();
                curs_set(0);
 
-
+               // Salvataggio del risultato nella classifica.
                classifica.aggiungiRisultato(nome, player.getPunteggio());
                classifica.salvaSuFile();
+
                clear();
                refresh();
-               //set_border();
-               //stamp_screen();
 
 
           }
@@ -247,8 +231,8 @@ int main() {
 
      }
 
-
-     endwin(); //termina stdscr
+     // Chiusura di curses prima della terminazione del programma.
+     endwin();
 
 
     return 0;
