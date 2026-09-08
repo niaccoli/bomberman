@@ -56,7 +56,7 @@ private:
 
 
     Timer visualize_explosion{0};
-    bool active_explosion = false;
+    //bool active_explosion = false;
 
     // Restituisce una posizione casuale valida in cui posizionare un nemico.
     // La posizione deve essere calpestabile, non occupata da altri nemici vivi,

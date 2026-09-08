@@ -107,9 +107,9 @@ Posizione mappa_schermo;
 
 void Mappa::stampaMappa(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione, int timer_gioco){
 
-    int larghezza_stats = 30; // Larghezza stimata per le statistiche a destra
-    int total_w = this->cols + 2 + larghezza_stats;
-    int total_h = this->rows + 2;
+    //int larghezza_stats = 30; // Larghezza stimata per le statistiche a destra
+    //int total_w = this->cols + 2 + larghezza_stats;
+    //int total_h = this->rows + 2;
 
     int start_y = (LINES - rows) / 2;
     int start_x = (COLS - cols) / 2;

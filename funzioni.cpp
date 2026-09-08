@@ -23,7 +23,7 @@ void muoviGiocatore(Giocatore& player, ListaBidirezionale& lista_livelli, char i
     else
         dx = 1;
 
-    Posizione temp = {player.getX() + dx , player.getY() + dy};
+    //Posizione temp = {player.getX() + dx , player.getY() + dy};
 
     if (mossa_richiesta) {
         Posizione temp = {player.getX() + dx , player.getY() + dy};

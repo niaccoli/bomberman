@@ -50,6 +50,7 @@ add_executable(bomberman
         Menu.hpp
 )
 
+
 if(USE_MSYS2_PDCURSES)
     target_compile_definitions(bomberman PRIVATE PDC_WIDE=1 PDC_FORCE_UTF8=1)
 endif()

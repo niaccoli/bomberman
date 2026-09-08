@@ -1,11 +1,12 @@
 #include "Bomba.hpp"
 
 Bomba::Bomba():
-posizione{ -1, -1 },
-timer(0), potenziamentoTimer(false), durataPotenziamentoTimer(0),
-raggio(defaultRaggio), potenziamentoRaggio(false), durataPotenziamentoRaggio(0),
-attivo(false), appenaInnescata(false),
-danno(defaultDanno), potenziamentoDanno(false), durataPotenziamentoDanno(0)
+danno(defaultDanno),
+posizione{ -1, -1 }, raggio(defaultRaggio),
+timer(0), attivo(false), appenaInnescata(false),
+potenziamentoDanno(false), durataPotenziamentoDanno(0),
+potenziamentoRaggio(false), durataPotenziamentoRaggio(0),
+potenziamentoTimer(false), durataPotenziamentoTimer(0)
 { }
 
 
