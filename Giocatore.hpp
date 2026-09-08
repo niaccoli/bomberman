@@ -52,6 +52,9 @@ public:
     // Restituisce true se il danno è stato applicato, false altrimenti.
     bool diminuisciVita();
 
+    //Restituisce la durata dell'invulnerabilità
+    int durataInvulnerabilita() const;
+
     // Diminuisce la vita del giocatore del danno specificato
     // se il giocatore non è invulnerabile.
     // Restituisce true se il danno è stato applicato, false altrimenti.

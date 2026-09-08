@@ -49,6 +49,10 @@ void Giocatore::aggiornaInvulnerabilita(int durata ) {
     }
 }
 
+int Giocatore::durataInvulnerabilita() const{
+    return tempoInvulnerabilita;
+}
+
 bool Giocatore::diminuisciVita() {
     if (! invulnerabile()) {
         Personaggio::diminuisciVita();
@@ -65,7 +69,6 @@ bool Giocatore::diminuisciVita( int danno ) {
     }
     return false ;
 }
-
 
 
 int Giocatore::getPunteggio() const{

@@ -14,8 +14,6 @@ Mappa::Mappa(int height, int width){
     rows = height;
     cols = width;
 
-
-    //gli ultimi 2 parametri provvisori (Devo controllare se sono giusti)
     win = newwin(height + 2, width + 2, 1, 1);
 
     //allocazione dinamica della matrice
@@ -107,10 +105,6 @@ Posizione mappa_schermo;
 
 void Mappa::stampaMappa(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione, int timer_gioco){
 
-    //int larghezza_stats = 30; // Larghezza stimata per le statistiche a destra
-    //int total_w = this->cols + 2 + larghezza_stats;
-    //int total_h = this->rows + 2;
-
     int start_y = (LINES - rows) / 2;
     int start_x = (COLS - cols) / 2;
 
@@ -118,7 +112,6 @@ void Mappa::stampaMappa(const Giocatore& p, const Nemico nemici[], int numNemici
     if (start_y < 0) start_y = 0;
     if (start_x < 0) start_x = 0;
 
-    // Crea la finestra della mappa centrata (altezza, larghezza, start_y, start_x)
     this->win = newwin(this->rows + 2, this->cols + 2, start_y, start_x);
 
     mappa_schermo.x = start_x + cols;
@@ -146,7 +139,6 @@ void Mappa::stampaMappa(const Giocatore& p, const Nemico nemici[], int numNemici
             if(carattere_da_mostrare == '@' || carattere_da_mostrare == 'U'){
                 carattere_da_mostrare = ' ';
 
-                // TRUCCO: Cancelliamo il pezzo di bordo di ncurses!
                 if (j == 0)             // Bordo Sinistro
                     mvwaddch(this->win, i + 1, 0, ' ');
                 else if (j == cols - 1) // Bordo Destro
@@ -198,12 +190,11 @@ void Mappa::stampaMappa(const Giocatore& p, const Nemico nemici[], int numNemici
                         }
                     }
 
-            // Priorità 1: Giocatore (la più alta, sovrascrive tutto)
+            // Priorità 1: Giocatore
             if(p.vivo() && i == p.getY() && j == p.getX()){
                 carattere_da_mostrare = 'P'; // 'P' per giocatore
             }
 
-            // 2. RENDERIZZAZIONE GRAFICA MODERNA
             // Stampiamo con OFFSET di +1 per salvare i bordi della finestra
             if (carattere_da_mostrare == '#')
                 mvwaddstr(this->win, i + 1, j + 1, "█");

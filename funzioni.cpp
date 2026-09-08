@@ -23,8 +23,6 @@ void muoviGiocatore(Giocatore& player, ListaBidirezionale& lista_livelli, char i
     else
         dx = 1;
 
-    //Posizione temp = {player.getX() + dx , player.getY() + dy};
-
     if (mossa_richiesta) {
         Posizione temp = {player.getX() + dx , player.getY() + dy};
         Livello* livello_corrente = lista_livelli.getCurrent()->level;
@@ -164,18 +162,14 @@ void StampaInfo(const Giocatore& player,const Bomba& b, int timer_gioco, Posizio
      mvprintw(start_y, start_x, "=== STATISTICHE ===");
      attroff(A_BOLD);
 
-     // 1. VITE
      attron(COLOR_PAIR(4) | A_BOLD);
-     // Usiamo %-3d per allineare i numeri e cancellare i residui (es. da 10 a 9)
      mvprintw(start_y + 2, start_x, "Vite: %-3d", player.getVite()); 
      attroff(COLOR_PAIR(4) | A_BOLD);
 
-     // 2. PUNTEGGIO E TEMPO (Aggiungi qui i tuoi getter se li hai)
      int points = player.getPunteggio();
      mvprintw(start_y + 3, start_x, "Tempo rimasto: %02d:%02d   ", minute, seconds);
      mvprintw(start_y + 4, start_x, "Punteggio: %-4d", points);
 
-     // 3. POTENZIAMENTI ATTIVI
      mvprintw(start_y + 6, start_x, "--- POTENZIAMENTI ---");
     
      int riga = start_y + 7;
@@ -198,9 +192,12 @@ void StampaInfo(const Giocatore& player,const Bomba& b, int timer_gioco, Posizio
         int item_seconds = timer_item % 60;
         mvprintw(riga++, start_x, "Bomba Veloce [%02d]  ", item_seconds);
      }
+     if (player.invulnerabile()) {
+        timer_item = player.durataInvulnerabilita() / 1000;
+        int item_seconds = timer_item % 60;
+        mvprintw(riga++, start_x, "Invulnerabilità [%02d]  ", item_seconds);
+     }
 
-     // PULIZIA EFFETTO FANTASMA: Se un potenziamento scade, cancella la riga rimasta!
-     // Stampiamo un po' di spazi vuoti nelle righe successive
      for (int i = 0; i < 3; i++) {
           mvprintw(riga++, start_x, "                       "); 
      }
