@@ -1,10 +1,10 @@
 #include "Mappa.hpp"
-#include "Item.h"
+#include "Item.hpp"
 #include "Personaggio.hpp"
-#include "Giocatore.h"
-#include "Bomba.h"
-#include "Nemico.h"
-#include "Timer.h"
+#include "Giocatore.hpp"
+#include "Bomba.hpp"
+#include "Nemico.hpp"
+#include "Timer.hpp"
 #pragma once
 
 

@@ -1,4 +1,4 @@
-#include "Posizione.h"
+#include "Posizione.hpp"
 
 
 bool stessaPosizione(Posizione p1, Posizione p2) {

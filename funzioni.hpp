@@ -1,8 +1,8 @@
 #ifndef FUNZIONI_H
 #define FUNZIONI_H
-#include "Giocatore.h"
-#include "Item.h"
-#include "Bomba.h"
+#include "Giocatore.hpp"
+#include "Item.hpp"
+#include "Bomba.hpp"
 #include "Livello.hpp"
 #include "ListaBidirezionale.hpp"
 

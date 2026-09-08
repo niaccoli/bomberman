@@ -1,12 +1,12 @@
 #include "Mappa.hpp"
-#include "Nemico.h"
+#include "Nemico.hpp"
 #include <fstream>
 #include <iostream>
 #include <random>
 #include <cmath> //Usato per funzione abs() (Valore assoluto)
-#include "Timer.h"
-#include "funzioni.h"
-#include "Posizione.h"
+#include "Timer.hpp"
+#include "funzioni.hpp"
+#include "Posizione.hpp"
 
 using namespace std;
 

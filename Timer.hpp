@@ -1,7 +1,3 @@
-//
-// Created by andre on 01/09/2026.
-//
-
 #ifndef BOMBERMAN_TIMER_H
 #define BOMBERMAN_TIMER_H
 

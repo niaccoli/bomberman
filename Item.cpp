@@ -1,4 +1,4 @@
-#include "Item.h"
+#include "Item.hpp"
 #include <cstdlib>
 
 Item::Item(): posizione{ -1, -1 }, tipo(' '), /*durata(0),*/ attivo(false){}

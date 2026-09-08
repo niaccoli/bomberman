@@ -30,24 +30,24 @@ add_executable(bomberman
         Mappa.cpp
         funzioni.cpp
         Giocatore.cpp
-        Bomba.h
-        Item.h
+        Bomba.hpp
+        Item.hpp
         Item.cpp
         Bomba.cpp
         Nemico.cpp
-        Nemico.h
+        Nemico.hpp
         Personaggio.hpp
         Mappa.hpp
         Livello.hpp
         Livello.cpp
         Posizione.cpp
-        Posizione.h
+        Posizione.hpp
         Timer.cpp
-        Timer.h
+        Timer.hpp
         Classifica.cpp
-        Classifica.h
+        Classifica.hpp
         Menu.cpp
-        Menu.h
+        Menu.hpp
 )
 
 if(USE_MSYS2_PDCURSES)

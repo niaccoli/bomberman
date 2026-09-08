@@ -1,7 +1,3 @@
-//
-// Created by andre on 14/08/2026.
-//
-
 #ifndef BOMBERMAN_POSIZIONE_H
 #define BOMBERMAN_POSIZIONE_H
 

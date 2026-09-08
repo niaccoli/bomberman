@@ -2,7 +2,7 @@
 // Created by andre on 06/09/2026.
 //
 
-#include "Classifica.h"
+#include "Classifica.hpp"
 
 #include <fstream>
 

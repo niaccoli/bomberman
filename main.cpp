@@ -4,10 +4,10 @@
 #include <curses.h>
 #include "Mappa.hpp"
 #include "ListaBidirezionale.hpp"
-#include "funzioni.h"
-#include "Timer.h"
-#include "Classifica.h"
-#include "Menu.h"
+#include "funzioni.hpp"
+#include "Timer.hpp"
+#include "Classifica.hpp"
+#include "Menu.hpp"
 #include <cstdlib>
 
 using namespace std;

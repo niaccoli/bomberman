@@ -1,7 +1,7 @@
 #ifndef BOMBERMAN_BOMBA_H
 #define BOMBERMAN_BOMBA_H
 
-#include "Posizione.h"
+#include "Posizione.hpp"
 
 class Bomba {
 protected:

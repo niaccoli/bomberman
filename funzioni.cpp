@@ -1,5 +1,5 @@
-#include "funzioni.h"
-#include "Bomba.h"
+#include "funzioni.hpp"
+#include "Bomba.hpp"
 #include "Mappa.hpp"
 #include <cstdlib>
 #include "ListaBidirezionale.hpp"

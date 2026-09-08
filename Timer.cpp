@@ -1,8 +1,4 @@
-//
-// Created by andre on 01/09/2026.
-//
-
-#include "Timer.h"
+#include "Timer.hpp"
 
 Timer::Timer(int tempo) {
     attivaTimer( tempo ) ;

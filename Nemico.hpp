@@ -1,11 +1,7 @@
-//
-// Created by andre on 07/08/2026.
-//
-
 #ifndef BOMBERMAN_NEMICO_H
 #define BOMBERMAN_NEMICO_H
 
-#include "Giocatore.h"
+#include "Giocatore.hpp"
 #include "Mappa.hpp"
 #include "Personaggio.hpp"
 

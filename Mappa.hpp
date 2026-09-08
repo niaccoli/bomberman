@@ -2,9 +2,9 @@
 #define MAPPA_HPP
 #include <curses.h>
 #include "Personaggio.hpp"
-#include "Nemico.h"
-#include "Bomba.h"
-#include "Item.h"
+#include "Nemico.hpp"
+#include "Bomba.hpp"
+#include "Item.hpp"
 
 // Forward declaration: comunica l'esistenza della classe Nemico al compilatore prima della sua completa definizione
 class Nemico ; 

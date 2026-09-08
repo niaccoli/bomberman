@@ -1,6 +1,6 @@
 #ifndef PERSONAGGIO_H
 #define PERSONAGGIO_H
-#include "Posizione.h"
+#include "Posizione.hpp"
 
 
 class Personaggio {

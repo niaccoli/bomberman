@@ -1,5 +1,5 @@
 #include "Livello.hpp"
-#include "funzioni.h"
+#include "funzioni.hpp"
 #include <cstdlib>
 #include "Mappa.hpp"
 

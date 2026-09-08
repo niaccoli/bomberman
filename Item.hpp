@@ -1,6 +1,6 @@
 #ifndef BOMBERMAN_ITEMS_H
 #define BOMBERMAN_ITEMS_H
-#include "Posizione.h"
+#include "Posizione.hpp"
 
 
 class Item{

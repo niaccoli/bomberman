@@ -1,7 +1,3 @@
-//
-// Created by andre on 07/09/2026.
-//
-
 #ifndef BOMBERMAN_MENU_H
 #define BOMBERMAN_MENU_H
 #include <curses.h>

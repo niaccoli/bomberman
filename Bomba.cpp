@@ -1,4 +1,4 @@
-#include "Bomba.h"
+#include "Bomba.hpp"
 
 Bomba::Bomba():
 posizione{ -1, -1 },

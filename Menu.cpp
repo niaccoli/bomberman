@@ -1,8 +1,4 @@
-//
-// Created by andre on 07/09/2026.
-//
-
-#include "Menu.h"
+#include "Menu.hpp"
 #include <curses.h>
 
 Menu::Menu() {

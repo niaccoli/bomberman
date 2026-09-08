@@ -1,13 +1,6 @@
-//
-// Created by andre on 07/08/2026.
-//
-
 #include  "Personaggio.hpp"
-#include "Nemico.h"
-
-#include "funzioni.h"
-
-
+#include "Nemico.hpp"
+#include "funzioni.hpp"
 #include <cstdlib>
 
 Nemico::Nemico(): Personaggio(1, {-1, -1 }) {
