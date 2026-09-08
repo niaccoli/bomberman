@@ -275,6 +275,11 @@ bool Map::isWalkable (Posizione posizione ) {
     return true;
 }
 
+bool Map::isWalkable (int x, int y ) {
+    Posizione temp = {x , y} ;
+    return isWalkable(temp) ;
+}
+
 
 Posizione Map::walkableRandomPosition( ) {
     //utilizzo static per iniziallizarli solo una volta

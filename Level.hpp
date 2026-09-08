@@ -4,6 +4,7 @@
 #include "Giocatore.h"
 #include "Bomba.h"
 #include "Nemico.h"
+#include "Timer.h"
 #pragma once
 
 
@@ -14,27 +15,50 @@ const int MAX_ITEMS = 10;
 
 class Level {
 private:
+    // Mappa associata al livello.
     Map& map;
 
+    // Celle interessate dall'ultima esplosione.
     Posizione cella_esplosione[9] ;
+
+    // Numero di celle interessate dall'ultima esplosione.
     int num_cella_esplosione ;
 
+    // Nemici presenti nel livello.
     Nemico nemici[MAX_NEMICI_INS + MAX_NEMICI_RND + MAX_NEMICI_TANK];
+
+    // Numero totale di nemici presenti nel livello.
     int num_nemici ;
+
+    // Numero di nemici tank.
     int num_nemici_tank ;
+
+    // Numero di nemici inseguitori.
     int num_nemici_ins ;
+
+    // Numero di nemici con movimento casuale.
     int num_nemici_rnd ;
 
+    // Bomba associata al livello.
     Bomba b ;
 
+    // Item disponibili nel livello.
     Item items[MAX_ITEMS];
+
+    // Numero massimo di item che possono essere generati nel livello.
     int num_items;
+
+    // Indice del prossimo item disponibile da generare.
     int next_item ;
 
+    // Restituisce una posizione casuale calpestabile, non occupata
+    // da nemici vivi e sufficientemente lontana dall'entrata.
     bool completato;
+
 
     Timer visualize_explosion{0};
     bool active_explosion = false;
+
 
     Posizione posizioneRandomValida_v2() ;
     // Restituisce una posizione casuale calpestabile, non occupata da nemici vivi

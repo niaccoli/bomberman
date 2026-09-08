@@ -129,47 +129,76 @@ si occupa di:
 
 class Item{
     protected:
-        /*int x;
-        int y;*/
+
+        // Posizione corrente dell'item.
+        // {-1, -1} indica che l'item non è presente sulla mappa.
         Posizione posizione ;
-        char tipo; //danno('D'), riduzione tempo bomba('T'), aumento raggio bomba('R'), invulnerabilità('I'), 1pt.vita('V')
-        //int durata; //per quanto rempo rimane sulla mappa
-        bool attivo;//il tempo per quanto dura il suo effetto lo mettiamo in una funzione generale
+
+        // Tipo dell'item:
+        // D = aumento danno bomba
+        // R = aumento raggio bomba
+        // T = riduzione tempo di esplosione
+        // I = invulnerabilità
+        // V = vita aggiuntiva
+        char tipo;
+
+        // Indica se l'item è attualmente presente sulla mappa
+        // e può essere raccolto.
+        bool attivo;
 
 
     public:
+    // Crea un item inattivo, senza tipo e posizionato fuori dalla mappa.
         Item();
+
+    // Crea un item con posizione, tipo e stato specificati.
         Item(int x, int y, char tipo, /*int durata,*/ bool attivo);
 
+
+    // Imposta la coordinata x dell'item.
         void setX(int x) ;
+
+    // Imposta la coordinata y dell'item.
         void setY(int y) ;
+
+    // Imposta la posizione dell'item.
         void setPosizione(Posizione posizione) ;
+
+    // Imposta la posizione dell'item tramite le coordinate x e y.
         void setPosizione(int x, int y) ;
+
+    // Restituisce la coordinata x dell'item.
         int getX() const ;
+
+    // Restituisce la coordinata y dell'item.
         int getY() const ;
+
+    // Restituisce la posizione dell'item.
         Posizione getPosizione( ) const ;
 
+    // Imposta il tipo dell'item.
+    // Se il tipo ricevuto non è valido, assegna il carattere spazio.
         void setTipo(char tipo) ;
+
+    // Restituisce il tipo dell'item.
         char getTipo() const ;
 
+    // Assegna casualmente il tipo dell'item secondo
+    // le probabilità definite dalla funzione.
         void setTipoRandom_v2() ;
-        /*imposta un tipo casuale:
-        danno('D') --> probabilita': 30%
-        riduzione tempo bomba('T') --> probabilita': 30%
-        aumento raggio bomba('B') --> probabilita': 30%
-        1pt.vita('V') --> probabilita': 5%
-        invulnerabilità('I') --> probabilita': 5%
-        */
 
-
-        //void setDurata(int tempo);
-        //int getDurata() const;
-
+    // Restituisce true se l'item è attualmente presente sulla mappa.
         bool isAttivo() const ;
+
+    // Segna l'item come raccolto, disattivandolo.
         void raccogli() ;
-        void disattiva() ; //riposizionare fuori mappa?
+
+    // Disattiva l'item.
+        void disattiva() ;
+
+    // Attiva l'item rendendolo presente sulla mappa.
         void attiva( ) ;
-        //void aggiornaItem();
+
 
 };
 

@@ -2,10 +2,10 @@
 
 Bomba::Bomba():
 posizione{ -1, -1 },
-timer(0), boostTimer(false), durataBoostTimer(0),
-raggio(defaultRaggio), boostRaggio(false), durataBoostRaggio(0),
+timer(0), potenziamentoTimer(false), durataPotenziamentoTimer(0),
+raggio(defaultRaggio), potenziamentoRaggio(false), durataPotenziamentoRaggio(0),
 attivo(false), appenaInnescata(false),
-danno(defaultDanno), boostDanno(false), durataBoostDanno(0)
+danno(defaultDanno), potenziamentoDanno(false), durataPotenziamentoDanno(0)
 { }
 
 
@@ -110,7 +110,7 @@ bool Bomba::aggiornaBomba(int durata) {
         else {
             diminuisciTimer(durata);
 
-            if (boostTimerAttivo())
+            if (potenziamentoTimerAttivo())
                 diminuisciTimer(durata);
         }
 
@@ -124,138 +124,138 @@ bool Bomba::aggiornaBomba(int durata) {
 
 
 
-void Bomba::attivaBoostDanno() {
-    if ( !boostDannoAttivo()) {
-        boostDanno = true;
-        setDurataBoostDanno( defaultDurataBoostDanno );
+void Bomba::attivaPotenziamentoDanno() {
+    if ( !potenziamentoDannoAttivo()) {
+        potenziamentoDanno = true;
+        setDurataPotenziamentoDanno( durataDefaultPotenziamentoDanno );
         duplicaDanno();
     }
     else {
-        setDurataBoostDanno( getDurataBoostDanno() + defaultDurataBoostDanno ) ;
+        setDurataPotenziamentoDanno( getDurataPotenziamentoDanno() + durataDefaultPotenziamentoDanno ) ;
     }
 }
 
-void Bomba::disattivaBoostDanno() {
-    boostDanno = false;
+void Bomba::disattivaPotenziamentoDanno() {
+    potenziamentoDanno = false;
     danno = defaultDanno ;
 }
 
-void Bomba::setDurataBoostDanno(int durata) {
-    durataBoostDanno = durata;
+void Bomba::setDurataPotenziamentoDanno(int durata) {
+    durataPotenziamentoDanno = durata;
 }
 
-void Bomba::diminuisciDurataBoostDanno(int durata) {
-    if ( boostDannoAttivo() )
-        durataBoostDanno -= durata ;
+void Bomba::diminuisciDurataPotenziamentoDanno(int durata) {
+    if ( potenziamentoDannoAttivo() )
+        durataPotenziamentoDanno -= durata ;
 }
 
-int Bomba::getDurataBoostDanno() const {
-    return durataBoostDanno;
+int Bomba::getDurataPotenziamentoDanno() const {
+    return durataPotenziamentoDanno;
 }
 
-bool Bomba::boostDannoAttivo() const {
-    return boostDanno;
+bool Bomba::potenziamentoDannoAttivo() const {
+    return potenziamentoDanno;
 }
 
 
-void Bomba::aggiornaBoostDanno(int durata) {
-    if (boostDannoAttivo()) {
-        diminuisciDurataBoostDanno(durata);
-        if (getDurataBoostDanno() <= 0)
-            disattivaBoostDanno();
+void Bomba::aggiornaPotenziamentoDanno(int durata) {
+    if (potenziamentoDannoAttivo()) {
+        diminuisciDurataPotenziamentoDanno(durata);
+        if (getDurataPotenziamentoDanno() <= 0)
+            disattivaPotenziamentoDanno();
     }
 }
 
 
-void Bomba::attivaBoostRaggio() {
-    if ( !boostRaggioAttivo()) {
-        boostRaggio = true;
-        setDurataBoostRaggio( defaultDurataBoostRaggio );
+void Bomba::attivaPotenziamentoRaggio() {
+    if ( !potenziamentoRaggioAttivo()) {
+        potenziamentoRaggio = true;
+        setDurataPotenziamentoRaggio( durataDefaultPotenziamentoRaggio );
         raddoppiaRaggio();
     }
     else {
-        setDurataBoostRaggio( getDurataBoosRaggio() + defaultDurataBoostRaggio) ;
+        setDurataPotenziamentoRaggio( getDurataPotenziamentoRaggio() + durataDefaultPotenziamentoRaggio) ;
     }
 }
 
-void Bomba::disattivaBoostRaggio() {
-    boostRaggio = false;
+void Bomba::disattivaPotenziamentoRaggio() {
+    potenziamentoRaggio = false;
     raggio = defaultRaggio ;
 }
-void Bomba::setDurataBoostRaggio(int durata) {
-    durataBoostRaggio = durata;
+void Bomba::setDurataPotenziamentoRaggio(int durata) {
+    durataPotenziamentoRaggio = durata;
 }
 
-void Bomba::diminuisciDurataBoostRaggio(int durata) {
-    if ( boostRaggioAttivo() )
-        durataBoostRaggio -= durata ;
+void Bomba::diminuisciDurataPotenziamentoRaggio(int durata) {
+    if ( potenziamentoRaggioAttivo() )
+        durataPotenziamentoRaggio -= durata ;
 }
 
-int Bomba::getDurataBoosRaggio() const {
-    return durataBoostRaggio;
+int Bomba::getDurataPotenziamentoRaggio() const {
+    return durataPotenziamentoRaggio;
 }
 
-bool Bomba::boostRaggioAttivo() const{
-    return boostRaggio;
+bool Bomba::potenziamentoRaggioAttivo() const{
+    return potenziamentoRaggio;
 }
 
 
-void Bomba::aggiornaBoostRaggio(int durata) {
-    if (boostRaggioAttivo()) {
-        diminuisciDurataBoostRaggio(durata);
-        if (getDurataBoosRaggio() <= 0)
-            disattivaBoostRaggio();
+void Bomba::aggiornaPotenziamentoRaggio(int durata) {
+    if (potenziamentoRaggioAttivo()) {
+        diminuisciDurataPotenziamentoRaggio(durata);
+        if (getDurataPotenziamentoRaggio() <= 0)
+            disattivaPotenziamentoRaggio();
     }
 }
 
 
-void Bomba::attivaBoostTimer() {
-    if ( !boostTimerAttivo()) {
-        boostTimer = true;
-        setDurataBoostTimer( defaultDurataBoostTimer);
+void Bomba::attivaPotenziamentoTimer() {
+    if ( !potenziamentoTimerAttivo()) {
+        potenziamentoTimer = true;
+        setDurataPotenziamentoTimer( durataDefaultPotenziamentoTimer);
     }
     else {
-        setDurataBoostTimer( getDurataBoostTimer( ) + defaultDurataBoostTimer) ;
+        setDurataPotenziamentoTimer( getDurataPotenziamentoTimer( ) + durataDefaultPotenziamentoTimer) ;
     }
 }
 
-void Bomba::disattivaBoostTimer() {
-    boostTimer = false;
+void Bomba::disattivaPotenziamentoTimer() {
+    potenziamentoTimer = false;
 }
 
-void Bomba::setDurataBoostTimer(int durata) {
-    durataBoostTimer = durata;
+void Bomba::setDurataPotenziamentoTimer(int durata) {
+    durataPotenziamentoTimer = durata;
 }
 
-void Bomba::diminuisciDurataBoostTimer( int durata ) {
-    durataBoostTimer -= durata ;
+void Bomba::diminuisciDurataPotenziamentoTimer( int durata ) {
+    durataPotenziamentoTimer -= durata ;
 }
 
-int Bomba::getDurataBoostTimer() const {
-    return durataBoostTimer ;
+int Bomba::getDurataPotenziamentoTimer() const {
+    return durataPotenziamentoTimer ;
 }
 
-bool Bomba::boostTimerAttivo() const{
-    return boostTimer;
+bool Bomba::potenziamentoTimerAttivo() const{
+    return potenziamentoTimer;
 }
 
-void Bomba::aggiornaBoostTimer(int durata ) {
-    if (boostTimerAttivo()) {
-        diminuisciDurataBoostTimer(durata);
-        if (getDurataBoostTimer() <= 0)
-            disattivaBoostTimer();
+void Bomba::aggiornaPotenziamentoTimer(int durata ) {
+    if (potenziamentoTimerAttivo()) {
+        diminuisciDurataPotenziamentoTimer(durata);
+        if (getDurataPotenziamentoTimer() <= 0)
+            disattivaPotenziamentoTimer();
     }
 }
 
 
 void Bomba::aggiornaPotenziamenti(int durata ) {
-    aggiornaBoostTimer(durata ) ;
-    aggiornaBoostRaggio(durata ) ;
-    aggiornaBoostDanno(durata ) ;
+    aggiornaPotenziamentoTimer(durata ) ;
+    aggiornaPotenziamentoRaggio(durata ) ;
+    aggiornaPotenziamentoDanno(durata ) ;
 }
 
 void Bomba::disattivaPotenziamenti( ) {
-    disattivaBoostDanno( ) ;
-    disattivaBoostRaggio( ) ;
-    disattivaBoostTimer( ) ;
+    disattivaPotenziamentoDanno( ) ;
+    disattivaPotenziamentoRaggio( ) ;
+    disattivaPotenziamentoTimer( ) ;
 }
