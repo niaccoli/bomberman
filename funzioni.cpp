@@ -125,7 +125,31 @@ int min(int n1, int n2, int n3, int n4 ) {
     return min ;
 }
 
+void popupGiocatoreColpito(){
+    int h_finestra_popup = 7;
+    int w_finestra_popup = 42;
+    int pop_y = (LINES - h_finestra_popup) / 2;
+    int pop_x = (COLS - w_finestra_popup) / 2;
+
+    WINDOW* colpito_win = newwin(h_finestra_popup, w_finestra_popup, pop_y, pop_x);
+
+    wbkgd(colpito_win, COLOR_PAIR(2));
+    box(colpito_win, 0, 0);
+
+    wattron(colpito_win, COLOR_PAIR(2) | A_BOLD);
+    mvwprintw(colpito_win, 2, (w_finestra_popup - 20) / 2, "GIOCATORE COLPITO!");
+    wattroff(colpito_win, COLOR_PAIR(2) | A_BOLD);
+
+    wrefresh(colpito_win);
+
+    napms(1500);
+    werase(colpito_win);
+    wrefresh(colpito_win);
+    delwin(colpito_win);
+}
+
 void StampaInfo(const Giocatore& player,const Bomba& b, int timer_gioco, Posizione mappa_schermo){
+
      int start_x = mappa_schermo.x + 5;
      int start_y = mappa_schermo.y + 2;
 

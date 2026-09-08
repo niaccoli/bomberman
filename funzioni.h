@@ -48,5 +48,7 @@ void reset_v3(Giocatore& player, BidirectionalList& l ) ;
 
 int min(int n1, int n2, int n3, int n4 ) ;
 
+void popupGiocatoreColpito();
+
 
 #endif

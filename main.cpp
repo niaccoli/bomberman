@@ -138,10 +138,8 @@ int main() {
 
           if ( colpito ) {// il giocatore ha subito danno
                 if ( player.vivo() ) {
-                         // mostra messaggio / animazione
-                         // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
-                         // Invulnerabilita' attiva per x secondi"
-                         reset_v3 (player, levelList ) ;
+                    popupGiocatoreColpito();
+                    reset_v3 (player, levelList );
                 }
                 else
                     break ;
@@ -149,11 +147,6 @@ int main() {
 
           if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
                 break ;
-
-          // --- AGGIUNGI QUESTE TRE RIGHE ALLA FINE DEL WHILE ---
-          debug_contatore++;
-          mvprintw(0, 0, "Battito loop: %d | Ultimo input: %d", debug_contatore, input);
-          refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
 
           timerNemici.diminuisci(INTERVALLO_CICLO_MS) ;
           timerGioco.diminuisci(INTERVALLO_CICLO_MS) ;
