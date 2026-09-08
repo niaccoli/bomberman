@@ -186,7 +186,7 @@ void BidirectionalList::moveEnemies(Giocatore& g) {
 }
 
 bool BidirectionalList::collisioniGiocatoreNemici(Giocatore& g) {
-    return (current -> level -> collisioneGiocatoreNemici_v2(g)) ;
+    return (current -> level -> collisioneGiocatoreNemici(g)) ;
 }
 
 void BidirectionalList::updateBoostBombe(int durata) {

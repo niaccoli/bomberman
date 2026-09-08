@@ -61,15 +61,15 @@ private:
     // Restituisce una posizione casuale valida in cui posizionare un nemico.
     // La posizione deve essere calpestabile, non occupata da altri nemici vivi,
     // sufficientemente lontana dall'entrata e non completamente circondata da muri.
-    Posizione posizioneRandomValida_v2() ;
+    Posizione posizioneRandomValida() ;
 
     // Posiziona tutti i nemici del livello in posizioni casuali valide.
-    void posizionaNemici_v2( ) ;
+    void posizionaNemici( ) ;
 
 
     // Restituisce l'indice del nemico vivo presente nella posizione indicata.
     // Restituisce -1 se la posizione non è occupata da alcun nemico vivo.
-    int isThereAnEnemy_v2( Posizione posizione) ;
+    int isThereAnEnemy( Posizione posizione) ;
 
 
 
@@ -121,7 +121,7 @@ public:
     // di un nemico vivo.
     // Restituisce true solo se la collisione provoca
     // effettivamente una perdita di vita al giocatore.
-    bool collisioneGiocatoreNemici_v2(Giocatore& g ) ;
+    bool collisioneGiocatoreNemici(Giocatore& g ) ;
 
     // Calcola tutte le celle raggiunte dall'esplosione della bomba.
     // Gestisce le collisioni con il giocatore, i nemici e i muri.

@@ -20,7 +20,7 @@ Level::Level(Map& m, int random_enemies, int items) : map(m) {
     num_nemici_ins = 0 ;
     num_nemici_tank = 0 ;
 
-    posizionaNemici_v2() ;
+    posizionaNemici() ;
 
     if ( items >= 0 && items <= MAX_ITEMS) {
         num_items = items;
@@ -65,7 +65,7 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int items) : map(m
 
     num_nemici_tank = 0 ;
 
-    posizionaNemici_v2() ;
+    posizionaNemici() ;
 
     if ( items >= 0 && items <= MAX_ITEMS) {
         num_items = items;
@@ -120,7 +120,7 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, 
         tank_enemies = 0 ;
     }
 
-    posizionaNemici_v2() ;
+    posizionaNemici() ;
 
     if ( items >= 0 && items <= MAX_ITEMS) {
         num_items = items;
@@ -139,14 +139,14 @@ Level::~Level() {
 }
 
 
-Posizione Level::posizioneRandomValida_v2() {
+Posizione Level::posizioneRandomValida() {
     Posizione temp = map.walkableRandomPosition( ) ;
 
 
-    if (( isThereAnEnemy_v2( temp ) == -1) && !map.isNearEntry(temp) && map.isSurroundedByWalls(temp))
+    if (( isThereAnEnemy( temp ) == -1) && !map.isNearEntry(temp) && map.isSurroundedByWalls(temp))
         return temp ;
 
-    return posizioneRandomValida_v2() ;
+    return posizioneRandomValida() ;
 }
 
 
@@ -155,13 +155,13 @@ Bomba& Level::getBomb(){
 }
 
 
-void Level::posizionaNemici_v2( ) {
+void Level::posizionaNemici( ) {
     for (int i = 0; i < num_nemici ; i++ )
-        nemici[i].setPosizione( posizioneRandomValida_v2()) ;
+        nemici[i].setPosizione( posizioneRandomValida()) ;
 }
 
 
-int Level::isThereAnEnemy_v2( Posizione posizione) {
+int Level::isThereAnEnemy( Posizione posizione) {
     for (int i = 0 ; i < num_nemici ; i++) {
         if ( stessaPosizione( nemici[i].getPosizione(), posizione) && nemici[i].vivo( ))
             return i ;
@@ -228,7 +228,7 @@ void Level::moveEnemies(Giocatore& g) {
 
                 bool cellaLibera =
                     map.isWalkable(possibili[j]) &&
-                    isThereAnEnemy_v2(possibili[j]) == -1 &&
+                    isThereAnEnemy(possibili[j]) == -1 &&
                     !(stessaPosizione(possibili[j], b.getPosizione()) &&
                       b.innescata());
 
@@ -258,7 +258,7 @@ void Level::moveEnemies(Giocatore& g) {
 
 
                 if (map.isWalkable(nuova) &&
-                    isThereAnEnemy_v2(nuova) == -1 &&
+                    isThereAnEnemy(nuova) == -1 &&
                     !(stessaPosizione(nuova, b.getPosizione()) &&
                       b.innescata())) {
 
@@ -273,9 +273,9 @@ void Level::moveEnemies(Giocatore& g) {
 }
 
 
-bool Level::collisioneGiocatoreNemici_v2(Giocatore &g) {
+bool Level::collisioneGiocatoreNemici(Giocatore &g) {
 
-    if ( isThereAnEnemy_v2(g.getPosizione()) != -1 ) {
+    if ( isThereAnEnemy(g.getPosizione()) != -1 ) {
         if (g.diminuisciVita() )
             return true;
     }
@@ -306,7 +306,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
 
 
-    int index_enemy_in_current = isThereAnEnemy_v2( current ) ;
+    int index_enemy_in_current = isThereAnEnemy( current ) ;
     if ( index_enemy_in_current != -1 ) {
         nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno() ) ;
         if ( !nemici[ index_enemy_in_current ].vivo( )) {
@@ -336,7 +336,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
             dropItem( current) ;
         }
 
-        index_enemy_in_current = isThereAnEnemy_v2( current ) ;
+        index_enemy_in_current = isThereAnEnemy( current ) ;
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno( )) ;
@@ -369,7 +369,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
         }
 
 
-        index_enemy_in_current = isThereAnEnemy_v2( current ) ;
+        index_enemy_in_current = isThereAnEnemy( current ) ;
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno() ) ;
@@ -403,7 +403,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
         }
 
 
-        index_enemy_in_current = isThereAnEnemy_v2( current ) ;
+        index_enemy_in_current = isThereAnEnemy( current ) ;
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita(b.getDanno() ) ;
@@ -436,7 +436,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
         }
 
 
-        index_enemy_in_current = isThereAnEnemy_v2( current ) ;
+        index_enemy_in_current = isThereAnEnemy( current ) ;
 
         if ( index_enemy_in_current != -1 ) {
             nemici[ index_enemy_in_current ].diminuisciVita(b.getDanno() ) ;
@@ -475,7 +475,7 @@ void Level::dropItem(Posizione posizione) {
 
         if (random == 1) {
             items[next_item].setPosizione( posizione ) ;
-            items[next_item].setTipoRandom_v2( ) ;
+            items[next_item].setTipoRandom( ) ;
             items[next_item].attiva( ) ;
             next_item++ ;
         }
@@ -500,7 +500,7 @@ void Level::resetBombeEPotenziamenti() {
 
 void Level::reset_v3( ) {
 
-    posizionaNemici_v2() ;
+    posizionaNemici() ;
 
     resetBombeEPotenziamenti() ;
 }

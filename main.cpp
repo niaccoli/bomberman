@@ -56,7 +56,7 @@ int main() {
 
 
      Classifica classifica ;
-     classifica.caricaDaFile_v2() ;
+     classifica.caricaDaFile() ;
      Menu menu ;
 
      timeout(-1) ;
@@ -217,7 +217,7 @@ int main() {
 
 
                classifica.aggiungiRisultato(nome, player.getPunteggio());
-               classifica.salvaSuFile_v2();
+               classifica.salvaSuFile();
                clear();
                refresh();
                //set_border();

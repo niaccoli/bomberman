@@ -61,7 +61,7 @@ class Item{
 
     // Assegna casualmente il tipo dell'item secondo
     // le probabilità definite dalla funzione.
-        void setTipoRandom_v2() ;
+        void setTipoRandom() ;
 
     // Restituisce true se l'item è attualmente presente sulla mappa.
         bool isAttivo() const ;

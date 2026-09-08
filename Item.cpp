@@ -45,7 +45,7 @@ void Item::setTipo(char tipo) {
 }
 
 
-void Item::setTipoRandom_v2() {
+void Item::setTipoRandom() {
     int i = rand() % 100 ;
     if (i >= 0 && i < 30) {
         setTipo('D') ;

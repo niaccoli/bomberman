@@ -47,24 +47,9 @@ void Classifica::aggiungiRisultato(char nome[], int punteggio) {
     head = aggiungiRisultato_aux( head, nome, punteggio ) ;
 }
 
+
+
 void Classifica::caricaDaFile() {
-    ifstream inputFile;
-    inputFile.open("Classifica.txt");
-
-    char nome[100];
-    int punteggio;
-
-    while ( inputFile >> nome >> punteggio) {
-
-        aggiungiRisultato(nome, punteggio);
-
-    }
-
-    inputFile.close();
-}
-
-
-void Classifica::caricaDaFile_v2() {
     ifstream inputFile;
     inputFile.open("Classifica.txt");
 
@@ -81,27 +66,8 @@ void Classifica::caricaDaFile_v2() {
 }
 
 
+
 void Classifica::salvaSuFile( ) {
-    ofstream outputFile ;
-    outputFile.open("Classifica.txt") ;
-
-    pris temp = head  ;
-
-    while ( temp != nullptr ) {
-        outputFile << temp -> nome ;
-        outputFile << ' ' ;
-        outputFile << temp -> punteggio ;
-        outputFile << '\n' ;
-        temp = temp -> next ;
-    }
-
-    outputFile.close() ;
-
-}
-
-
-
-void Classifica::salvaSuFile_v2( ) {
     ofstream outputFile ;
     outputFile.open("Classifica.txt") ;
 

@@ -30,22 +30,16 @@ public :
     // mantenendo i risultati ordinati per punteggio decrescente.
     void aggiungiRisultato(char nome[],int punteggio) ;
 
-    // Carica i risultati dal file "Classifica.txt".
-    // Il formato previsto per ogni riga è: nome punteggio
-    void caricaDaFile( ) ;
 
     // Carica i risultati dal file "Classifica.txt".
     // Il formato previsto per ogni riga è: nome;punteggio.
     // Permette quindi di utilizzare nomi contenenti spazi.
-    void caricaDaFile_v2( ) ;
+    void caricaDaFile( ) ;
 
-    // Salva tutti i risultati nel file "Classifica.txt".
-    // Il formato utilizzato è: nome punteggio.
-    void salvaSuFile( ) ;
 
     // Salva tutti i risultati nel file "Classifica.txt".
     // Il formato utilizzato è: nome;punteggio.
-    void salvaSuFile_v2( ) ;
+    void salvaSuFile( ) ;
 
     // Mostra a schermo i primi n risultati della classifica
     // e attende la pressione di INVIO prima di tornare al menu.
