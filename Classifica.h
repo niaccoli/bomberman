@@ -8,6 +8,7 @@
 
 class Classifica {
 protected:
+    // Rappresenta un risultato salvato nella classifica.
     struct risultato {
         char nome[100] ;
         int punteggio ;
@@ -17,24 +18,42 @@ protected:
 
     pris head ;
 
+    // Inserisce ricorsivamente un risultato nella posizione corretta,
+    // mantenendo la classifica ordinata per punteggio decrescente.
     pris aggiungiRisultato_aux (pris r, char nome[],int punteggio) ;
 
 public :
+    // Crea una classifica inizialmente vuota.
     Classifica( ) ;
 
+    // Aggiunge un nuovo risultato alla classifica,
+    // mantenendo i risultati ordinati per punteggio decrescente.
     void aggiungiRisultato(char nome[],int punteggio) ;
-    //risultati ordinati per punteggio decrescente
 
-    void caricaDaFile( ) ; //formato classifica: nome punteggio
+    // Carica i risultati dal file "Classifica.txt".
+    // Il formato previsto per ogni riga è: nome punteggio
+    void caricaDaFile( ) ;
 
-    void caricaDaFile_v2( ) ; //formato classifica: nome ; punteggio
+    // Carica i risultati dal file "Classifica.txt".
+    // Il formato previsto per ogni riga è: nome;punteggio.
+    // Permette quindi di utilizzare nomi contenenti spazi.
+    void caricaDaFile_v2( ) ;
 
-    void salvaSuFile( ) ; //formato classifica: nome  punteggio
+    // Salva tutti i risultati nel file "Classifica.txt".
+    // Il formato utilizzato è: nome punteggio.
+    void salvaSuFile( ) ;
 
-    void salvaSuFile_v2( ) ; //formato classifica: nome ; punteggio
+    // Salva tutti i risultati nel file "Classifica.txt".
+    // Il formato utilizzato è: nome;punteggio.
+    void salvaSuFile_v2( ) ;
 
+    // Mostra a schermo i primi n risultati della classifica
+    // e attende la pressione di INVIO prima di tornare al menu.
     void mostraMigliori(int n) ;
 
+    // Chiede all'utente quanti risultati visualizzare.
+    // Se viene premuto INVIO senza inserire un numero, mostra i primi 10.
+    // Gestisce inoltre eventuali input non validi.
     void stampaClassifica( ) ;
 };
 

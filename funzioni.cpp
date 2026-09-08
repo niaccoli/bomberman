@@ -157,18 +157,18 @@ void StampInfo(const Giocatore& player,const Bomba& b, int map_cols, int timer_g
      int timer_item = 0;
 
      // Usiamo i metodi che hai già scritto nella classe Bomba!
-     if (b.boostDannoAttivo()) {
-        timer_item = b.getDurataBoostDanno() / 1000;
+     if (b.potenziamentoDannoAttivo()) {
+        timer_item = b.getDurataPotenziamentoDanno() / 1000;
         int item_seconds = timer_item % 60;
         mvprintw(riga++, start_x, "Danno Extra  [%02d]  ", item_seconds);
      }
-     if (b.boostRaggioAttivo()) {
-        timer_item = b.getDurataBoosRaggio() / 1000;
+     if (b.potenziamentoRaggioAttivo()) {
+        timer_item = b.getDurataPotenziamentoRaggio() / 1000;
         int item_seconds = timer_item % 60;
         mvprintw(riga++, start_x, "Raggio Extra [%02d]  ", item_seconds);
      }
-     if (b.boostTimerAttivo()) {
-        timer_item = b.getDurataBoostTimer() / 1000;
+     if (b.potenziamentoTimerAttivo()) {
+        timer_item = b.getDurataPotenziamentoTimer() / 1000;
         int item_seconds = timer_item % 60;
         mvprintw(riga++, start_x, "Bomba Veloce [%02d]  ", item_seconds);
      }

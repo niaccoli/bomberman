@@ -160,7 +160,7 @@ void Nemico::nuovaPosizioneInseguitore(Giocatore& g, Posizione possibili[4]) con
     }
 }
 
-Posizione Nemico::nuovaPosizioneCasuale(Giocatore& g) const{
+Posizione Nemico::nuovaPosizioneCasuale(Giocatore& g ) const{
 
     Posizione temp = posizione;
 

@@ -20,13 +20,13 @@ protected:
     const int durataDefaultPotenziamentoTimer = 10000;
 
     // Imposta la durata residua del potenziamento del danno
-    void setDurataBoostDanno(int durata);
+    void setDurataPotenziamentoDanno(int durata);
 
     // Imposta la durata residua del potenziamento del raggio
-    void setDurataBoostRaggio(int durata);
+    void setDurataPotenziamentoRaggio(int durata);
 
     // Imposta la durata residua del potenziamento del timer
-    void setDurataBoostTimer(int durata);
+    void setDurataPotenziamentoTimer(int durata);
 
 
     // Tempo rimanente prima dell'esplosione, espresso in millisecondi
@@ -46,24 +46,24 @@ protected:
 
 
     // Indica se è attivo il potenziamento del danno
-    bool boostDanno;
+    bool potenziamentoDanno;
 
     // Tempo rimanente del potenziamento del danno
-    int durataBoostDanno;
+    int durataPotenziamentoDanno;
 
 
     // Indica se è attivo il potenziamento del raggio
-    bool boostRaggio;
+    bool potenziamentoRaggio;
 
     // Tempo rimanente del potenziamento del raggio
-    int durataBoostRaggio;
+    int durataPotenziamentoRaggio;
 
 
     // Indica se è attivo il potenziamento che riduce il tempo di esplosione
-    bool boostTimer;
+    bool potenziamentoTimer;
 
     // Tempo rimanente del potenziamento del timer
-    int durataBoostTimer;
+    int durataPotenziamentoTimer;
 
 
 public:
@@ -140,64 +140,64 @@ public:
     // ---------------- POTENZIAMENTO DANNO ----------------
 
     // Attiva il potenziamento del danno oppure ne prolunga la durata se già attivo
-    void attivaBoostDanno();
+    void attivaPotenziamentoDanno();
 
     // Disattiva il potenziamento e ripristina il danno standard
-    void disattivaBoostDanno();
+    void disattivaPotenziamentoDanno();
 
     // Diminuisce la durata residua del potenziamento del danno
-    void diminuisciDurataBoostDanno(int durata);
+    void diminuisciDurataPotenziamentoDanno(int durata);
 
     // Restituisce la durata residua del potenziamento del danno
-    int getDurataBoostDanno() const;
+    int getDurataPotenziamentoDanno() const;
 
     // Restituisce true se il potenziamento del danno è attivo
-    bool boostDannoAttivo() const;
+    bool potenziamentoDannoAttivo() const;
 
     // Aggiorna la durata del potenziamento e lo disattiva quando scade
-    void aggiornaBoostDanno(int durata);
+    void aggiornaPotenziamentoDanno(int durata);
 
 
     // ---------------- POTENZIAMENTO RAGGIO ----------------
 
     // Attiva il potenziamento del raggio oppure ne prolunga la durata se già attivo
-    void attivaBoostRaggio();
+    void attivaPotenziamentoRaggio();
 
     // Disattiva il potenziamento e ripristina il raggio standard
-    void disattivaBoostRaggio();
+    void disattivaPotenziamentoRaggio();
 
     // Diminuisce la durata residua del potenziamento del raggio
-    void diminuisciDurataBoostRaggio(int durata);
+    void diminuisciDurataPotenziamentoRaggio(int durata);
 
     // Restituisce la durata residua del potenziamento del raggio
-    int getDurataBoosRaggio() const;
+    int getDurataPotenziamentoRaggio() const;
 
     // Restituisce true se il potenziamento del raggio è attivo
-    bool boostRaggioAttivo() const;
+    bool potenziamentoRaggioAttivo() const;
 
     // Aggiorna la durata del potenziamento e lo disattiva quando scade
-    void aggiornaBoostRaggio(int durata);
+    void aggiornaPotenziamentoRaggio(int durata);
 
 
     // ---------------- POTENZIAMENTO TIMER ----------------
 
     // Attiva il potenziamento che velocizza l'esplosione oppure ne prolunga la durata
-    void attivaBoostTimer();
+    void attivaPotenziamentoTimer();
 
     // Disattiva il potenziamento del timer
-    void disattivaBoostTimer();
+    void disattivaPotenziamentoTimer();
 
     // Diminuisce la durata residua del potenziamento del timer
-    void diminuisciDurataBoostTimer(int durata);
+    void diminuisciDurataPotenziamentoTimer(int durata);
 
     // Restituisce la durata residua del potenziamento del timer
-    int getDurataBoostTimer() const;
+    int getDurataPotenziamentoTimer() const;
 
     // Restituisce true se il potenziamento del timer è attivo
-    bool boostTimerAttivo() const;
+    bool potenziamentoTimerAttivo() const;
 
     // Aggiorna la durata del potenziamento e lo disattiva quando scade
-    void aggiornaBoostTimer(int durata);
+    void aggiornaPotenziamentoTimer(int durata);
 
 
     // Aggiorna contemporaneamente la durata di tutti i potenziamenti della bomba

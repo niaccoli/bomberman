@@ -534,13 +534,13 @@ void Level::aggiornaPotenziamenti(int durata ) {
 
 void Level::applicaEffetto(char tipo ) {
     if ( tipo == 'D') {
-        b.attivaBoostDanno( ) ;
+        b.attivaPotenziamentoDanno( ) ;
     }
     if ( tipo == 'R') {
-        b.attivaBoostRaggio( );
+        b.attivaPotenziamentoRaggio( );
     }
     if ( tipo == 'T') {
-        b.attivaBoostTimer( ) ;
+        b.attivaPotenziamentoTimer( ) ;
     }
 }
 
