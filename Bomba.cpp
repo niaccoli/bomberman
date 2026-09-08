@@ -127,11 +127,11 @@ bool Bomba::aggiornaBomba(int durata) {
 void Bomba::attivaBoostDanno() {
     if ( !boostDannoAttivo()) {
         boostDanno = true;
-        setDurataBoostDanno( defaultDurataBoostDanno );
+        setDurataBoostDanno( durataDefaultPotenziamentoDanno );
         duplicaDanno();
     }
     else {
-        setDurataBoostDanno( getDurataBoostDanno() + defaultDurataBoostDanno ) ;
+        setDurataBoostDanno( getDurataBoostDanno() + durataDefaultPotenziamentoDanno ) ;
     }
 }
 
@@ -212,10 +212,10 @@ void Bomba::aggiornaBoostRaggio(int durata) {
 void Bomba::attivaBoostTimer() {
     if ( !boostTimerAttivo()) {
         boostTimer = true;
-        setDurataBoostTimer( defaultDurataBoostTimer);
+        setDurataBoostTimer( durataDefaultPotenziamentoTimer);
     }
     else {
-        setDurataBoostTimer( getDurataBoostTimer( ) + defaultDurataBoostTimer) ;
+        setDurataBoostTimer( getDurataBoostTimer( ) + durataDefaultPotenziamentoTimer) ;
     }
 }
 

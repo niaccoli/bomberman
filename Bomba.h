@@ -1,131 +1,210 @@
 #ifndef BOMBERMAN_BOMBA_H
 #define BOMBERMAN_BOMBA_H
+
 #include "Posizione.h"
-#include "Timer.h"
 
 class Bomba {
-    protected:
-        /*int x;
-        int y;*/
-        Posizione posizione ;
+protected:
+
+    // Posizione corrente della bomba; {-1, -1} indica che non è posizionata sulla mappa
+    Posizione posizione;
+
+    // Valori standard della bomba senza potenziamenti
+    const int defaultDanno = 1;
+    const int defaultRaggio = 1;
+
+    // Durate espresse in millisecondi
+    const int defaultTimer = 2000;
+    const int durataDefaultPotenziamentoDanno = 10000;
+    const int durataDefaultPotenziamentoRaggio = 10000;
+    const int durataDefaultPotenziamentoTimer = 10000;
+
+    // Imposta la durata residua del potenziamento del danno
+    void setDurataBoostDanno(int durata);
+
+    // Imposta la durata residua del potenziamento del raggio
+    void setDurataBoostRaggio(int durata);
+
+    // Imposta la durata residua del potenziamento del timer
+    void setDurataBoostTimer(int durata);
 
 
-        const int defaultDanno = 1 ;
-        const int defaultRaggio = 1 ;
+    // Tempo rimanente prima dell'esplosione, espresso in millisecondi
+    int timer;
 
-    //durate in ms
-        const int defaultTimer = 2000 ;
-        const int defaultDurataBoostDanno = 10000;
-        const int defaultDurataBoostRaggio = 10000;
-        const int defaultDurataBoostTimer = 10000;
+    // Danno inflitto dall'esplosione
+    int danno;
 
-        //queste funzioni non servono se decidiamo che se un boost gia' attivo viene preso si resetta il tempo invece
-        //di sommarlo ( in tal caso modificare anche funzioni di attivazione boost )
-        void setDurataBoostDanno(int durata);
-        void setDurataBoostRaggio(int durata);
-        void setDurataBoostTimer(int durata);
+    // Numero di celle raggiunte dall'esplosione in ogni direzione
+    int raggio;
 
-        int timer;
-        int danno;
-        int raggio;
-        bool attivo;
-        bool appenaInnescata ;
+    // Indica se la bomba è attualmente posizionata e innescata
+    bool attivo;
 
-        bool boostDanno;
-        int durataBoostDanno;
-
-        bool boostRaggio;
-        int durataBoostRaggio;
-
-        bool boostTimer;
-        int durataBoostTimer;
-
-/*da ragionare: una volta che viene viene raccolto un item bisogna applicare un effetto(funzione void effetto item()).
- *Se l'item è un item che riguarda il giocatore è facile perchè il giocatore è già creato.
- *Es. invulnerabilità fai invulnerabilitaOn() e diminuisci il  *tempoinvulnerabilità ogni ciclo (aggiornaInvulnerabilità()).
- *le bombe invece vengono create ogni volta che il giocatore preme  *'x' quindi forse non ha senso salvare boostpotenza,
- *boostraggio, boostTimer perchè ogni volta si crea una nuova bomba.
- *Forse conviene creare delle sottoclassi di bomba (bombaPotenziata, aumentata, velocizzata)
- *ma anche in questo caso per quanto tempo devono continuare ad essere create questo tipo di bombe dove lo salvo?
- *potrei fare una classe o struttura effettoBomba{char tipo; int tempo; bool attivo;}, quando viene raccolto un item,
- *viene creato un effettoBomba con bool attivo, quindi aggiungere in gestisciInput(piazzaBomba) un controllo su ..
- *
- *forse sto ragionando male:
- *non conviene creare una bomba ogni volta che il giocatore preme 'x' conviene creare un unico oggetto bomba e passarlo per
- *riferimento.
- *In questo caso però il giocatore non deve essere in grado di piazzare una nuova bomba finche la prima non è esplosa.*
- *quindi: nel main creo un unico oggetto Bomba bombastd() posizionata fuori dalla mappa e disattiva.
- *poi nel comando piazza bomba permetto di piazzare la bomba solo se non è già attiva, poisiziono la bomba nelle coordinate del giocatore
- *e la attivo.*
- *a questo punto mi conviene creare dei booleani per i potenziamenti e il tempo del potenziamento, se il giocatore passa sopra un item
- *disattivo l'item e applico il suo effetto attivando il potenziamento che dopo un po si disattiva. (applicaEffettoItem)*/
+    // Impedisce di diminuire il timer nello stesso ciclo in cui la bomba viene innescata
+    bool appenaInnescata;
 
 
+    // Indica se è attivo il potenziamento del danno
+    bool boostDanno;
+
+    // Tempo rimanente del potenziamento del danno
+    int durataBoostDanno;
 
 
+    // Indica se è attivo il potenziamento del raggio
+    bool boostRaggio;
 
-        //bool checkTimer(); valutare se aggiungerle per verificare che l'oggetto venga chiamato con un timer positivo
-        //bool checkRaggio(); valutare se aggiungerle per verificare che l'oggetto venga chiamato con un timer positivo
-
-    public:
-        Bomba();
-        //crea un oggetto bomba posizionato fuori dalla mappa e non attiva
-
-        /*Bomba(int x, int y, int timer, int danno, int raggio, bool attivo); //capire se aggiungere funzioni di check per valori
-        // timer, danno, raggio (>0)*/
-
-        int getX() const;
-        int getY() const;
-        Posizione getPosizione() const ;
-        void setX(int x);
-        void setY(int y);
-        void setPosizione(Posizione posizione) ;
-        void setPosizione(int x, int y) ;
-
-        int getTimer() const; //ritorna il tempo rimanente prima di esplodere
-        void setTimer(int tempo); //imposta il timer della bomba
-        void diminuisciTimer(int durata);
-
-        int getDanno() const; //ritorna il danno della bomba
-        void setDanno(int danno); //imposta il danno della bomba
-        void duplicaDanno(); //o potenziaDanno() (per item 'D' = aumento danno bomba (creare nemici tank con 2 vite))
-
-        int getRaggio() const; //ritorna il raggio di azione della bomba
-        void setRaggio(int raggio); //imposta il raggio di azione della bomba
-        void raddoppiaRaggio();  //o aumentaRaggio() (per item 'B' = aumento raggio bomba)
-
-        bool innescata() const; //o innescata
-        void innesca();
-        void esplodi(); // = disattiva
-        bool aggiornaBomba(int durata) ;
-
-        //POTENZIAMENTI
-        void attivaBoostDanno();
-        void disattivaBoostDanno();
-        void diminuisciDurataBoostDanno(int durata);
-        int getDurataBoostDanno() const;
-        bool boostDannoAttivo() const;
-        void aggiornaBoostDanno(int durata);
-
-        void attivaBoostRaggio();
-        void disattivaBoostRaggio();
-        void diminuisciDurataBoostRaggio(int durata);
-        int getDurataBoosRaggio() const;
-        bool boostRaggioAttivo() const;
-        void aggiornaBoostRaggio(int durata);
+    // Tempo rimanente del potenziamento del raggio
+    int durataBoostRaggio;
 
 
-        void attivaBoostTimer( );
-        void disattivaBoostTimer( ) ;
-        void diminuisciDurataBoostTimer( int durata );
-        int getDurataBoostTimer( ) const;
-        bool boostTimerAttivo( ) const;
-        void aggiornaBoostTimer(int durata );
+    // Indica se è attivo il potenziamento che riduce il tempo di esplosione
+    bool boostTimer;
 
-        void aggiornaPotenziamenti(int durata ) ;
-        void disattivaPotenziamenti( ) ;
+    // Tempo rimanente del potenziamento del timer
+    int durataBoostTimer;
 
 
+public:
+
+    // Crea una bomba disattivata, posizionata fuori dalla mappa e con valori standard
+    Bomba();
+
+
+    // Restituisce la coordinata x della bomba
+    int getX() const;
+
+    // Restituisce la coordinata y della bomba
+    int getY() const;
+
+    // Restituisce la posizione della bomba
+    Posizione getPosizione() const;
+
+    // Modifica la coordinata x della bomba
+    void setX(int x);
+
+    // Modifica la coordinata y della bomba
+    void setY(int y);
+
+    // Imposta la posizione della bomba
+    void setPosizione(Posizione posizione);
+
+    // Imposta la posizione della bomba tramite coordinate x e y
+    void setPosizione(int x, int y);
+
+
+    // Restituisce il tempo rimanente prima dell'esplosione
+    int getTimer() const;
+
+    // Imposta il tempo rimanente prima dell'esplosione
+    void setTimer(int tempo);
+
+    // Diminuisce il timer della quantità specificata
+    void diminuisciTimer(int durata);
+
+
+    // Restituisce il danno inflitto dalla bomba
+    int getDanno() const;
+
+    // Imposta il danno della bomba
+    void setDanno(int danno);
+
+    // Raddoppia il danno della bomba
+    void duplicaDanno();
+
+
+    // Restituisce il raggio dell'esplosione
+    int getRaggio() const;
+
+    // Imposta il raggio dell'esplosione
+    void setRaggio(int raggio);
+
+    // Raddoppia il raggio dell'esplosione
+    void raddoppiaRaggio();
+
+
+    // Restituisce true se la bomba è attualmente innescata
+    bool innescata() const;
+
+    // Innesca la bomba e inizializza il timer al valore standard
+    void innesca();
+
+    // Disattiva la bomba dopo l'esplosione
+    void esplodi();
+
+    // Aggiorna il timer della bomba e restituisce true quando la bomba esplode
+    bool aggiornaBomba(int durata);
+
+
+    // ---------------- POTENZIAMENTO DANNO ----------------
+
+    // Attiva il potenziamento del danno oppure ne prolunga la durata se già attivo
+    void attivaBoostDanno();
+
+    // Disattiva il potenziamento e ripristina il danno standard
+    void disattivaBoostDanno();
+
+    // Diminuisce la durata residua del potenziamento del danno
+    void diminuisciDurataBoostDanno(int durata);
+
+    // Restituisce la durata residua del potenziamento del danno
+    int getDurataBoostDanno() const;
+
+    // Restituisce true se il potenziamento del danno è attivo
+    bool boostDannoAttivo() const;
+
+    // Aggiorna la durata del potenziamento e lo disattiva quando scade
+    void aggiornaBoostDanno(int durata);
+
+
+    // ---------------- POTENZIAMENTO RAGGIO ----------------
+
+    // Attiva il potenziamento del raggio oppure ne prolunga la durata se già attivo
+    void attivaBoostRaggio();
+
+    // Disattiva il potenziamento e ripristina il raggio standard
+    void disattivaBoostRaggio();
+
+    // Diminuisce la durata residua del potenziamento del raggio
+    void diminuisciDurataBoostRaggio(int durata);
+
+    // Restituisce la durata residua del potenziamento del raggio
+    int getDurataBoosRaggio() const;
+
+    // Restituisce true se il potenziamento del raggio è attivo
+    bool boostRaggioAttivo() const;
+
+    // Aggiorna la durata del potenziamento e lo disattiva quando scade
+    void aggiornaBoostRaggio(int durata);
+
+
+    // ---------------- POTENZIAMENTO TIMER ----------------
+
+    // Attiva il potenziamento che velocizza l'esplosione oppure ne prolunga la durata
+    void attivaBoostTimer();
+
+    // Disattiva il potenziamento del timer
+    void disattivaBoostTimer();
+
+    // Diminuisce la durata residua del potenziamento del timer
+    void diminuisciDurataBoostTimer(int durata);
+
+    // Restituisce la durata residua del potenziamento del timer
+    int getDurataBoostTimer() const;
+
+    // Restituisce true se il potenziamento del timer è attivo
+    bool boostTimerAttivo() const;
+
+    // Aggiorna la durata del potenziamento e lo disattiva quando scade
+    void aggiornaBoostTimer(int durata);
+
+
+    // Aggiorna contemporaneamente la durata di tutti i potenziamenti della bomba
+    void aggiornaPotenziamenti(int durata);
+
+    // Disattiva tutti i potenziamenti e ripristina i valori standard della bomba
+    void disattivaPotenziamenti();
 };
 
-#endif //BOMBERMAN_BOMBA_H
+#endif // BOMBERMAN_BOMBA_H

@@ -210,21 +210,72 @@ bool Level::aggiornaEsplosioni(Giocatore& g ,int durata ) {
 }
 
 
-void Level::moveEnemies(Giocatore& g){
+void Level::moveEnemies(Giocatore& g) {
 
-    for ( int i = 0 ; i < num_nemici ; i++ ) {
-        
-        bool mosso = false ;
-        int tentativo = 0 ;
+    for (int i = 0; i < num_nemici; i++) {
 
-        while ( !mosso && nemici[i].vivo() && tentativo < 10) {
-            Posizione new_posizione = nemici[i].nuovaPosizione(g, map) ;
-            if ( map.isWalkable( new_posizione ) && ( isThereAnEnemy_v2( new_posizione ) == -1 ) &&
-                !(stessaPosizione( new_posizione, b.getPosizione()) && b.innescata())) {
-                nemici[i].muovi( new_posizione ) ;
-                mosso = true ;
+        if (!nemici[i].vivo())
+            continue;
+
+
+        // INSEGUITORE
+        if (nemici[i].getTipo() == 'I') {
+
+            // se è già sopra il giocatore rimane fermo
+            if (stessaPosizione(nemici[i].getPosizione(), g.getPosizione()))
+                continue;
+
+            Posizione possibili[4];
+
+            nemici[i].nuovaPosizioneInseguitore(g, possibili);
+
+            bool mosso = false;
+            int j = 0;
+
+            while (j < 4 && !mosso) {
+
+                bool cellaLibera =
+                    map.isWalkable(possibili[j]) &&
+                    isThereAnEnemy_v2(possibili[j]) == -1 &&
+                    !(stessaPosizione(possibili[j], b.getPosizione()) &&
+                      b.innescata());
+
+                if (cellaLibera) {
+                    nemici[i].muovi(possibili[j]);
+                    mosso = true;
+                }
+
+                j++;
             }
-            tentativo++ ;
+        }
+
+
+        // RANDOM E TANK
+        else {
+
+            bool mosso = false;
+            int tentativo = 0;
+
+            while (!mosso && tentativo < 10) {
+
+                Posizione nuova = nemici[i].nuovaPosizioneCasuale(g);
+
+                if (stessaPosizione(nuova, nemici[i].getPosizione())) { //per nemico tank
+                    mosso = true;
+                }
+
+
+                if (map.isWalkable(nuova) &&
+                    isThereAnEnemy_v2(nuova) == -1 &&
+                    !(stessaPosizione(nuova, b.getPosizione()) &&
+                      b.innescata())) {
+
+                    nemici[i].muovi(nuova);
+                    mosso = true;
+                      }
+
+                tentativo++;
+            }
         }
     }
 }

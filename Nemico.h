@@ -35,7 +35,8 @@ private:
         void setTipo ( char tipo ) ;
         char getTipo ( ) const;
         int getPunti ( ) ;
-        Posizione nuovaPosizione (Giocatore& g, Map& m);
+        void nuovaPosizioneInseguitore (Giocatore& g, Posizione possibili[4]) const;
+        Posizione nuovaPosizioneCasuale (Giocatore& g) const;
     //----------------------------------------------DA VALUTARE (guarda Level) -----------------------------------------
         Posizione nuovaPosizione_v3 (Map& m); //se il giocatore non e' presente nel livello i nemici inseguitori si comportano
     //come nemici random
