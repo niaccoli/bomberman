@@ -1,7 +1,3 @@
-//
-// Created by andre on 06/09/2026.
-//
-
 #ifndef BOMBERMAN_CLASSIFICA_H
 #define BOMBERMAN_CLASSIFICA_H
 

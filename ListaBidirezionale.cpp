@@ -47,7 +47,7 @@ void ListaBidirezionale::CreaLivelli(){
     node* node1 = new node;
 
     node1->levelID = 1;
-    node1->level = new Livello(*mappa1, 7, 7, 3);
+    node1->level = new Livello(*mappa1, 1, 3, 3);
     node1->prev = NULL;
 
     node* node2 = new node;

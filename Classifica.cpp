@@ -1,16 +1,9 @@
-//
-// Created by andre on 06/09/2026.
-//
-
 #include "Classifica.hpp"
-
 #include <fstream>
-
 #include "curses.h"
-
 #include <cstdlib>
-
 #include "cstring"
+
 using namespace std ;
 
 Classifica::Classifica( ) {

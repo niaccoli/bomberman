@@ -80,7 +80,7 @@ int main() {
                // Parametri temporali della partita.
                const int INTERVALLO_CICLO_MS = 100;
                const int TEMPO_AGGIORNAMENTO_NEMICI_MS = 1000 ;
-               const int DURATA_PARTITA_MINUTI = 5 ;
+               const int DURATA_PARTITA_MINUTI = 10 ;
 
      Timer timerGioco(DURATA_PARTITA_MINUTI * 60 * 1000) ;
      int timer_gioco = timerGioco.getTimer();
