@@ -26,6 +26,10 @@ public:
     Map(int h, int w);
 
 
+    //Distruttore classe Mappa
+    ~Map();
+
+
     // Carica la configurazione strutturale della mappa dal file di testo corrispondente all'ID del livello (es. level1.txt).
     void Initialize_Map(int levelID);
     

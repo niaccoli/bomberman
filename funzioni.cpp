@@ -122,6 +122,10 @@ int min(int n1, int n2, int n3, int n4 ) {
 }
 
 void popupGiocatoreColpito(){
+
+    clear();
+    refresh();
+    
     int h_finestra_popup = 7;
     int w_finestra_popup = 42;
     int pop_y = (LINES - h_finestra_popup) / 2;
@@ -134,6 +138,8 @@ void popupGiocatoreColpito(){
 
     wattron(colpito_win, COLOR_PAIR(2) | A_BOLD);
     mvwprintw(colpito_win, 2, (w_finestra_popup - 20) / 2, "GIOCATORE COLPITO!");
+    mvwprintw(colpito_win, 4, (w_finestra_popup - 30) / 2, "Tutte le bombe disinnescate");
+    mvwprintw(colpito_win, 5, (w_finestra_popup - 27) / 2, "e potenziamenti resettati");
     wattroff(colpito_win, COLOR_PAIR(2) | A_BOLD);
 
     wrefresh(colpito_win);

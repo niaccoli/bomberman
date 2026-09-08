@@ -64,7 +64,7 @@ private:
     Posizione posizioneRandomValida_v2() ;
 
     // Posiziona tutti i nemici del livello in posizioni casuali valide.
-    void posizionaNemici_v2( ) ;
+
 
     // Restituisce l'indice del nemico vivo presente nella posizione indicata.
     // Restituisce -1 se la posizione non è occupata da alcun nemico vivo.
@@ -88,8 +88,11 @@ public:
     // nemici random, nemici tank e il numero massimo di item specificato.
     Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
 
-    // Restituisce un riferimento alla mappa associata al livello.
+    //Distruttore classe Level
+    ~Level();
+
     Map& getMap( );
+    // Restituisce un riferimento alla mappa associata al livello.
 
     // Visualizza lo stato corrente del livello.
     // Se è appena avvenuta un'esplosione, visualizza anche

@@ -134,6 +134,10 @@ Level::Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, 
     completato = false;
 }
 
+Level::~Level() {
+    delete &(this->map);
+}
+
 
 Posizione Level::posizioneRandomValida_v2() {
     Posizione temp = map.walkableRandomPosition( ) ;

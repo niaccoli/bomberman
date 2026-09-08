@@ -25,6 +25,20 @@ Map::Map(int height, int width){
     }
 };
 
+Map::~Map() {
+    // 1. Libera le colonne per ogni riga
+    for (int i = 0; i < rows; i++) {
+        delete[] grid[i]; 
+    }
+    // 2. Libera l'array delle righe
+    delete[] grid;    
+
+    // 3. Libera la memoria della finestra ncurses
+    if (win != nullptr) {
+        delwin(win);
+    }
+}
+
 void Map::Initialize_Map(int levelID){
     string fileName;
 
