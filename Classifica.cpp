@@ -6,6 +6,8 @@
 
 #include <fstream>
 
+#include "curses.h"
+
 #include "cstring"
 using namespace std ;
 
@@ -114,3 +116,46 @@ void Classifica::salvaSuFile_v2( ) {
     outputFile.close() ;
 }
 
+void Classifica::mostraMigliori(int n) {
+
+    clear();
+
+    mvprintw(1, 1, "CLASSIFICA");
+
+    pris temp = head;
+    int posizione = 1;
+    int y = 3;
+
+    while (temp != nullptr && posizione <= n) {
+
+        mvprintw(
+            y,
+            1,
+            "%d. %s - %d",
+            posizione,
+            temp->nome,
+            temp->punteggio
+        );
+
+        temp = temp->next;
+        posizione++;
+        y++;
+    }
+
+    if (head == nullptr)
+        mvprintw(3, 1, "Nessun risultato presente");
+
+    mvprintw(y + 2, 1, "Premi INVIO per tornare al menu");
+
+    refresh();
+
+    timeout(-1);
+
+    int input = getch();
+
+    while (input != '\n')
+        input = getch();
+
+    clear();
+    refresh();
+}

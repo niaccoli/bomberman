@@ -7,6 +7,8 @@
 #include "funzioni.h"
 #include "Timer.h"
 #include "Classifica.h"
+#include "Menu.h"
+#include <cstdlib>
 
 using namespace std;
 
@@ -48,207 +50,295 @@ int main() {
      → esegue setenv("TERM", ...)*/
 
 
+
      //INIZIALIZZAZIONE
      setlocale(LC_ALL, "");
-     initscr(); //inizializza lo schermo
+     initscr(); //crea automaticamente una finestra che rappresenta tutto il terminale. (chiamata stdscr)
      noecho(); //Non mostra il carattere della tastiera in input
      curs_set(0); //Nasconde il cursore
 
+
+
      Classifica classifica ;
      classifica.caricaDaFile_v2() ;
+     Menu menu ;
 
-     timeout(0);
+     timeout(-1) ;
+     menu.stampa() ;
 
-     refresh();
 
-     if (has_colors()) {
-          start_color();
-          use_default_colors(); // Mantiene lo sfondo trasparente/predefinito del terminale
-
-          // init_pair(ID_COPPIA, COLORE_TESTO, COLORE_SFONDO);
-          init_pair(1, COLOR_CYAN,    -1); // Giocatore
-          init_pair(2, COLOR_RED,     -1); // Nemici / Bomba
-          init_pair(3, COLOR_YELLOW,  -1); // Bomba
-          init_pair(4, COLOR_GREEN,   -1); // Item / Valuta
-          init_pair(5, COLOR_WHITE,   -1); // Muri indistruttibili
-          init_pair(6, COLOR_RED,  COLOR_RED);   // Esplosione
+     while (menu.leggiInput() != '\n') {
      }
 
-     BidirectionalList levelList;
-     levelList.Create_Levels(); 
-
-     //2 CREAZIONE ENTITÀ
-     Giocatore player(3, 1, 1);
-     char input;
-
-     posizionaGiocatoreStart(player, levelList);
-
-     //3 PRIMA STAMPA
-     levelList.getCurrent()->level->stamp_map(player);
-
-     /*
-     //Puntatore alla finestra window
-     WINDOW *win = newwin(height, width, start_y, start_x);
-
-     //Aggiorna lo schermo per farlo matchare a ciò c he è presente in memoria
-     refresh();
-
-     //Crea un bordo attorno alla window
-     box(win, 0, 0);
-     wrefresh(win);
-     */
-
-     // TEST
-
-     //node* currentNode = levelList.getCurrent();
-     //Map& m = currentNode->level->getMap();
-
-     // 2. Variabili fittizie per far funzionare stamp_map (temporanee)
-     //Giocatore player(3, 1, 1);
-     //Nemico dummy_nemici[1];
-     //Item dummy_items[1];
-     //Bomba b;
-
-     // 3. STAMPA IL LIVELLO!
-     //m.stamp_map(player, dummy_nemici, 0, dummy_items, 0, b);
-     //FINE TEST
+     int selezione = menu.getSelezione();
 
 
-       //Prende l'input dell'utente restituendo il valore int corrispondente al tasto premuto
-      //getch();
+     while ( selezione != 3 ) {
+          if ( selezione == 0) {
+               timeout(0); //importante per il gameLoop altrimenti getch(); poptrebbe aspettare finche' l'utente non preme un testo
 
-      //Muove il cursore alle coordinate specificate
-      //move(y, x);
-
-      //dealloca la memoria e termina ncurses
-      //endwin();
+               clear() ;
+               refresh();
 
 
 
+               if (has_colors()) { //controlla se il terminale supporta i colori
+                    start_color(); //abilita il sistema di colori curses.
+                    use_default_colors(); // Mantiene lo sfondo trasparente/predefinito del terminale
 
-
-     //Giocatore player(3, 1, 1);
-     //char input ;
-
-     //posizionaGiocatoreStart( player, levelList ) ;
-
-     // Prima del while, dichiara un contatore
-     int debug_contatore = 0;
-
-     const int INTERVALLO_CICLO_MS = 100;
-     const int TEMPO_AGGIORNAMENTO_NEMICI_MS = 1000 ;
-     const int DURATA_PARTITA_MINUTI = 5 ;
-
-     Timer timerGioco(DURATA_PARTITA_MINUTI * 60 * 1000) ;
-     Timer timerNemici (TEMPO_AGGIORNAMENTO_NEMICI_MS) ;
-
-
-     //INIZIO CICLO
-     while ( player.vivo() && !timerGioco.scaduto( )) {
-          //1. leggi input
-          char temp;
-          input = ERR;
-
-          while ((temp = getch()) != ERR) //svuota la coda di input tenendo solo l'ultimo
-               input = temp;
-
-
-          if (input != ERR)
-               gestisciInput(player, levelList, input);
-
-          controllaPassaggioLivelli( player, levelList ) ;
-
-          player.aggiornaInvulnerabilita( INTERVALLO_CICLO_MS ) ;
-
-          levelList.updateBoostBombe(INTERVALLO_CICLO_MS ) ;
-
-
-          bool colpito = false;
-
-          if ( timerNemici.scaduto()) {
-               levelList.moveEnemies( player ) ;
-               timerNemici.attivaTimer(TEMPO_AGGIORNAMENTO_NEMICI_MS ) ;
-          }
-
-          colpito = levelList.collisioniGiocatoreNemici(player ) ;
-
-          if ( !colpito )
-			  colpito = levelList.updateBombs( player, INTERVALLO_CICLO_MS ) ;
-
-
-          if (!colpito) {
-               char tipo = levelList.getCurrent()->level->raccoltaItem(player);
-
-               if (tipo != ' ')
-                    levelList.applicaEffettoItem(player, tipo);
-          }
-
-          levelList.getCurrent() -> level -> stamp_map( player ) ;
-
-
-          if ( colpito ) {// il giocatore ha subito danno
-                if ( player.vivo() ) {
-                         // mostra messaggio / animazione
-                         // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
-                         // Invulnerabilita' attiva per x secondi"
-                         reset_v3 (player, levelList ) ;
-                }
-                else
-                    break ;
+                    // init_pair(ID_COPPIA, COLORE_TESTO, COLORE_SFONDO);
+                    init_pair(1, COLOR_CYAN,    -1); // Giocatore
+                    init_pair(2, COLOR_RED,     -1); // Nemici / Bomba
+                    init_pair(3, COLOR_YELLOW,  -1); // Bomba
+                    init_pair(4, COLOR_GREEN,   -1); // Item / Valuta
+                    init_pair(5, COLOR_WHITE,   -1); // Muri indistruttibili
+                    init_pair(6, COLOR_RED,  COLOR_RED);   // Esplosione
                }
 
-          if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
-                break ;
+               BidirectionalList levelList;
+               levelList.Create_Levels();
 
-          // --- AGGIUNGI QUESTE TRE RIGHE ALLA FINE DEL WHILE ---
-          debug_contatore++;
-          mvprintw(0, 0, "Battito loop: %d | Ultimo input: %d", debug_contatore, input);
-          refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
+               //2 CREAZIONE ENTITÀ
+               Giocatore player(3, 1, 1);
 
-          timerNemici.diminuisci(INTERVALLO_CICLO_MS) ;
-          timerGioco.diminuisci(INTERVALLO_CICLO_MS) ;
+               posizionaGiocatoreStart(player, levelList);
 
-          napms(INTERVALLO_CICLO_MS) ;
-     }
+               //3 PRIMA STAMPA
+               levelList.getCurrent()->level->stamp_map(player);
 
-     if ( player.vivo()) {
-          //vittoria
-     }
-     else {
-          //sconfitta
-     }
+               /*
+               //Puntatore alla finestra window
+               WINDOW *win = newwin(height, width, start_y, start_x);
 
-     //dopo la fine della partita bisogna richiedere il nome del giocatore, sia in caso di vittoria che in caso di
-     //sconfitta
+               //Aggiorna lo schermo per farlo matchare a ciò c he è presente in memoria
+               refresh();
 
-     char nome[100];
-     char ch ;
+               //Crea un bordo attorno alla window
+               box(win, 0, 0);
+               wrefresh(win);
+               */
 
-     cin.get(ch) ;
+               // TEST
 
-     int i = 0 ;
+               //node* currentNode = levelList.getCurrent();
+               //Map& m = currentNode->level->getMap();
 
-     while ( i < 99 && ch != '\n' ){
-          nome[i] = ch ;
-          cin.get(ch) ;
-          i++ ;
-     }
+               // 2. Variabili fittizie per far funzionare stamp_map (temporanee)
+               //Giocatore player(3, 1, 1);
+               //Nemico dummy_nemici[1];
+               //Item dummy_items[1];
+               //Bomba b;
 
-     nome[i] = '\0' ;
-     if ( i == 99 ){
-          while ( ch != '\n' && ch != '\n' ){
-               cin.get(ch) ;
+               // 3. STAMPA IL LIVELLO!
+               //m.stamp_map(player, dummy_nemici, 0, dummy_items, 0, b);
+               //FINE TEST
+
+
+               //Prende l'input dell'utente restituendo il valore int corrispondente al tasto premuto
+               //getch();
+
+               //Muove il cursore alle coordinate specificate
+               //move(y, x);
+
+               //dealloca la memoria e termina ncurses
+               //endwin();
+
+
+
+
+
+               //Giocatore player(3, 1, 1);
+               //char input ;
+
+               //posizionaGiocatoreStart( player, levelList ) ;
+
+               // Prima del while, dichiara un contatore
+               int debug_contatore = 0;
+
+               const int INTERVALLO_CICLO_MS = 100;
+               const int TEMPO_AGGIORNAMENTO_NEMICI_MS = 1000 ;
+               const int DURATA_PARTITA_MINUTI = 5 ;
+
+               Timer timerGioco(DURATA_PARTITA_MINUTI * 60 * 1000) ;
+               Timer timerNemici (TEMPO_AGGIORNAMENTO_NEMICI_MS) ;
+
+
+               //INIZIO CICLO
+               while ( player.vivo() && !timerGioco.scaduto( )) {
+                    //1. leggi input
+                    char temp; //sarebbe meglio int (valutare)
+                    char input = ERR;
+
+                    while ((temp = getch()) != ERR) //svuota la coda di input tenendo solo l'ultimo
+                         input = temp;
+                    //legge un tasto dalla tastiera.
+                    //legge un tasto dalla tastiera.
+                    //Il comportamento dipende da timeout
+                    //timeout(-1)= aspetta per sempre
+                    //timeout(0)=non aspettare, se non viene premuto niente ritorni ERR
+                    //timeout(x)= aspetta x ms, se non viene premuto niente ritorni ERR
+
+                    if (input != ERR)
+                         gestisciInput(player, levelList, input);
+
+                    controllaPassaggioLivelli( player, levelList ) ;
+
+                    player.aggiornaInvulnerabilita( INTERVALLO_CICLO_MS ) ;
+
+                    levelList.updateBoostBombe(INTERVALLO_CICLO_MS ) ;
+
+
+                    bool colpito = false;
+
+                    if ( timerNemici.scaduto()) {
+                         levelList.moveEnemies( player ) ;
+                         timerNemici.attivaTimer(TEMPO_AGGIORNAMENTO_NEMICI_MS ) ;
+                    }
+
+                    colpito = levelList.collisioniGiocatoreNemici(player ) ;
+
+                    if ( !colpito )
+                         colpito = levelList.updateBombs( player, INTERVALLO_CICLO_MS ) ;
+
+
+                    if (!colpito) {
+                         char tipo = levelList.getCurrent()->level->raccoltaItem(player);
+
+                         if (tipo != ' ')
+                              levelList.applicaEffettoItem(player, tipo);
+                    }
+
+                    levelList.getCurrent() -> level -> stamp_map( player ) ;
+
+
+                    if ( colpito ) {// il giocatore ha subito danno
+                         if ( player.vivo() ) {
+                              // mostra messaggio / animazione
+                              // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
+                              // Invulnerabilita' attiva per x secondi"
+                              reset_v3 (player, levelList ) ;
+                         }
+                         else
+                              break ;
+                    }
+
+                    if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
+                         break ;
+
+                    // --- AGGIUNGI QUESTE TRE RIGHE ALLA FINE DEL WHILE ---
+                    debug_contatore++;
+
+                    mvprintw(0, 0, "Battito loop: %d | Ultimo input: %d", debug_contatore, input); ////scrive nel buffer di stdscr.
+                    //move + printw = move(0, 0); printw(...); muovi il cursore a (y,x) e stampa.
+
+                    refresh(); // Questo aggiorna lo sfondo, separato dalla mappa
+                    //aggiorna stdscr
+
+                    timerNemici.diminuisci(INTERVALLO_CICLO_MS) ;
+                    timerGioco.diminuisci(INTERVALLO_CICLO_MS) ;
+
+                    napms(INTERVALLO_CICLO_MS) ;
+               }
+
+
+
+               char nome[100];
+
+               timeout(-1);
+
+               clear();
+
+               if (player.vivo()) {
+                    player.aumentaPunteggio(timerGioco.getTimer() / 1000);
+                    mvprintw(1, 1, "HAI VINTO!");
+               }
+               else
+                    mvprintw(1, 1, "GAME OVER");
+
+               mvprintw(3, 1, "Punteggio: %d", player.getPunteggio());
+               mvprintw(5, 1, "Inserisci nome: ");
+
+               echo();
+               curs_set(1);
+
+               refresh();
+
+               getnstr(nome, 99);
+
+               noecho();
+               curs_set(0);
+
+
+               classifica.aggiungiRisultato(nome, player.getPunteggio());
+               classifica.salvaSuFile_v2();
+               clear();
+               refresh();
+               //set_border();
+               //stamp_screen();
+
+
           }
-          cin.ignore() ;
+
+          else if ( selezione == 1 ) {
+
+               char numero[10];
+
+               clear();
+
+               mvprintw(1, 1, "Quanti risultati vuoi visualizzare? (Invio = 10)");
+
+               echo();
+               curs_set(1);
+               refresh();
+
+               getnstr(numero, 9);
+
+               noecho();
+               curs_set(0);
+
+               int n;
+
+               if (numero[0] == '\0') {
+                    n = 10;
+               }
+               else {
+
+                    bool valido = true;
+                    int i = 0;
+
+                    while (numero[i] != '\0' && valido) {
+
+                         if (numero[i] < '0' || numero[i] > '9')
+                              valido = false;
+
+                         i++;
+                    }
+
+                    if (valido)
+                         n = atoi(numero);
+                    else
+                         n = 0;
+               }
+
+               classifica.mostraMigliori(n);
+
+          }
+
+          else {
+               //mostra info
+          }
+
+          menu.stampa();
+
+          while (menu.leggiInput() != '\n') {
+          }
+
+          selezione = menu.getSelezione();
+
      }
 
-     classifica.aggiungiRisultato(nome, player.getPunteggio()) ;
 
-     classifica.salvaSuFile() ;
-    //set_border();
-    //stamp_screen();
-
-    endwin();
+     endwin(); //termina stdscr
 
 
     return 0;
