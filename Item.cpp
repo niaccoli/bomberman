@@ -68,14 +68,6 @@ char Item::getTipo() const {
     return this -> tipo;
 }
 
-/*void Item::setDurata(int tempo) {
-    this -> durata = tempo;
-}*/
-
-/*int Item::getDurata() const {
-    return this -> durata;
-}*/
-
 bool Item::isAttivo() const{
     return this -> attivo;
 }
@@ -93,10 +85,3 @@ void Item::attiva() {
 }
 
 
-/*void Item::aggiornaItem() {
-    if (attivo) {
-        durata -= 1;
-        if (durata <= 0)
-            disattiva();
-    }
-}*/

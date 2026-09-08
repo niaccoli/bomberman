@@ -20,14 +20,10 @@ void muoviGiocatore(Giocatore& player, BidirectionalList& lista_livelli, char in
         dx = -1;
     else if (input == 's' || input == 'S')
         dy = 1;
-    else //chat suggerisce di aggiungere un if esle e un else con return (valutare: in realtà il controllo lo faccio gia sotto)
+    else
         dx = 1;
 
     Posizione temp = {player.getX() + dx , player.getY() + dy};
-
-    //Ho sostituito isWalkable() al posto di mossaValida()
-    //if ( lista_livelli.getCurrent() -> level -> getMap().isWalkable(temp) )
-        //player.muovi( temp );
 
     if (mossa_richiesta) {
         Posizione temp = {player.getX() + dx , player.getY() + dy};
@@ -85,7 +81,7 @@ void controllaPassaggioLivelli( Giocatore& player, BidirectionalList& l ) {
         }
     }
     else if ( l.getCurrent() -> level -> getMap().isExit( player.getPosizione())) {
-        if ( l.goToNext( )){ //aggiorna il current della lista
+        if ( l.goToNext( )){
             clear(); 
             refresh();
 
@@ -203,5 +199,5 @@ void StampaInfo(const Giocatore& player,const Bomba& b, int timer_gioco, Posizio
           mvprintw(riga++, start_x, "                       "); 
      }
 
-     refresh(); // Aggiorna lo schermo base per mostrare le scritte
+     refresh();
 }

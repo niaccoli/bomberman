@@ -119,9 +119,6 @@ public:
     // altri nemici o sulla bomba attiva.
     void moveEnemies(Giocatore& g);
 
-    // Aggiorna lo stato degli item del livello.
-    // Attualmente predisposta per una futura gestione degli item con durata
-    void updateItems( );
 
     // Controlla se il giocatore si trova nella stessa posizione
     // di un nemico vivo.
@@ -168,25 +165,5 @@ public:
     // 'R' aumenta il raggio,
     // 'T' riduce il tempo necessario all'esplosione.
     void applicaEffetto(char tipo ) ;
-
-
-    /* ---------------------------------------- DA VALUTARE---------------------------------------------
-
-    //se vogliamo che se una bomba viene piazzata in un livello e il giocatore si sposta nel livello sucessivo la bomba
-    //continui ad esplodere, i nemici si muovano e quando la bomba esplode crei danno ai nemici
-    //richiede una funzione in BidirectionalLIst che prende la lista di livelli, chiama updateLevel(Giocatore& g)
-    //per il livello corrente e updateLevel_v3( ) per gli altri livelli
-
-    void updateLevel_v3 ( ) ;
-    //chiama una versione modificata di updateEnemies ( muove i nemici ). Non essendo presente il giocatore in quel
-    //livello fa muovere i nemici_inseguitore come nemici_random chiamando Nemico::nuovaPosizione( )
-
-    void updateEnemies_v3( ) ;
-    //muove tutti i nemici vivi nel livello. Non essendo presente il giocatore in quel
-    //livello fa muovere i nemici_inseguitore come nemici_random chiamando Nemico::nuovaPosizione( )
-
-    void collisioneEplosione_v3( ) ;
-    //fa esplodere la bomba causando danno a muri e nemici
-    */
 
 };

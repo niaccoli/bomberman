@@ -146,19 +146,6 @@ Posizione Level::posizioneRandomValida_v2() {
 }
 
 
-/*
-Posizione Level::posizioneRandomValida_v2() {
-    Posizione temp;
-    int tentativi = 0;
-
-    do {
-        temp = map.walkableRandomPosition();
-        tentativi++;
-    } while ((isThereAnEnemy_v2(temp) != -1) || map.isNearEntry(temp) && tentativi < 1000);
-
-    return temp;
-}*/
-
 Bomba& Level::getBomb(){
     return this->b;
 }
@@ -186,7 +173,8 @@ void Level::stamp_map(Giocatore& g, int timer_gioco) {
     if ( num_cella_esplosione == 0 )
         map.stamp_map( g, nemici, num_nemici, items, num_items, b, timer_gioco) ;
     else {
-        map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione, num_cella_esplosione, timer_gioco) ;
+        map.stamp_map( g, nemici, num_nemici, items, num_items, b, cella_esplosione,
+            num_cella_esplosione, timer_gioco) ;
 
         num_cella_esplosione = 0 ;
     }
@@ -314,12 +302,7 @@ bool Level::collisioneEsplosione( Giocatore& g ) {
 
 
 
-    int index_enemy_in_current = isThereAnEnemy_v2( current ) ; //fondamentale sia perche' evita piu' chiamate
-    //poi perche in
-    // nemici[ isThereAnEnemy_v2( current )].diminuisciVita( );
-    // se il nemico muore isThereAnEnemy_v2( current ) ritorna -1 quindi accedi fuori array
-    //if ( !nemici[ index_enemy_in_current ].vivo( ))
-
+    int index_enemy_in_current = isThereAnEnemy_v2( current ) ;
     if ( index_enemy_in_current != -1 ) {
         nemici[ index_enemy_in_current ].diminuisciVita( b.getDanno() ) ;
         if ( !nemici[ index_enemy_in_current ].vivo( )) {
@@ -484,7 +467,7 @@ char Level::raccoltaItem(Giocatore& g ) {
 
 void Level::dropItem(Posizione posizione) {
     if ( next_item < num_items ) {
-        int random = rand() % 5 ; //valutare a gioco creato se aumentare o diminuire
+        int random = rand() % 5 ;
 
         if (random == 1) {
             items[next_item].setPosizione( posizione ) ;
@@ -515,15 +498,7 @@ void Level::reset_v3( ) {
 
     posizionaNemici_v2() ;
 
-    /*
-    for ( int i = 0 ; i < next_item ; i++ ) { //da valutare
-        if ( items[i].isAttivo() )
-            items[i].disattiva() ;
-    }
-    */
-
-    // reset bomba
-    Level::resetBombeEPotenziamenti() ;
+    resetBombeEPotenziamenti() ;
 }
 
 
@@ -544,139 +519,4 @@ void Level::applicaEffetto(char tipo ) {
     }
 }
 
-/*---------------------------------------------------DA VALUTARE-------------------------------------------------------
-
-
-void Level::updateLevel_v3() {
-
-    updateEnemies_v3( ) ;
-
-    if (b.aggiornaBomba( ) )
-        collisioneEplosione_v3() ;
-
-    //updateItems( ) ;
-}
-
-void Level::updateEnemies_v3( ) {
-    for ( int i = 0 ; i < num_nemici ; i++ ) {
-        bool mosso = false ;
-        while ( !mosso && nemici[i].vivo()) {
-            Posizione new_posizione = nemici[i].nuovaPosizione_v3( map ) ;
-            if ( map.isWalkable( new_posizione) && !isThereAnEnemy_v2( new_posizione )) {
-                nemici[i].muovi( new_posizione) ;
-                mosso = true ;
-            }
-        }
-    }
-}
-
-
-
-void Level::collisioneEplosione_v3( ) {
-    Posizione epicentro = b.getPosizione() ;
-
-    Posizione nord = { epicentro.x, epicentro.y - b.getRaggio() - 1} ;
-    Posizione sud = { epicentro.x, epicentro.y + b.getRaggio() + 1} ;
-    Posizione est = { epicentro.x - b.getRaggio() - 1, epicentro.y} ;
-    Posizione ovest = { epicentro.x + b.getRaggio() + 1, epicentro.y} ;
-
-    Posizione current = epicentro;
-    bool muro_distrutto = false ;
-
-    for ( int i = 0 ; i < num_nemici ; i++ ) {
-        if ( isThereAnEnemy_v2( current )) {
-            nemici[i].diminuisciVita( ) ;
-            if ( !nemici[i].vivo( ))
-                dropItem( current ) ;
-        }
-    }
-
-    //SU:
-    current = { epicentro.x, epicentro.y - 1 } ;
-    while ( !stessaPosizione(current, nord) && !map.isUnbreakableWall(current) && !muro_distrutto ) {
-
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
-            muro_distrutto = true ;
-            dropItem( current) ;
-        }
-
-        for ( int i = 0 ; i < num_nemici ; i++ ) {
-            if ( isThereAnEnemy_v2( current )) {
-                nemici[i].diminuisciVita( ) ;
-                if ( !nemici[i].vivo( ))
-                    dropItem( current ) ;
-            }
-        }
-
-        current.y-- ;
-    }
-
-    //GIU
-    current = { epicentro.x, epicentro.y + 1 } ;
-    muro_distrutto = false ;
-    while ( !stessaPosizione(current, sud) && !map.isUnbreakableWall(current) && !muro_distrutto) {
-
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
-            muro_distrutto = true ;
-            dropItem(current) ;
-        }
-        for ( int i = 0 ; i < num_nemici ; i++ ) {
-            if ( isThereAnEnemy_v2( current )) {
-                nemici[i].diminuisciVita( ) ;
-                if ( !nemici[i].vivo( ))
-                    dropItem( current ) ;
-            }
-        }
-
-        current.y++ ;
-    }
-
-
-    //SINISTRA
-    current = { epicentro.x - 1, epicentro.y } ;
-    muro_distrutto = false ;
-    while ( !stessaPosizione(current, est) && !map.isUnbreakableWall(current) && !muro_distrutto ) {
-
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
-            muro_distrutto = true ;
-            dropItem( current ) ;
-        }
-
-        for ( int i = 0 ; i < num_nemici ; i++ ) {
-            if ( isThereAnEnemy_v2( current )) {
-                nemici[i].diminuisciVita( ) ;
-                if ( !nemici[i].vivo( ))
-                    dropItem( current ) ;
-            }
-        }
-
-        current.x-- ;
-    }
-
-    //DESTRA
-    current = { epicentro.x + 1, epicentro.y } ;
-    muro_distrutto = false ;
-    while ( !stessaPosizione(current, ovest) && !map.isUnbreakableWall(current) && !muro_distrutto) {
-
-        if ( map.isBreakable(current) ) {
-            map.breakWall(current ) ;
-            muro_distrutto = true ;
-            dropItem( current ) ;
-        }
-
-        for ( int i = 0 ; i < num_nemici ; i++ ) {
-            if ( isThereAnEnemy_v2( current )) {
-                nemici[i].diminuisciVita( ) ;
-                if ( !nemici[i].vivo( ))
-                    dropItem( current ) ;
-            }
-        }
-
-        current.x++ ;
-    }
-}
-*/
 

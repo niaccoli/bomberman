@@ -9,14 +9,7 @@
 #include "Map.hpp"
 #include "Personaggio.hpp"
 
-class Map ; /* forward declaration
-Nemico.h
-↓ include
-Map.hpp
-↓ include
-Nemico.h
-void muovi(Giocatore& g, Map& m); può non aver ancora incontrato: class Map { ... };
-*/
+class Map ;
 
 
 class Nemico : public Personaggio {
@@ -79,10 +72,6 @@ private:
     // Se il nemico si trova già sulla posizione del giocatore,
     // mantiene la posizione corrente.
         Posizione nuovaPosizioneCasuale (Giocatore& g) const;
-    //----------------------------------------------DA VALUTARE (guarda Level) -----------------------------------------
-        Posizione nuovaPosizione_v3 (Map& m); //se il giocatore non e' presente nel livello i nemici inseguitori si comportano
-    //come nemici random
-    //-------------------------------------------------------------------------------------------------------------------
 
     // Ripristina le vite del nemico in base alla sua tipologia:
     // 1 vita per inseguitori e random, 2 vite per i tank.

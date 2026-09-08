@@ -187,34 +187,6 @@ Posizione Nemico::nuovaPosizioneCasuale(Giocatore& g ) const{
     return temp;
 }
 
-Posizione Nemico::nuovaPosizione_v3 (Map& m) {
-    if (tipo == 'R' || tipo == 'I') {
-        int random = rand() % 4 ;
-        if ( random == 0 )
-            posizione.x -= 1 ;
-        if ( random == 1 )
-            posizione.y += 1 ;
-        if ( random == 2 )
-            posizione.x += 1 ;
-        if ( random == 3 )
-            posizione.y -= 1 ;
-    }
-    else if ( tipo == 'T') {
-        if ( rand() % 2 ) {
-            int random = rand() % 4 ;
-            if ( random == 0 )
-                posizione.x -= 1 ;
-            if ( random == 1 )
-                posizione.y += 1 ;
-            if ( random == 2 )
-                posizione.x += 1 ;
-            if ( random == 3 )
-                posizione.y -= 1 ;
-            
-        }
-    }
-        return posizione ;
-}
 
 void Nemico::rianima( ) {
     if ( tipo == 'I' || tipo == 'R' )

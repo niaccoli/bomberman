@@ -71,9 +71,9 @@ void Classifica::caricaDaFile_v2() {
     char nome[100];
     int punteggio;
 
-    while (inputFile.getline(nome, 100, ';') && inputFile >> punteggio) { //getline(..., ';')legge tutto fino al ;
+    while (inputFile.getline(nome, 100, ';') && inputFile >> punteggio) {
         aggiungiRisultato(nome, punteggio);
-        inputFile.ignore(); //scarta il '\n' rimasto dopo il punteggio
+        inputFile.ignore();
     }
 
 
@@ -187,12 +187,10 @@ void Classifica::stampaClassifica( ) {
 
         int i = 0;
 
-        // Ignora eventuali spazi iniziali
         while (numero[i] == ' ')
             i++;
 
 
-        // Invio oppure solo spazi -> mostra 10 risultati
         if (numero[i] == '\0') {
             n = 10;
         }

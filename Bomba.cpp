@@ -9,15 +9,6 @@ danno(defaultDanno), potenziamentoDanno(false), durataPotenziamentoDanno(0)
 { }
 
 
-/*Bomba::Bomba(int x, int y, int timer, int danno, int raggio, bool attivo) {
-    setX(x);
-    setY(y);
-    setTimer(timer);
-    setDanno(danno);
-    setRaggio(raggio);
-    setAttivo(attivo);
-}*/
-
 int Bomba::getX() const {
     return this -> posizione.x;
 }
