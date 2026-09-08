@@ -51,49 +51,54 @@ private:
     // Indice del prossimo item disponibile da generare.
     int next_item ;
 
-    // Restituisce una posizione casuale calpestabile, non occupata
-    // da nemici vivi e sufficientemente lontana dall'entrata.
+    // Indica se il livello è stato completato.
     bool completato;
 
 
     Timer visualize_explosion{0};
     bool active_explosion = false;
 
-
+    // Restituisce una posizione casuale valida in cui posizionare un nemico.
+    // La posizione deve essere calpestabile, non occupata da altri nemici vivi,
+    // sufficientemente lontana dall'entrata e non completamente circondata da muri.
     Posizione posizioneRandomValida_v2() ;
-    // Restituisce una posizione casuale calpestabile, non occupata da nemici vivi
-    // e sufficientemente lontana dall'entrata del livello.
 
-    void posizionaNemici_v2( ) ;
     // Posiziona tutti i nemici del livello in posizioni casuali valide.
+    void posizionaNemici_v2( ) ;
 
+    // Restituisce l'indice del nemico vivo presente nella posizione indicata.
+    // Restituisce -1 se la posizione non è occupata da alcun nemico vivo.
     int isThereAnEnemy_v2( Posizione posizione) ;
-    // Restituisce l'indice del nemico vivo presente nella posizione indicata;
-    // restituisce -1 se la posizione non è occupata da alcun nemico vivo.
+
 
 
 public:
+    // Restituisce un riferimento alla bomba associata al livello.
     Bomba& getBomb();
 
+    // Costruisce un livello contenente nemici random
+    // e il numero massimo di item specificato.
     Level(Map& m, int random_enemies, int items);
-    // Costruisce un livello con nemici inseguitori e un numero massimo di item.
 
+    // Costruisce un livello contenente nemici inseguitori,
+    // nemici random e il numero massimo di item specificato.
     Level(Map& m, int chasers_enemies, int random_enemies, int items);
-    // Costruisce un livello con nemici inseguitori, nemici random e un numero massimo di item.
 
+    // Costruisce un livello contenente nemici inseguitori,
+    // nemici random, nemici tank e il numero massimo di item specificato.
     Level(Map& m, int chasers_enemies, int random_enemies, int tank_enemies, int items);
-    // Costruisce un livello con nemici inseguitori, random, tank e un numero massimo di item.
 
-    Map& getMap( );
     // Restituisce un riferimento alla mappa associata al livello.
+    Map& getMap( );
 
+    // Visualizza lo stato corrente del livello.
+    // Se è appena avvenuta un'esplosione, visualizza anche
+    // le celle coinvolte e successivamente ne azzera la memorizzazione.
     void stamp_map(Giocatore& g, int timer_gioco) ;
-    // Visualizza lo stato corrente del livello; se è presente un'esplosione,
-    // ne mostra le celle e successivamente ne azzera la memorizzazione.
 
+    // Controlla se tutti i nemici del livello sono stati sconfitti.
+    // Restituisce true se il livello è completato, false altrimenti.
     bool isCompletato( );
-    // Restituisce true se tutti i nemici del livello sono stati sconfitti,
-    // false altrimenti.
 
     //bool updateLevel(Giocatore& g) ;
     // Aggiorna il livello corrente: muove i nemici, controlla le collisioni
@@ -101,47 +106,69 @@ public:
     // Restituisce true solo se il giocatore perde effettivamente una vita.
 
 
-
+    // Aggiorna il timer della bomba.
+    // Se il timer scade, gestisce l'esplosione e le relative collisioni.
+    // Restituisce true se l'esplosione provoca una perdita di vita
+    // al giocatore.
     bool aggiornaEsplosioni(Giocatore& g ,int durata ) ;
 
-    void moveEnemies(Giocatore& g);
     // Aggiorna la posizione di tutti i nemici vivi del livello.
+    // I nemici inseguitori cercano di avvicinarsi al giocatore,
+    // mentre i nemici random e tank utilizzano il movimento casuale.
+    // Evita inoltre che i nemici si spostino su muri,
+    // altri nemici o sulla bomba attiva.
+    void moveEnemies(Giocatore& g);
 
-    void updateItems( );
     // Aggiorna lo stato degli item del livello.
-    // Attualmente predisposta per una futura gestione degli item con durata.
+    // Attualmente predisposta per una futura gestione degli item con durata
+    void updateItems( );
 
+    // Controlla se il giocatore si trova nella stessa posizione
+    // di un nemico vivo.
+    // Restituisce true solo se la collisione provoca
+    // effettivamente una perdita di vita al giocatore.
     bool collisioneGiocatoreNemici_v2(Giocatore& g ) ;
-    // Controlla la collisione tra giocatore e nemici.
-    // Restituisce true solo se la collisione provoca effettivamente una perdita di vita.
 
+    // Calcola tutte le celle raggiunte dall'esplosione della bomba.
+    // Gestisce le collisioni con il giocatore, i nemici e i muri.
+    // Distrugge i muri distruttibili, danneggia i nemici,
+    // assegna il relativo punteggio e può generare item.
+    // Restituisce true se il giocatore perde una vita.
     bool collisioneEsplosione( Giocatore& g ) ;
-    // Calcola l'area dell'esplosione, gestisce le collisioni con giocatore,
-    // nemici e muri e restituisce true se il giocatore perde una vita.
-    //precedentemente nominata come: bool collisioneEsplosioneMuriNemiciGiocatore_v2( Giocatore& g ) ;
 
+    // Controlla se il giocatore si trova nella posizione
+    // di un item attivo.
+    // Se l'item viene raccolto, lo disattiva e ne restituisce il tipo.
+    // Restituisce ' ' se non viene raccolto alcun item.
     char raccoltaItem(Giocatore& g ) ;
-    // Se il giocatore si trova su un item attivo, ne restituisce il tipo;
-    // restituisce ' ' se non è presente alcun item raccoglibile.
 
-    void dropItem(Posizione posizione) ; ;
-    // Tenta di generare casualmente un item nella posizione indicata,
-    // se non è stato raggiunto il numero massimo di item del livello.
+    // Tenta casualmente di generare un item nella posizione indicata.
+    // Se il drop avviene e sono ancora disponibili item,
+    // assegna all'item posizione e tipo casuale e lo attiva.
+    void dropItem(Posizione posizione) ;
 
+    // Piazza la bomba nella posizione corrente del giocatore
+    // e la innesca, solamente se non è già presente una bomba attiva.
     void piazzaBomba(Giocatore& g) ;
-    // Piazza e innesca la bomba nella posizione del giocatore,
-    // se non è già presente una bomba attiva.
 
-    void resetBombeEPotenziamenti( ) ;
-    // Disattiva la bomba del livello, ne rimuove i potenziamenti
+    // Disattiva la bomba del livello, rimuove tutti i suoi potenziamenti
     // e la riposiziona fuori dalla mappa.
+    void resetBombeEPotenziamenti( ) ;
 
+    // Riposiziona casualmente tutti i nemici del livello
+    // e reimposta la bomba e i suoi potenziamenti.
     void reset_v3( ) ;
 
+    // Aggiorna la durata dei potenziamenti della bomba.
+    // I potenziamenti scaduti vengono automaticamente disattivati.
     void aggiornaPotenziamenti(int durata ) ;
 
+    // Applica alla bomba il potenziamento corrispondente al tipo ricevuto:
+    // 'D' aumenta il danno,
+    // 'R' aumenta il raggio,
+    // 'T' riduce il tempo necessario all'esplosione.
     void applicaEffetto(char tipo ) ;
-    // Applica alla bomba il potenziamento identificato dal tipo ricevuto.
+
 
     /* ---------------------------------------- DA VALUTARE---------------------------------------------
 

@@ -7,7 +7,7 @@
 
 #include "funzioni.h"
 
-#include "Map.hpp"
+
 #include <cstdlib>
 
 Nemico::Nemico(): Personaggio(1, {-1, -1 }) {
@@ -59,32 +59,7 @@ int Nemico::getPunti ( ) {
 }
 
 
-int Nemico::percorsoBreve( Posizione player, Posizione n, Map& map, char& wasd) {
-    if ( stessaPosizione( player, n))
-        return 0 ;
 
-
-    int min_sinistra = percorsoBreve( player, {n.x - 1, n.y}, map, wasd );
-    int min_destra = percorsoBreve( player, {n.x + 1, n.y }, map , wasd);
-    int min_su = percorsoBreve( player, {n.x, n.y - 1}, map , wasd);
-    int min_giu = percorsoBreve( player, {n.x ,n.y + 1 }, map , wasd);
-
-    int piuBreve = min(min_sinistra, min_destra, min_su, min_giu) ;
-
-    if (piuBreve == min_sinistra)
-        wasd = 'a' ;
-    else if (piuBreve == min_destra)
-        wasd = 'd' ;
-	else if ( piuBreve == min_su )
-        wasd == 'w' ;
-    else
-        wasd == 's' ;
-
-    if ( !map.isWalkable( n ))
-        return 100 + piuBreve;
-    else
-        return 1 + piuBreve ;
-}
 
 void Nemico::nuovaPosizioneInseguitore(Giocatore& g, Posizione possibili[4]) const{
 
