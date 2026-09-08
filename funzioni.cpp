@@ -125,9 +125,9 @@ int min(int n1, int n2, int n3, int n4 ) {
     return min ;
 }
 
-void StampInfo(const Giocatore& player,const Bomba& b, int map_cols, int timer_gioco){
-     int start_x = map_cols + 5;
-     int start_y = 2;
+void StampaInfo(const Giocatore& player,const Bomba& b, int timer_gioco, Posizione mappa_schermo){
+     int start_x = mappa_schermo.x + 5;
+     int start_y = mappa_schermo.y + 2;
 
      int total_time_in_seconds = timer_gioco / 1000;
 
