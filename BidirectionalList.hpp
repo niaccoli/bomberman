@@ -3,13 +3,8 @@
 #include <iostream>
 #include "Level.hpp"
 
-/*Io terrei BidirectionalList come vera classe separata. Non la sposterei dentro funzioni.cpp.
-
-Il motivo è che la lista bidirezionale non è una semplice utility: ha uno stato proprio (head, current) e operazioni che
-modificano quello stato, come goToNext(), goToPrev() e getCurrent().
-Questo è esattamente il tipo di cosa che ha senso rappresentare con una classe.*/
-
-struct node{
+// Struttura del nodo per la lista doppiamente concatenata
+struct node {
     int levelID;
     Level* level;
     node* next;
@@ -20,63 +15,57 @@ class BidirectionalList {
 protected:
     node* head;
     node* current;
+
 public:
+    // Costruttore di default: inizializza una lista vuota.
     BidirectionalList();
+    
+    // Costruttore con parametri: inizializza la lista con una testa e un nodo corrente specificati.
     BidirectionalList(node* head, node* current);
 
-    bool goToNext( );
-    //Andrea: aggiungere controllo se il livello e' completato va eliminato il nodo
-    //se esiste un livello sucessivo aggiorna current e ritorna true, false altrimenti
-
-    bool goToPrev();
-    //Andrea: aggiungere controllo se il livello e' completato va eliminato il nodo
-    //se esiste un livello precedente aggiorna current e ritorna true, false altrimenti
-
-    //Creazione dei 5 livelli
+    // Istanzia, inizializza e concatena i 5 livelli di gioco, impostando le rispettive mappe.
     void Create_Levels();
 
+    // Avanza al livello successivo. Se il livello appena lasciato è contrassegnato come completato, 
+    // lo elimina definitivamente dalla lista. Ritorna true in caso di successo, false altrimenti.
+    bool goToNext();
+
+    // Retrocede al livello precedente. Se il livello appena lasciato è contrassegnato come completato, 
+    // lo elimina definitivamente dalla lista. Ritorna true in caso di successo, false altrimenti.
+    bool goToPrev();
+
+    // Restituisce un puntatore al nodo (livello) in cui si trova attualmente il giocatore.
     node* getCurrent();
 
+    // Verifica se il livello corrente è l'unico rimasto attivo nella lista.
+    bool isLastLevel();
 
-    //resetLevels_v1
-    //resetLevels_v2
-    //deve chiamare ripetutamente Level::reset( ) per rispristinare i livelli quando il giocatore perde una vita
-    //non necessaria nell'immediato, prima facciamo una versione semplice dove rimettiamo semplicemente il giocatore
-    //al livello 1
-
-
-    void applicaEffettoItem ( Giocatore& g, char type ) ;
-    // se tipo == 'I' g.invulnerabilitaOn()
-    //se tipo == 'V' g.aumentaVita()
-    //altrimenti chiami per tutti i livelli Level::applicaEffetto( tipo )
-
-    //bool updateLevels(Giocatore& g) ;
-    /* per tutti i livelli non correnti → Level::updateLevel() //aggiorna soltanto i timer dei potenziamenti
-     livello corrente  → Level::updateLevel(g) // deve ritornare questo valore cosi' sappiamo se il giocatore e' stato colpito
-     */
-
-    void moveEnemies(Giocatore& g) ;
-    //muove i nemici del livello corrente
-
-    bool collisioniGiocatoreNemici(Giocatore& g) ;
-
-    bool updateBombs(Giocatore& g, int durata) ;
-    //aggiorna la bomba del livello corrente
-
-    void updateBoostBombe(int durata) ;
-    //aggiorna i Boost delle bombe di tutti i livelli
-
-    bool isLastLevel( ) ;
-    //ritorna true se il livello corrente e' l'ultimo livello rimasto
-
-    void reset_v1( ) ;
-    //chiama void Level::resetBombeEPotenziamenti() per tutti i livelli attivi disattivando i potenziamenti bomba
-
-    void reset_v3( ) ;
-
-    //Eliminazione del nodo(Utilizzato in goToNext e goToPrev)
+    // Rimuove il nodo corrente dalla lista e aggiorna i puntatori dei nodi adiacenti.
     void deleteNode();
 
+
+    // Applica l'effetto del potenziamento raccolto. Modifica direttamente il giocatore (es. vita, invulnerabilità) 
+    // oppure propaga l'effetto globale (es. potenziamenti bomba) a tutti i livelli attivi.
+    void applicaEffettoItem(Giocatore& g, char type);
+
+    // Gestisce il movimento di tutti i nemici presenti nel livello corrente.
+    void moveEnemies(Giocatore& g);
+
+    // Verifica eventuali collisioni fatali tra il giocatore e i nemici nel livello corrente.
+    bool collisioniGiocatoreNemici(Giocatore& g);
+
+    // Aggiorna lo stato della bomba innescata (timer ed esplosione) all'interno del livello corrente.
+    bool updateBombs(Giocatore& g, int durata);
+
+    // Aggiorna la durata residua dei potenziamenti (es. raggio o timer bomba) su tutti i livelli attivi.
+    void updateBoostBombe(int durata);
+
+    // Disattiva i potenziamenti della bomba su tutti i livelli.
+    void reset_v1();
+
+    // Esegue un reset totale (entità e potenziamenti) per il livello corrente in caso di morte del giocatore, 
+    // e si limita a resettare bombe e potenziamenti per i livelli in background.
+    void reset_v3();
 };
 
 #endif
