@@ -6,6 +6,7 @@
 #include <cmath> //Usato per funzione abs() (Valore assoluto)
 #include "Timer.h"
 #include "funzioni.h"
+#include "Posizione.h"
 
 using namespace std;
 
@@ -87,9 +88,29 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici,
 bool change_bomb_color = false;
 Timer color_switch(1);
 
+Posizione mappa_schermo;
+
+
 void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, const Item items[], int numItems, const Bomba& b, Posizione celle_esplosione[], int num_celle_esplosione, int timer_gioco){
 
+    int larghezza_stats = 30; // Larghezza stimata per le statistiche a destra
+    int total_w = this->cols + 2 + larghezza_stats;
+    int total_h = this->rows + 2;
+
+    int start_y = (LINES - rows) / 2;
+    int start_x = (COLS - cols) / 2;
+
+    // Controllo di sicurezza per evitare coordinate negative se il terminale è piccolo:
+    if (start_y < 0) start_y = 0;
+    if (start_x < 0) start_x = 0;
+
+    // Crea la finestra della mappa centrata (altezza, larghezza, start_y, start_x)
+    this->win = newwin(this->rows + 2, this->cols + 2, start_y, start_x);
+
+    mappa_schermo.x = start_x + cols;
+    mappa_schermo.y = start_y;
     
+
     werase(this->win);
     box(this->win, 0, 0);
 
@@ -226,7 +247,7 @@ void Map::stamp_map(const Giocatore& p, const Nemico nemici[], int numNemici, co
         }
     }
 
-    StampInfo(p, b, this->cols, timer_gioco);
+    StampaInfo(p, b, timer_gioco, mappa_schermo);
     
 
     //Aggiorna la finestra

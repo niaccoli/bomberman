@@ -21,7 +21,7 @@ void gestisciInput(Giocatore& player,BidirectionalList& lista_livelli, char inpu
 // Mostra a schermo le informazioni relative alla partita:
 // vite e punteggio del giocatore, tempo rimanente
 // e potenziamenti della bomba attualmente attivi.
-void StampInfo(const Giocatore& player, const Bomba& b, int map_cols, int timer_gioco);
+void StampaInfo(const Giocatore& player,const Bomba& b, int timer_gioco, Posizione mappa_schermo);
 
 // Posiziona il giocatore nella prima cella interna
 // adiacente all'entrata del livello corrente.
@@ -43,7 +43,9 @@ void reset_v1( Giocatore& player, BidirectionalList& l ) ;
 void reset_v3(Giocatore& player, BidirectionalList& l ) ;
 
 // Restituisce il valore minimo tra i quattro interi ricevuti.
-int min(int n1, int n2, int n3, int n4 );
+int min(int n1, int n2, int n3, int n4 ) ;
+
+void popupGiocatoreColpito();
 
 
 #endif

@@ -13,7 +13,6 @@
 using namespace std;
 
 
-
 //dimensioni matrice: 25x70, con due righe e due colonne in più per i bordi.
 const int width = 72;
 const int height = 27;
@@ -167,15 +166,14 @@ int main() {
           levelList.getCurrent() -> level -> stamp_map( player, timer_gioco );
 
 
-                    if ( colpito ) {// il giocatore ha subito danno
-                         if ( player.vivo()) {
-                              // mostra messaggio / animazione
-                              // "giocatore colpito, vite rimaste: x. tutte le bombe piazzate sono disattivate.
-                              reset_v3 (player, levelList ) ;
-                         }
-                         else
-                              break ;
-                    }
+          if ( colpito ) {// il giocatore ha subito danno
+                if ( player.vivo() ) {
+                    popupGiocatoreColpito();
+                    reset_v3 (player, levelList );
+                }
+                else
+                    break ;
+               }
 
                     if ( levelList.isLastLevel( ) && levelList.getCurrent() -> level -> isCompletato( ))
                          break ;
