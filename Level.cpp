@@ -206,67 +206,65 @@ void Level::moveEnemies(Giocatore& g) {
 
     for (int i = 0; i < num_nemici; i++) {
 
-        if (!nemici[i].vivo())
-            continue;
+        if (nemici[i].vivo()) {
+
+            // INSEGUITORE
+            if (nemici[i].getTipo() == 'I') {
 
 
-        // INSEGUITORE
-        if (nemici[i].getTipo() == 'I') {
+                if (!stessaPosizione(nemici[i].getPosizione(), g.getPosizione())) {
 
-            // se è già sopra il giocatore rimane fermo
-            if (stessaPosizione(nemici[i].getPosizione(), g.getPosizione()))
-                continue;
+                    Posizione possibili[4];
 
-            Posizione possibili[4];
+                    nemici[i].nuovaPosizioneInseguitore(g, possibili);
 
-            nemici[i].nuovaPosizioneInseguitore(g, possibili);
+                    bool mosso = false;
+                    int j = 0;
 
-            bool mosso = false;
-            int j = 0;
+                    while (j < 4 && !mosso) {
 
-            while (j < 4 && !mosso) {
+                        bool cellaLibera =
+                            map.isWalkable(possibili[j]) &&
+                            isThereAnEnemy(possibili[j]) == -1 &&
+                            !(stessaPosizione(possibili[j], b.getPosizione()) &&
+                              b.innescata());
 
-                bool cellaLibera =
-                    map.isWalkable(possibili[j]) &&
-                    isThereAnEnemy(possibili[j]) == -1 &&
-                    !(stessaPosizione(possibili[j], b.getPosizione()) &&
-                      b.innescata());
+                        if (cellaLibera) {
+                            nemici[i].muovi(possibili[j]);
+                            mosso = true;
+                        }
 
-                if (cellaLibera) {
-                    nemici[i].muovi(possibili[j]);
-                    mosso = true;
+                        j++;
+                    }
                 }
-
-                j++;
             }
-        }
 
+            // RANDOM E TANK
+            else {
 
-        // RANDOM E TANK
-        else {
+                bool mosso = false;
+                int tentativo = 0;
 
-            bool mosso = false;
-            int tentativo = 0;
+                while (!mosso && tentativo < 10) {
 
-            while (!mosso && tentativo < 10) {
+                    Posizione nuova = nemici[i].nuovaPosizioneCasuale(g);
 
-                Posizione nuova = nemici[i].nuovaPosizioneCasuale(g);
+                    // Per il nemico tank: può decidere di rimanere fermo
+                    if (stessaPosizione(nuova, nemici[i].getPosizione())) {
+                        mosso = true;
+                    }
 
-                if (stessaPosizione(nuova, nemici[i].getPosizione())) { //per nemico tank
-                    mosso = true;
+                    if (map.isWalkable(nuova) &&
+                        isThereAnEnemy(nuova) == -1 &&
+                        !(stessaPosizione(nuova, b.getPosizione()) &&
+                          b.innescata())) {
+
+                        nemici[i].muovi(nuova);
+                        mosso = true;
+                    }
+
+                    tentativo++;
                 }
-
-
-                if (map.isWalkable(nuova) &&
-                    isThereAnEnemy(nuova) == -1 &&
-                    !(stessaPosizione(nuova, b.getPosizione()) &&
-                      b.innescata())) {
-
-                    nemici[i].muovi(nuova);
-                    mosso = true;
-                      }
-
-                tentativo++;
             }
         }
     }
